@@ -22,7 +22,7 @@ require_once dirname(__FILE__).'/../include/CIntegrationTest.php';
  * @onAfter cleanupTestEnv
  *
  */
-class testConfigTestOption extends CIntegrationTest {
+class testConfigVariables extends CIntegrationTest {
 	const SERVER_NAME = 'server';
 	const PROXY_NAME = 'proxy';
 	const STATS_ITEM_NAME = 'stats item';
