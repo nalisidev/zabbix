@@ -29,21 +29,46 @@ class testConfigVariables extends CIntegrationTest {
 	const STATS_ITEM_KEY = 'zabbix[stats,,]';
 	const START_POLLERS = 12;
 
+	const VALID_NAMES = [
+		'variable',
+		'_var123',
+		'a',
+		'_'
+	];
+
+	private static $include_files = [
+		self::COMPONENT_AGENT => PHPUNIT_CONFIG_DIR . self::COMPONENT_AGENT . '_usrprm_with_vars.conf',
+		self::COMPONENT_AGENT2 => PHPUNIT_CONFIG_DIR . self::COMPONENT_AGENT2 . '_usrprm_with_vars.conf',
+	];
+
 	private static $proxyids = [];
 	private static $hostids = [];
 	private static $itemids = [];
+	private static $envvars = [];
 
+	private static function putenv($name, $value) {
+		putenv($name . '=' . $value);
+		self::$envvars[] = $name;
+	}
 
 	public static function prepareTestEnv(): void {
-		putenv('StartPollers=' . self::START_POLLERS);
+		self::putenv('StartPollers', self::START_POLLERS);
 	}
 
 	public static function cleanupTestEnv(): void {
-		putenv('StartPollers');
 		CDataHelper::call('history.clear', self::$itemids);
 		CDataHelper::call('item.delete', self::$itemids);
 		CDataHelper::call('host.delete', self::$hostids);
 		CDataHelper::call('proxy.delete', self::$proxyids);
+
+		foreach (self::$include_files as $file) {
+			if (file_exists($file)) {
+				unlink($file);
+			}
+		}
+		foreach (self::$envvars as $var) {
+			putenv($var);
+		}
 	}
 
 	/**
@@ -117,7 +142,7 @@ class testConfigVariables extends CIntegrationTest {
 	 *
 	 * @return array
 	 */
-	public function configurationProvider() {
+	public function configurationProviderWorkerCount() {
 		return [
 			self::COMPONENT_SERVER => [
 				'StartPollers' => '${StartPollers}',
@@ -130,11 +155,10 @@ class testConfigVariables extends CIntegrationTest {
 		];
 	}
 
-
 	/**
 	 * Check the number of pollers set with variable in configuration file
 	 *
-	 * @configurationDataProvider configurationProvider
+	 * @configurationDataProvider configurationProviderWorkerCount
 	 * @required-components server, proxy
 	 */
 	public function testConfigTestOption_WorkerCount() {
@@ -179,4 +203,65 @@ class testConfigVariables extends CIntegrationTest {
 		}
 	}
 
+	/**
+	 * Component configuration provider.
+	 *
+	 * @return array
+	 */
+	public function configurationProviderVarNames() {
+		foreach (self::VALID_NAMES as $idx => $var_name) {
+			$usrprm_key = 'valid_usrprm' . $idx;
+			$usrprm_val = 'echo valid_usrprm ' . $var_name;
+			$var_val = $usrprm_key . ',' . $usrprm_val;
+			self::putenv($var_name, $var_val);
+		}
+
+		// Currently multiple identical configuration parameters are not allowed by the test environment,
+		// so use put them into an file and include it.
+		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
+			$filename = PHPUNIT_CONFIG_DIR.'/'.$component.'_usrprm_with_vars.conf';
+
+			$data = "";
+			foreach (self::VALID_NAMES as $name) {
+				$data .= 'UserParameter=' . '${' . $name . '}' . PHP_EOL;
+			}
+
+			if (file_put_contents($filename, $data) === false) {
+				throw new Exception('Failed to create include configuration file for %s', $component);
+			}
+		}
+
+		return [
+			self::COMPONENT_AGENT => [
+				'Include' => self::$include_files[self::COMPONENT_AGENT]
+			],
+			self::COMPONENT_AGENT2 => [
+				'Include' => self::$include_files[self::COMPONENT_AGENT2]
+			],
+		];
+	}
+
+	/**
+	 * Test valid variable names
+	 *
+	 * @configurationDataProvider configurationProviderVarNames
+	 * @required-components agent,agent2
+	 */
+	public function testConfigTestOption_VariableNames() {
+
+		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
+			foreach (self::VALID_NAMES as $idx => $var_name) {
+				$usrprm_key = 'valid_usrprm' . $idx;
+				$expected_output = 'valid_usrprm ' . $var_name . PHP_EOL;
+
+				$port =	$this->getConfigurationValue($component, 'ListenPort');
+				$output = shell_exec(PHPUNIT_BASEDIR . '/bin/zabbix_get -s 127.0.0.1 -p ' . $port .
+					' -k ' . $usrprm_key . ' -t 7');
+
+				$this->assertNotNull($output);
+				$this->assertNotFalse($output);
+				$this->assertEquals($expected_output, $output);
+			}
+		}
+	}
 }
