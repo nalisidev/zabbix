@@ -128,7 +128,7 @@ class testConfigVariables extends CIntegrationTest {
 						'delay' => '1s'
 					]
 				]
-			],
+			]
 		]);
 
 		self::$hostids = $result['hostids'];
@@ -151,7 +151,7 @@ class testConfigVariables extends CIntegrationTest {
 				'Hostname' => self::PROXY_NAME,
 				'Server' => '127.0.0.1:'.self::getConfigurationValue(self::COMPONENT_SERVER, 'ListenPort'),
 				'StartPollers' => '${StartPollers}'
-			],
+			]
 		];
 	}
 
