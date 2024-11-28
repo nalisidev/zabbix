@@ -38,7 +38,7 @@ class testConfigVariables extends CIntegrationTest {
 
 	private static $include_files = [
 		self::COMPONENT_AGENT => PHPUNIT_CONFIG_DIR . self::COMPONENT_AGENT . '_usrprm_with_vars.conf',
-		self::COMPONENT_AGENT2 => PHPUNIT_CONFIG_DIR . self::COMPONENT_AGENT2 . '_usrprm_with_vars.conf',
+		self::COMPONENT_AGENT2 => PHPUNIT_CONFIG_DIR . self::COMPONENT_AGENT2 . '_usrprm_with_vars.conf'
 	];
 
 	private static $proxyids = [];
@@ -109,7 +109,7 @@ class testConfigVariables extends CIntegrationTest {
 						'type' => ITEM_TYPE_INTERNAL,
 						'value_type' => ITEM_VALUE_TYPE_TEXT,
 						'delay' => '1s'
-					],
+					]
 				]
 			],
 			[
@@ -126,7 +126,7 @@ class testConfigVariables extends CIntegrationTest {
 						'type' => ITEM_TYPE_INTERNAL,
 						'value_type' => ITEM_VALUE_TYPE_TEXT,
 						'delay' => '1s'
-					],
+					]
 				]
 			],
 		]);
@@ -145,12 +145,12 @@ class testConfigVariables extends CIntegrationTest {
 	public function configurationProviderWorkerCount() {
 		return [
 			self::COMPONENT_SERVER => [
-				'StartPollers' => '${StartPollers}',
+				'StartPollers' => '${StartPollers}'
 			],
 			self::COMPONENT_PROXY => [
 				'Hostname' => self::PROXY_NAME,
 				'Server' => '127.0.0.1:'.self::getConfigurationValue(self::COMPONENT_SERVER, 'ListenPort'),
-				'StartPollers' => '${StartPollers}',
+				'StartPollers' => '${StartPollers}'
 			],
 		];
 	}
@@ -237,7 +237,7 @@ class testConfigVariables extends CIntegrationTest {
 			],
 			self::COMPONENT_AGENT2 => [
 				'Include' => self::$include_files[self::COMPONENT_AGENT2]
-			],
+			]
 		];
 	}
 
