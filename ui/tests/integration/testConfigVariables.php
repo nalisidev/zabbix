@@ -30,10 +30,17 @@ class testConfigVariables extends CIntegrationTest {
 	const START_POLLERS = 12;
 
 	const VALID_NAMES = [
-		'variable',
+		'var',
+		'var123',
 		'_var123',
 		'a',
 		'_'
+	];
+
+	const INVALID_NAMES = [
+		'123var', // starts with a digit
+		'var-123', // contains a hyphen
+		'var 123', // contains a space
 	];
 
 	private static $include_files = [
@@ -210,16 +217,15 @@ class testConfigVariables extends CIntegrationTest {
 	 */
 	public function configurationProviderVarNames() {
 		foreach (self::VALID_NAMES as $idx => $var_name) {
-			$usrprm_key = 'valid_usrprm' . $idx;
-			$usrprm_val = 'echo valid_usrprm ' . $var_name;
-			$var_val = $usrprm_key . ',' . $usrprm_val;
+			// 'valid_usrprm0,echo valid_usrprm var123';
+			$var_val = 'valid_usrprm' . $idx . ',echo valid_usrprm ' . $var_name;
 			self::putenv($var_name, $var_val);
 		}
 
 		// Currently multiple identical configuration parameters are not allowed by the test environment,
 		// so use put them into an file and include it.
 		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
-			$filename = PHPUNIT_CONFIG_DIR.'/'.$component.'_usrprm_with_vars.conf';
+			$filename = self::$include_files[$component];
 
 			$data = "";
 			foreach (self::VALID_NAMES as $name) {
@@ -261,6 +267,54 @@ class testConfigVariables extends CIntegrationTest {
 				$this->assertNotNull($output);
 				$this->assertNotFalse($output);
 				$this->assertEquals($expected_output, $output);
+			}
+		}
+	}
+
+	/**
+	 * Test invalid variable names
+	 */
+	public function testConfigTestOption_InvalidVariableNames() {
+		foreach (self::INVALID_NAMES as $idx => $var_name) {
+			// 'invalid_usrprm0,echo invalid_usrprm var-123';
+			$var_val = 'invalid_usrprm' . $idx . ',echo invalid_usrprm ' . $var_name;
+			self::putenv($var_name, $var_val);
+		}
+
+		$def_config = self::getDefaultComponentConfiguration();
+
+		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
+			foreach (self::INVALID_NAMES as $name) {
+				$config = [
+					$component => [
+						'UserParameter' => '${' . $name . '}'
+					]
+				];
+
+				$config[$component] = array_merge($config[$component], $def_config[$component]);
+				self::prepareComponentConfiguration($component, $config);
+
+				$config_path = PHPUNIT_CONFIG_DIR.'zabbix_'.$component.'.conf';
+				if (!file_exists($config_path)) {
+					throw new Exception('There is no configuration file for component "'.$component.'".');
+				}
+				$background = ($component === self::COMPONENT_AGENT2);
+				$bin_path = PHPUNIT_BINARY_DIR.'zabbix_'.$component;
+
+				self::clearLog($component);
+				self::executeCommand($bin_path, ['-c', $config_path], $background);
+				sleep(1); // wait until the component starts and stops
+				$this->stopComponent($component); // for safety
+
+				if ($component === self::COMPONENT_AGENT) {
+					$needle = 'cannot load user parameters: user parameter "${' . $name . '}": not comma-separated';
+				} else {
+					$needle = 'Cannot initialize user parameters: cannot add user parameter "${' . $name . '}": not comma-separated';
+				}
+
+				$log = CLogHelper::readLog(self::getLogPath($component), false);
+				$err_msg = 'String "' . $needle . '" is not found in log file for component "' . $component . '".';
+				$this->assertTrue(str_contains($log, $needle), $err_msg);
 			}
 		}
 	}
