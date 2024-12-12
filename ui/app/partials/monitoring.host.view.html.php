@@ -40,9 +40,7 @@ $table = (new CTableInfo())
 	->setPageNavigation($data['paging']);
 
 foreach ($data['hosts'] as $hostid => $host) {
-	$host_name = (new CLinkAction($host['name']))
-		->setMenuPopup(CMenuPopupHelper::getHost($hostid))
-		->addClass(ZBX_STYLE_WORDBREAK);
+	$host_name = (new CLinkAction($host['name']))->setMenuPopup(CMenuPopupHelper::getHost($hostid));
 
 	$interface = null;
 	if ($host['interfaces']) {
