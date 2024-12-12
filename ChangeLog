@@ -1368,6 +1368,8 @@ Changes for 6.4.21rc1
 New features:
 
 Bug fixes:
+..F....... [ZBX-24895] changed double quotes to single quotes for a string in an SQL statement (rgontarski)
+...G...... [ZBX-25377] fixed crash when executing vfs.fs.size or other metrics and forked metric is terminated abnormally (vso)
 
 --------------------------------------------------------------------------------
 Changes for 6.4.20
