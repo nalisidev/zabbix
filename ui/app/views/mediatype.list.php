@@ -214,7 +214,7 @@ foreach ($data['mediatypes'] as $media_type) {
 	// append row
 	$media_type_table->addRow([
 		new CCheckBox('mediatypeids['.$media_type['mediatypeid'].']', $media_type['mediatypeid']),
-		(new CCol($name))->addClass(ZBX_STYLE_WORDBREAK),
+		(new CCol($name))->addClass(ZBX_STYLE_NOWRAP),
 		CMediatypeHelper::getMediaTypes($media_type['typeid']),
 		$status,
 		(new CCol($action_count_total))->addClass(ZBX_STYLE_CELL_WIDTH),
