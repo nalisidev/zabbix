@@ -2939,6 +2939,16 @@ msgid_plural "Cannot delete user groups"
 msgstr[0] "No es pot pas esborrar el grup d'usuaris"
 msgstr[1] "No es poden pas esborrar els grups d'usuaris"
 
+#: include/classes/api/services/CUserGroup.php:1306
+#, c-format
+msgid "Cannot delete user group \"%1$s\", because it is used by LDAP userdirectory \"%2$s\"."
+msgstr ""
+
+#: include/classes/api/services/CUserGroup.php:1301
+#, c-format
+msgid "Cannot delete user group \"%1$s\", because it is used by SAML userdirectory."
+msgstr ""
+
 #: include/classes/api/services/CUserGroup.php:1397
 #, c-format
 msgid "Cannot delete user group \"%1$s\", because it is used by provisioned user \"%2$s\"."
