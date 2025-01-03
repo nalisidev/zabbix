@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2024-11-28 09:01+0000\n"
-"Last-Translator: Ryan Skov <rsk@capmon.dk>\n"
+"PO-Revision-Date: 2025-01-03 08:49+0000\n"
+"Last-Translator: sergejs.olonkins <sergejs.olonkins@zabbix.com>\n"
 "Language-Team: none\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -694,7 +694,7 @@ msgstr[1] "Handling deaktiveret"
 
 #: app/controllers/CControllerPopup.php:42
 msgid "Action edit"
-msgstr ""
+msgstr "Handling redigering"
 
 #: app/controllers/CControllerActionEnable.php:84
 msgid "Action enabled"
@@ -1290,7 +1290,7 @@ msgstr "Alle"
 #: app/views/mediatype.list.php:79 app/views/mediatype.list.php:81
 #: app/views/mediatype.list.php:90 app/views/popup.operation.edit.php:160
 msgid "All available"
-msgstr ""
+msgstr "Alle tilgængelige"
 
 #: app/views/monitoring.dashboard.view.php:189
 msgid "All dashboards"
@@ -2320,7 +2320,7 @@ msgstr "Kan ikke tilføje billede"
 
 #: items.php:667
 msgid "Cannot add item"
-msgstr "Kan ikke tilføje genstand"
+msgstr "Kan ikke tilføje datapunkt"
 
 #: disc_prototypes.php:454
 msgid "Cannot add item prototype"
@@ -2941,12 +2941,12 @@ msgstr[1] "Kan ikke slette bruger grupper"
 #: include/classes/api/services/CUserGroup.php:1306
 #, c-format
 msgid "Cannot delete user group \"%1$s\", because it is used by LDAP userdirectory \"%2$s\"."
-msgstr ""
+msgstr "Kan ikke slette brugergruppen \"%1$s\", fordi den bruges af LDAP-brugerkataloget \"%2$s\"."
 
 #: include/classes/api/services/CUserGroup.php:1301
 #, c-format
 msgid "Cannot delete user group \"%1$s\", because it is used by SAML userdirectory."
-msgstr ""
+msgstr "Kan ikke slette brugergruppen \"%1$s\", fordi den bruges af SAML-brugermappe."
 
 #: include/classes/api/services/CUserGroup.php:1397
 #, c-format
@@ -5092,7 +5092,7 @@ msgstr[1] "Forbindelser deaktiveret"
 
 #: app/controllers/CControllerPopup.php:43
 msgid "Connector edit"
-msgstr ""
+msgstr "Redigering af forbindelsesled"
 
 #: app/controllers/CControllerConnectorEnable.php:69
 msgid "Connector enabled"
@@ -5377,7 +5377,7 @@ msgstr "Opret aktiveret"
 
 #: app/views/correlation.list.php:35
 msgid "Create event correlation"
-msgstr ""
+msgstr "Opret begivenhedskorrelation"
 
 #: include/views/configuration.graph.list.php:63
 msgid "Create graph"
@@ -6377,11 +6377,11 @@ msgstr "Vil du slette de valgte elementer?"
 
 #: app/views/js/correlation.list.js.php:96
 msgid "Delete selected event correlation?"
-msgstr ""
+msgstr "Slet den valgte begivenhedskorrelation?"
 
 #: app/views/js/correlation.list.js.php:95
 msgid "Delete selected event correlations?"
-msgstr ""
+msgstr "Slet de valgte begivenhedskorrelationer?"
 
 #: include/views/configuration.graph.list.php:269
 msgid "Delete selected graph prototype?"
@@ -6891,11 +6891,11 @@ msgstr "Vil du deaktivere valgte registreringsregler?"
 
 #: app/views/js/correlation.list.js.php:147
 msgid "Disable selected event correlation?"
-msgstr ""
+msgstr "Deaktivere den valgte begivenhedskorrelation?"
 
 #: app/views/js/correlation.list.js.php:146
 msgid "Disable selected event correlations?"
-msgstr ""
+msgstr "Deaktivere valgte begivenhedskorrelationer?"
 
 #: app/views/usergroup.list.php:231
 msgid "Disable selected group?"
@@ -7085,7 +7085,7 @@ msgstr "Opdagelseshandlinger"
 
 #: app/views/configuration.discovery.edit.php:52
 msgid "Discovery by"
-msgstr ""
+msgstr "Opdagelse af"
 
 #: app/views/configuration.discovery.edit.php:63
 msgid "Discovery by proxy"
@@ -7194,7 +7194,7 @@ msgstr[1] "Opdagelsesregler deaktiveret"
 
 #: app/controllers/CControllerPopup.php:45
 msgid "Discovery rule edit"
-msgstr ""
+msgstr "Redigering af opdagelsesregel"
 
 #: app/controllers/CControllerDiscoveryEnable.php:68 host_discovery.php:580
 msgid "Discovery rule enabled"
@@ -7243,7 +7243,7 @@ msgstr "Vis OK udløsere for"
 
 #: app/views/mediatype.list.php:75
 msgid "Display actions"
-msgstr ""
+msgstr "Visnings handlinger"
 
 #: app/partials/monitoring.latest.view.html.php:309
 msgid "Display graph"
@@ -7275,7 +7275,7 @@ msgstr "Vis stablet graf"
 
 #: widgets/topitems/views/column.edit.php:90
 msgid "Display value as"
-msgstr ""
+msgstr "Vis værdi som"
 
 #: app/controllers/CControllerHintboxActionlist.php:99
 #: app/views/administration.queue.details.php:86
@@ -7740,11 +7740,11 @@ msgstr "Vil du aktivere valgte handlinger?"
 
 #: app/views/js/connector.list.js.php:88
 msgid "Enable selected connector?"
-msgstr ""
+msgstr "Aktiver den valgte forbindelse?"
 
 #: app/views/js/connector.list.js.php:87
 msgid "Enable selected connectors?"
-msgstr ""
+msgstr "Aktiver en valgte forbindelser?"
 
 #: app/views/js/configuration.discovery.list.js.php:81
 #: include/views/configuration.host.discovery.list.php:343
@@ -8005,33 +8005,33 @@ msgstr "Hændelseskorrelation"
 #: include/classes/api/services/CCorrelation.php:536
 #, c-format
 msgid "Event correlation \"%1$s\" already exists."
-msgstr ""
+msgstr "Begivenhedskorrelation \"%1$s\" eksisterer allerede."
 
 #: app/controllers/CControllerCorrelationCreate.php:107
 msgid "Event correlation created"
-msgstr ""
+msgstr "Hændelseskorrelation oprettet"
 
 #: app/controllers/CControllerCorrelationDelete.php:60
 msgid "Event correlation deleted"
 msgid_plural "Event correlations deleted"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hændelseskorrelation slettet"
+msgstr[1] "Hændelseskorrelationer slettet"
 
 #: app/controllers/CControllerCorrelationDisable.php:68
 msgid "Event correlation disabled"
 msgid_plural "Event correlations disabled"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hændelseskorrelation deaktiveret"
+msgstr[1] "Hændelseskorrelationer deaktiveret"
 
 #: app/controllers/CControllerCorrelationEnable.php:68
 msgid "Event correlation enabled"
 msgid_plural "Event correlations enabled"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hændelseskorrelation aktiveret"
+msgstr[1] "Hændelseskorrelationer aktiveret"
 
 #: include/events.inc.php:143
 msgid "Event correlation rule"
-msgstr ""
+msgstr "Begivenhedskorrelationsregel"
 
 #: app/controllers/CControllerCorrelationEdit.php:130
 #: app/controllers/CControllerCorrelationList.php:128
@@ -8040,7 +8040,7 @@ msgstr "Hændelseskorrelationsregler"
 
 #: app/controllers/CControllerCorrelationUpdate.php:109
 msgid "Event correlation updated"
-msgstr ""
+msgstr "Hændelseskorrelation opdateret"
 
 #: tr_events.php:29 tr_events.php:172 tr_events.php:191
 msgid "Event details"
@@ -8584,7 +8584,7 @@ msgstr "Filter"
 
 #: app/views/mediatype.list.php:76
 msgid "Filter actions by the scope of media type usage:"
-msgstr ""
+msgstr "Filtrer handlinger efter omfanget af medietypebrug:"
 
 #: app/views/js/popup.tabfilter.edit.js.php:63
 msgid "Filter deleted"
@@ -9366,7 +9366,7 @@ msgstr "Fremhæv hele rækken"
 
 #: widgets/itemhistory/views/column.edit.php:132
 msgid "Highlights"
-msgstr ""
+msgstr "Højdepunkter"
 
 #: app/controllers/CControllerAuditLogList.php:232
 #: app/controllers/CControllerPopupLldOperation.php:218
@@ -9545,7 +9545,7 @@ msgstr "Værten kan ikke have mere end én standard interface af samme type."
 
 #: widgets/hostcard/Widget.php:32
 msgid "Host card"
-msgstr ""
+msgstr "Værtskort"
 
 #: app/views/administration.proxy.list.php:91 hostinventoriesoverview.php:85
 #: widgets/tophosts/includes/WidgetForm.php:159
@@ -9572,7 +9572,7 @@ msgstr[1] "Værter deaktiveret"
 
 #: app/controllers/CControllerPopup.php:46
 msgid "Host edit"
-msgstr ""
+msgstr "Værtsredigering"
 
 #: app/controllers/CControllerHostGroupEnable.php:76
 #: app/controllers/CControllerPopupMassupdateHost.php:491
@@ -9635,7 +9635,7 @@ msgstr[1] "Værtsgrupper slettet"
 
 #: app/controllers/CControllerPopup.php:47
 msgid "Host group edit"
-msgstr ""
+msgstr "Værtsgrupperedigering"
 
 #: include/views/js/monitoring.sysmaps.js.php:112
 msgid "Host group elements"
@@ -9773,7 +9773,7 @@ msgstr "Værtsnetværk"
 #: widgets/topitems/includes/WidgetForm.php:128
 #: widgets/topitems/views/widget.edit.php:63
 msgid "Host ordering"
-msgstr ""
+msgstr "Værts sortering"
 
 #: widgets/hostnavigator/includes/WidgetForm.php:65
 msgid "Host patterns"
@@ -9988,7 +9988,7 @@ msgstr "Oprydning"
 #: include/views/configuration.item.edit.php:1084
 #: include/views/configuration.item.prototype.edit.php:952
 msgid "However, if \"Check for not supported value\" steps are configured, they are always placed and executed first (with \"any error\" being the last of them)."
-msgstr ""
+msgstr "Men hvis \"Kontroller for ikke-understøttet værdi\"-trin er konfigureret, placeres og udføres de altid først (med \"enhver fejl\" som den sidste af dem)."
 
 #: include/locales.inc.php:47
 msgid "Hungarian (hu_HU)"
@@ -10205,13 +10205,13 @@ msgstr[1] "Hvis mindst %2$s under service har %1$s status eller under"
 #: include/classes/helpers/CServiceHelper.php:45
 #, c-format
 msgid "If less than %2$s child services have %1$s status or below"
-msgstr ""
+msgstr "Hvis mindst %2$s under service har %1$s status eller under"
 
 #: include/classes/helpers/CServiceHelper.php:50
 #: include/classes/helpers/CServiceHelper.php:101
 #, c-format
 msgid "If less than %2$s of child services have %1$s status or below"
-msgstr ""
+msgstr "Hvis mindre end %2$s af under tjenester har %1$s status eller derunder"
 
 #: include/classes/api/services/CReport.php:368
 msgid "If no user groups are specified, at least one user must be included in the mailing list."
@@ -10223,7 +10223,7 @@ msgstr "Hvis der ikke er angivet nogen brugergrupper, skal der være mindst én 
 #: include/classes/helpers/CServiceHelper.php:110
 #, c-format
 msgid "If weight of child services with %1$s status or above is at least %2$s"
-msgstr ""
+msgstr "Hvis vægten af undertjenester med %1$s status eller derover er mindst %2$s"
 
 #: include/classes/helpers/CServiceHelper.php:65
 #: include/classes/helpers/CServiceHelper.php:70
@@ -10231,7 +10231,7 @@ msgstr ""
 #: include/classes/helpers/CServiceHelper.php:118
 #, c-format
 msgid "If weight of child services with %1$s status or below is less than %2$s"
-msgstr ""
+msgstr "Hvis vægten af undertjenester med %1$s status eller derunder er mindre end %2$s"
 
 #: include/classes/core/ZBase.php:767 include/func.inc.php:1688
 #: include/func.inc.php:1710
@@ -10588,7 +10588,7 @@ msgstr ""
 #: include/classes/validators/CActionCondValidator.php:131
 #, c-format
 msgid "Incorrect action condition port \"%1$s\"."
-msgstr ""
+msgstr "Forkert handlingstilstandsport \"%1$s\"."
 
 #: include/classes/api/services/CAction.php:3490
 msgid "Incorrect action condition proxy. Proxy does not exist or you have no access to it."
@@ -11263,7 +11263,7 @@ msgstr "Indledende visning ignoreres, hvis standardvisningen er indstillet."
 
 #: app/views/administration.script.edit.php:339
 msgid "Input prompt"
-msgstr ""
+msgstr "Input prompt"
 
 #: app/views/administration.script.edit.php:349
 msgid "Input type"
@@ -16248,7 +16248,7 @@ msgstr "Persisk (fa_IR)"
 #: app/views/popup.generic.php:620 include/graphs.inc.php:26
 #: widgets/piechart/includes/WidgetForm.php:121
 msgid "Pie"
-msgstr ""
+msgstr "Pie"
 
 #: widgets/piechart/Widget.php:31
 msgid "Pie chart"
@@ -19235,39 +19235,39 @@ msgstr "Enkelt linje - resultatet vil blive vist i en enkelt linje og afkortet t
 
 #: include/hosts.inc.php:364
 msgid "Site ZIP / postal"
-msgstr ""
+msgstr "Lokation postnummer"
 
 #: include/hosts.inc.php:334
 msgid "Site address A"
-msgstr ""
+msgstr "Lokation adresse A"
 
 #: include/hosts.inc.php:339
 msgid "Site address B"
-msgstr ""
+msgstr "Lokation adresse B"
 
 #: include/hosts.inc.php:344
 msgid "Site address C"
-msgstr ""
+msgstr "Lokation adresse C"
 
 #: include/hosts.inc.php:349
 msgid "Site city"
-msgstr ""
+msgstr "Lokation by"
 
 #: include/hosts.inc.php:359
 msgid "Site country"
-msgstr ""
+msgstr "Lokation land"
 
 #: include/hosts.inc.php:374
 msgid "Site notes"
-msgstr ""
+msgstr "Lokation noter"
 
 #: include/hosts.inc.php:369
 msgid "Site rack location"
-msgstr ""
+msgstr "Lokation rack placering"
 
 #: include/hosts.inc.php:354
 msgid "Site state / province"
-msgstr ""
+msgstr "Lokation stat / provins"
 
 #: include/views/js/monitoring.sysmaps.js.php:457
 #: tests/selenium/modules/clock32/includes/WidgetForm.php:91
@@ -19490,7 +19490,7 @@ msgstr "Tilstand"
 
 #: include/classes/data/CItemData.php:2912
 msgid "State of proxy group. Returns integer: 0 - unknown; 1 - offline; 2 - recovering; 3 - online; 4 - degrading."
-msgstr ""
+msgstr "Status for proxy-gruppen. Returnerer heltal: 0 - ukendt; 1 - offline; 2 - restituering; 3 - online; 4 - nedværdigende."
 
 #: include/classes/data/CItemData.php:2855
 msgid "State of proxy memory buffer."
@@ -21237,8 +21237,8 @@ msgstr "Udløser prototype tilføjet"
 #: app/controllers/CControllerTriggerPrototypeDelete.php:62
 msgid "Trigger prototype deleted"
 msgid_plural "Trigger prototypes deleted"
-msgstr[0] ""
-msgstr[1] "Udløserprototype slettet"
+msgstr[0] "Udløserprototype slettet"
+msgstr[1] "Udløserprototyper slettet"
 
 #: app/controllers/CControllerPopup.php:62
 msgid "Trigger prototype edit"
@@ -21250,7 +21250,7 @@ msgstr ""
 #: app/controllers/CControllerTriggerPrototypeUpdate.php:156
 msgid "Trigger prototype updated"
 msgid_plural "Trigger prototypes updated"
-msgstr[0] ""
+msgstr[0] "Udløserprototype opdateret"
 msgstr[1] "Udløserprototyper opdateret"
 
 #: app/controllers/CControllerPopupGeneric.php:255
@@ -22689,7 +22689,7 @@ msgstr ""
 
 #: include/classes/data/CItemData.php:2058
 msgid "VMware hypervisor sensors value, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns JSON"
-msgstr ""
+msgstr "VMware hypervisor sensorer værdi, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator. Returnerer JSON"
 
 #: include/classes/data/CItemData.php:2065
 msgid "VMware hypervisor serialnumber, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
@@ -22809,6 +22809,10 @@ msgstr ""
 
 #: include/classes/data/CItemData.php:2443
 msgid "VMware virtual machine power state, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
+msgstr ""
+
+#: include/classes/data/CItemData.php:2498
+msgid "VMware virtual machine private memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
 msgstr ""
 
 #: include/classes/data/CItemData.php:2359
@@ -24291,54 +24295,54 @@ msgstr ""
 #: widgets/tophosts/views/widget.view.php:116
 #: widgets/tophosts/views/widget.view.php:117
 msgid "binary value"
-msgstr ""
+msgstr "binær værdi"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:405
 msgid "bitand() - Bitwise AND"
-msgstr ""
+msgstr "bitand() - Bitvis OG"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:418
 msgid "bitlength() - Returns the length in bits"
-msgstr ""
+msgstr "bitlength() - Returnerer længden i bit"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:425
 msgid "bitlshift() - Bitwise shift left"
-msgstr ""
+msgstr "bitlshift() - Skift bitvis til venstre"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:438
 msgid "bitnot() - Bitwise NOT"
-msgstr ""
+msgstr "bitnot() - Bitvist IKKE"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:445
 msgid "bitor() - Bitwise OR"
-msgstr ""
+msgstr "bitor() - Bitvis ELLER"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:458
 msgid "bitrshift() - Bitwise shift right"
-msgstr ""
+msgstr "bitrshift() - Skift bitvis til højre"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:471
 msgid "bitxor() - Bitwise exclusive OR"
-msgstr ""
+msgstr "bitxor() - Bitwise eksklusiv ELLER"
 
 #: app/views/administration.trigdisplay.edit.php:49
 #: app/views/administration.trigdisplay.edit.php:61
 #: app/views/administration.trigdisplay.edit.php:73
 #: app/views/administration.trigdisplay.edit.php:85
 msgid "blinking"
-msgstr ""
+msgstr "blinker"
 
 #: include/classes/api/services/CItemGeneral.php:265
 msgid "both username and password should be either present or empty"
-msgstr ""
+msgstr "både brugernavn og adgangskode skal enten være til stede eller tomt"
 
 #: include/classes/api/services/CTemplate.php:589
 msgid "both vendor_name and vendor_version should be either present or empty"
-msgstr ""
+msgstr "både vendor_name og vendor_version skal enten være til stede eller tomme"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:484
 msgid "bytelength() - Returns the length in bytes"
-msgstr ""
+msgstr "bytelength() - Returnerer længden i bytes"
 
 #: widgets/svggraph/views/widget.edit.php:163
 #: widgets/svggraph/views/widget.edit.php:166
@@ -24347,7 +24351,7 @@ msgstr ""
 #: widgets/tophosts/views/column.edit.php:223
 #: widgets/tophosts/views/column.edit.php:233
 msgid "calculated"
-msgstr ""
+msgstr "beregnet"
 
 #: app/views/administration.geomaps.edit.php:52
 msgid "can be used to add \"@2x\" to the URL to load retina tiles."
@@ -24359,19 +24363,19 @@ msgstr ""
 
 #: include/classes/api/services/CItemGeneral.php:2179
 msgid "cannot be an item ID from another host or template"
-msgstr ""
+msgstr "kan ikke være et datapunkt-id fra en anden vært eller skabelon"
 
 #: include/classes/api/services/CItemGeneral.php:2193
 msgid "cannot be an item prototype ID from another LLD rule"
-msgstr ""
+msgstr "kan ikke være et datapunktsprototype-id fra en anden LLD-regel"
 
 #: include/classes/api/services/CItemGeneral.php:2178
 msgid "cannot be an item/item prototype ID from another host or template"
-msgstr ""
+msgstr "kan ikke være et datapunkt-/datapunktsprototype-id fra en anden vært eller skabelon"
 
 #: include/classes/api/services/CUserDirectory.php:629
 msgid "cannot be changed"
-msgstr ""
+msgstr "kan ikke ændres"
 
 #: app/controllers/CControllerActionOperationCheck.php:210
 #: app/controllers/CControllerActionOperationCheck.php:228
@@ -24468,32 +24472,32 @@ msgstr ""
 #: include/classes/validators/CNewValidator.php:103
 #: include/validate.inc.php:356
 msgid "cannot be empty"
-msgstr ""
+msgstr "kan ikke være tom"
 
 #: include/classes/validators/CApiInputValidator.php:3660
 msgid "cannot be equal to zero without custom intervals"
-msgstr ""
+msgstr "kan ikke være lig med nul uden brugerdefinerede intervaller"
 
 #: host_discovery.php:563
 #, c-format
 msgid "cannot be greater than or equal to the value of field \"%1$s\""
-msgstr ""
+msgstr "må ikke være større end eller lig med værdien af feltet \"%1$s\""
 
 #: include/classes/api/services/CDiscoveryRule.php:1678
 #, c-format
 msgid "cannot be greater than or equal to the value of parameter \"%1$s\""
-msgstr ""
+msgstr "må ikke være større end eller lig med værdien af parameteren \"%1$s\""
 
 #: include/classes/validators/CApiInputValidator.php:3487
 #, c-format
 msgid "cannot be less than or equal to the value of parameter \"%1$s\""
-msgstr ""
+msgstr "må ikke være mindre end eller lig med værdien af parameteren \"%1$s\""
 
 #: include/classes/api/services/CHostBase.php:57
 #: include/classes/api/services/CTemplate.php:1129
 #, c-format
 msgid "cannot be specified the value of parameter \"%1$s\""
-msgstr ""
+msgstr "kan ikke angive værdien af parameteren \"%1$s\""
 
 #: include/classes/api/services/CItemGeneral.php:1895
 msgid "cannot be the host interface ID from another host"
@@ -24505,19 +24509,19 @@ msgstr ""
 
 #: include/classes/api/services/CDiscoveryRule.php:3034
 msgid "cannot delete inherited LLD rule"
-msgstr ""
+msgstr "kan ikke slette nedarvet LLD-regel"
 
 #: include/classes/api/services/CItem.php:909
 msgid "cannot delete inherited item"
-msgstr ""
+msgstr "kan ikke slette arvet datapunkt"
 
 #: include/classes/api/services/CItemPrototype.php:802
 msgid "cannot delete inherited item prototype"
-msgstr ""
+msgstr "kan ikke slette nedarvet datapunktsprototype"
 
 #: include/classes/api/services/CHostPrototype.php:2504
 msgid "cannot delete templated host prototype"
-msgstr ""
+msgstr "kan ikke slette skabelon værtsprototype"
 
 #: include/classes/api/services/CHostPrototype.php:1411
 msgid "cannot have more than one default interface of the same type"
@@ -24525,17 +24529,17 @@ msgstr ""
 
 #: include/classes/helpers/CElasticsearchHelper.php:87
 msgid "cannot perform Scroll API request, data could be truncated"
-msgstr ""
+msgstr "kan ikke udføre Scroll API-anmodning, data kan afkortes"
 
 #: include/classes/validators/CApiInputValidator.php:3536
 #, c-format
 msgid "cannot update readonly parameter \"%1$s\" of discovered object"
-msgstr ""
+msgstr "kan ikke opdatere skrivebeskyttet parameter \"%1$s\" for det opdagede objekt"
 
 #: include/classes/validators/CApiInputValidator.php:3530
 #, c-format
 msgid "cannot update readonly parameter \"%1$s\" of inherited object"
-msgstr ""
+msgstr "kan ikke opdatere skrivebeskyttet parameter \"%1$s\" for det nedarvede objekt"
 
 #: include/classes/api/services/CUserGroup.php:501
 #: include/classes/api/services/CUser.php:451
@@ -24552,83 +24556,83 @@ msgstr ""
 
 #: app/controllers/CControllerPopupTriggerExpr.php:498
 msgid "ceil() - Rounds up to the nearest greater integer"
-msgstr ""
+msgstr "ceil() - Afrundes op til det nærmeste større heltal"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:505
 msgid "change() - Difference between last and previous value"
-msgstr ""
+msgstr "change() - Forskellen mellem sidste og forrige værdi"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:511
 msgid "changecount() - Number of changes between adjacent values, Mode (all - all changes, inc - only increases, dec - only decreases)"
-msgstr ""
+msgstr "changecount() - Antal ændringer mellem tilstødende værdier, Mode (alle - alle ændringer, inc - kun stiger, dec - kun falder)"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:518
 msgid "char() - Returns the character which represents the given ASCII code"
-msgstr ""
+msgstr "char() - Returnerer tegnet, som repræsenterer den givne ASCII-kode"
 
 #: include/classes/widgets/fields/CWidgetFieldNavTree.php:79
 msgid "circular dependency is not allowed"
-msgstr ""
+msgstr "cirkulær afhængighed er ikke tilladt"
 
 #: include/classes/api/services/CItemGeneral.php:2259
 #: include/classes/import/CConfigurationImport.php:3135
 msgid "circular item dependency is not allowed"
-msgstr ""
+msgstr "cirkulær datapunktsafhængighed er ikke tilladt"
 
 #: jsLoader.php:295
 msgid "color"
-msgstr ""
+msgstr "farve"
 
 #: app/controllers/CControllerSlaCreateUpdate.php:35
 msgid "comma separated list of time periods is expected for scheduled week days"
-msgstr ""
+msgstr "kommasepareret liste over tidsperioder forventes for planlagte ugedage"
 
 #: app/partials/monitoring.latest.filter.php:181
 #: app/partials/monitoring.problem.filter.php:277
 #: widgets/problems/views/widget.edit.php:68
 msgid "comma-separated list"
-msgstr ""
+msgstr "kommasepareret liste"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:525
 msgid "concat() - Returns a string that is the result of concatenating value to string"
-msgstr ""
+msgstr "concat() - Returnerer en streng, der er resultatet af sammenkædning af værdi til streng"
 
 #: app/partials/hostmacros.inherited.list.html.php:40
 msgid "configure"
-msgstr ""
+msgstr "konfigurere"
 
 #: app/views/popup.lldoperation.php:64 include/actions.inc.php:26
 #: include/classes/helpers/CCorrelationHelper.php:36
 #: include/views/inventory.host.list.php:71
 #: include/views/js/configuration.host.discovery.edit.overr.js.php:163
 msgid "contains"
-msgstr ""
+msgstr "indeholder"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:538
 msgid "cos() - The cosine of a value, where the value is an angle expressed in radians"
-msgstr ""
+msgstr "cos() - Cosinus af en værdi, hvor værdien er en vinkel udtrykt i radianer"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:545
 msgid "cosh() - The hyperbolic cosine of a value"
-msgstr ""
+msgstr "cosh() - Den hyperbolske cosinus af en værdi"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:552
 msgid "cot() - The cotangent of a value, where the value is an angle expressed in radians"
-msgstr ""
+msgstr "cot() - Cotangensen af en værdi, hvor værdien er en vinkel udtrykt i radianer"
 
 #: include/graphs.inc.php:82 widgets/piechart/actions/WidgetView.php:664
 #: widgets/piechart/includes/CWidgetFieldDataSetView.php:395
 #: widgets/tophosts/views/column.edit.php:155
 msgid "count"
-msgstr ""
+msgstr "antal"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:559
 msgid "count() - Number of successfully retrieved values V (which fulfill operator O) for period T"
-msgstr ""
+msgstr "count() - Antal succesfuldt hentede værdier V (som opfylder operator O) for periode T"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:566
 msgid "countunique() - The number of unique values"
-msgstr ""
+msgstr "countunique() - Antallet af unikke værdier"
 
 #: include/func.inc.php:567 include/func.inc.php:634 jsLoader.php:210
 msgctxt "day short"
@@ -24641,25 +24645,25 @@ msgstr ""
 
 #: include/classes/widgets/fields/CWidgetFieldTimePeriod.php:100
 msgid "data is missing"
-msgstr ""
+msgstr "data mangler"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:573
 msgid "date() - Current date"
-msgstr ""
+msgstr "date() - Aktuel dato"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:579
 msgid "dayofmonth() - Day of month"
-msgstr ""
+msgstr "dayofmonth() - Dag i måneden"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:585
 msgid "dayofweek() - Day of week"
-msgstr ""
+msgstr "dayofweek() - Ugedag"
 
 #: app/partials/monitoring.problem.filter.php:127
 #: app/views/administration.token.list.php:74
 #: app/views/administration.user.token.list.php:57
 msgid "days"
-msgstr ""
+msgstr "dage"
 
 #: app/controllers/CControllerMapView.php:123
 #: app/partials/js/configuration.valuemap.js.php:157
@@ -24667,15 +24671,15 @@ msgstr ""
 #: include/classes/html/widgets/CWidgetFormView.php:255
 #: include/classes/setup/CSetupWizard.php:748
 msgid "default"
-msgstr ""
+msgstr "standard"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:591
 msgid "degrees() - Converts a value from radians to degrees"
-msgstr ""
+msgstr "degrees() - Konverterer en værdi fra radianer til grader"
 
 #: include/forms.inc.php:504 include/views/js/item.preprocessing.js.php:379
 msgid "delimiter"
-msgstr ""
+msgstr "afgrænsning"
 
 #: widgets/actionlog/includes/WidgetForm.php:80
 #: widgets/actionlog/includes/WidgetForm.php:82
@@ -24686,7 +24690,7 @@ msgstr ""
 #: widgets/problems/includes/WidgetForm.php:179
 #: widgets/problems/includes/WidgetForm.php:185
 msgid "descending"
-msgstr ""
+msgstr "faldende"
 
 #: app/partials/hostmacros.inherited.list.html.php:201
 #: app/partials/hostmacros.list.html.php:121
@@ -24700,21 +24704,21 @@ msgstr ""
 #: include/views/configuration.host.prototype.edit.php:407
 #: include/views/configuration.host.prototype.edit.php:457
 msgid "description"
-msgstr ""
+msgstr "beskrivelse"
 
 #: include/classes/validators/CApiInputValidator.php:1985
 msgid "directory cannot be empty"
-msgstr ""
+msgstr "biblioteket må ikke være tomt"
 
 #: app/controllers/CControllerItemMassCheckNow.php:138
 #: include/classes/api/services/CTask.php:562
 #, c-format
 msgid "discovery rule \"%1$s\" on host \"%2$s\" is not monitored"
-msgstr ""
+msgstr "opdagelsesreglen \"%1$s\" på værten \"%2$s\" overvåges ikke"
 
 #: app/views/mediatype.list.php:78
 msgid "display all actions"
-msgstr ""
+msgstr "vise alle handlinger"
 
 #: app/views/mediatype.list.php:80
 msgid "display only actions where All available media types are used in action operation"
@@ -24728,20 +24732,20 @@ msgstr ""
 #: include/classes/helpers/CCorrelationHelper.php:37
 #: include/views/js/configuration.host.discovery.edit.overr.js.php:164
 msgid "does not contain"
-msgstr ""
+msgstr "ikke indeholder"
 
 #: app/views/popup.lldoperation.php:63 include/actions.inc.php:25
 #: include/classes/helpers/CCorrelationHelper.php:35
 #: include/views/js/configuration.host.discovery.edit.overr.js.php:162
 msgid "does not equal"
-msgstr ""
+msgstr "er ikke lig"
 
 #: app/views/popup.lldoverride.php:105
 #: include/views/configuration.host.discovery.edit.php:821
 #: include/views/js/configuration.host.discovery.edit.js.php:51
 #: include/views/js/configuration.host.discovery.edit.overr.js.php:79
 msgid "does not exist"
-msgstr ""
+msgstr "findes ikke"
 
 #: app/views/popup.lldoperation.php:67 app/views/popup.lldoverride.php:103
 #: include/actions.inc.php:35
@@ -24754,100 +24758,100 @@ msgstr ""
 
 #: app/controllers/CControllerPopupTriggerExpr.php:598
 msgid "e() - Returns Euler's number"
-msgstr ""
+msgstr "e() - Returnerer Eulers tal"
 
 #: app/views/mediatype.list.php:112 app/views/mediatype.list.php:117
 msgid "email"
-msgstr ""
+msgstr "e-mail"
 
 #: app/views/popup.lldoperation.php:62 app/views/popup.valuemap.edit.php:74
 #: include/actions.inc.php:24 include/classes/helpers/CCorrelationHelper.php:34
 #: include/views/inventory.host.list.php:72
 #: include/views/js/configuration.host.discovery.edit.overr.js.php:161
 msgid "equals"
-msgstr ""
+msgstr "lig med"
 
 #: include/forms.inc.php:1452 include/views/js/item.preprocessing.js.php:239
 msgid "error does not match"
-msgstr ""
+msgstr "fejlen stemmer ikke overens"
 
 #: include/forms.inc.php:1451 include/views/js/item.preprocessing.js.php:238
 msgid "error matches"
-msgstr ""
+msgstr "fejl matcher"
 
 #: include/views/js/item.preprocessing.js.php:615
 msgid "error message"
-msgstr ""
+msgstr "fejlmeddelelse"
 
 #: app/views/js/popup.itemtestedit.view.js.php:479
 msgid "error text"
-msgstr ""
+msgstr "fejltekst"
 
 #: include/forms.inc.php:1454 include/views/js/item.preprocessing.js.php:241
 msgid "error-matching"
-msgstr ""
+msgstr "fejlmatchning"
 
 #: app/views/popup.lldoverride.php:104
 #: include/views/configuration.host.discovery.edit.php:820
 #: include/views/js/configuration.host.discovery.edit.js.php:50
 #: include/views/js/configuration.host.discovery.edit.overr.js.php:78
 msgid "exists"
-msgstr ""
+msgstr "eksisterer"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:603
 msgid "exp() - Euler's number at a power of a value"
-msgstr ""
+msgstr "exp() - Eulers tal i en potens af en værdi"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:610
 msgid "expm1() - Euler's number at a power of a value minus 1"
-msgstr ""
+msgstr "expm1() - Eulers tal i en potens af en værdi minus 1"
 
 #: include/classes/parsers/CConditionFormula.php:214
 msgid "expression is empty"
-msgstr ""
+msgstr "udtrykket er tomt"
 
 #: include/classes/helpers/CElasticsearchHelper.php:185
 msgid "failed to parse JSON"
-msgstr ""
+msgstr "kunne ikke parse JSON"
 
 #: include/classes/validators/CApiInputValidator.php:3251
 msgid "file format is unsupported"
-msgstr ""
+msgstr "filformatet er ikke understøttet"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:617
 msgid "find() - Check occurrence of pattern V (which fulfill operator O) for period T (1 - match, 0 - no match)"
-msgstr ""
+msgstr "find() - Tjek forekomsten af mønster V (som opfylder operator O) for periode T (1 - match, 0 - ingen match)"
 
 #: include/classes/helpers/CMaintenanceHelper.php:44 include/graphs.inc.php:86
 #: widgets/piechart/actions/WidgetView.php:668
 #: widgets/piechart/includes/CWidgetFieldDataSetView.php:399
 #: widgets/tophosts/views/column.edit.php:157
 msgid "first"
-msgstr ""
+msgstr "først"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:624
 msgid "first() - The oldest value in the specified time interval"
-msgstr ""
+msgstr "first() - Den ældste værdi i det angivne tidsinterval"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:631
 msgid "floor() - Rounds down to the nearest smaller integer"
-msgstr ""
+msgstr "floor() - Afrundes ned til nærmeste mindre heltal"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:638
 msgid "forecast() - Forecast for next t seconds based on period T"
-msgstr ""
+msgstr "forecast() - Prognose for næste t sekunder baseret på periode T"
 
 #: include/classes/helpers/CMaintenanceHelper.php:47
 msgid "fourth"
-msgstr ""
+msgstr "fjerde"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:645
 msgid "fuzzytime() - Difference between item value (as timestamp) and Zabbix server timestamp is less than or equal to T seconds (1 - true, 0 - false)"
-msgstr ""
+msgstr "fuzzytime() - Forskellen mellem datapunktværdi (som tidsstempel) og Zabbix-servertidsstempel er mindre end eller lig med T sekunder (1 - sand, 0 - falsk)"
 
 #: include/classes/validators/CApiInputValidator.php:3317
 msgid "geographical coordinates (values of comma separated latitude and longitude) are expected"
-msgstr ""
+msgstr "geografiske koordinater (værdier af kommasepareret bredde- og længdegrad) forventes"
 
 #: include/views/configuration.item.edit.php:886
 #: include/views/configuration.item.edit.php:891
@@ -24855,28 +24859,28 @@ msgstr ""
 #: include/views/configuration.item.edit.php:923
 msgctxt "item_form"
 msgid "global housekeeping settings"
-msgstr ""
+msgstr "globale oprydningsningsindstillinger"
 
 #: include/classes/api/services/CScript.php:726
 msgid "global script execution on Zabbix server is disabled by server configuration"
-msgstr ""
+msgstr "global scriptudførelse på Zabbix-serveren er deaktiveret af serverkonfigurationen"
 
 #: include/html.inc.php:795 include/html.inc.php:800 include/html.inc.php:805
 msgid "graph"
-msgstr ""
+msgstr "graf"
 
 #: include/classes/api/services/CGraphGeneral.php:874
 msgid "graph prototype with the same UUID already exists"
-msgstr ""
+msgstr "grafprototype med samme UUID findes allerede"
 
 #: include/classes/api/services/CGraphGeneral.php:868
 msgid "graph with the same UUID already exists"
-msgstr ""
+msgstr "graf med samme UUID findes allerede"
 
 #: app/views/popup.usergroupmapping.edit.php:79
 #, c-format
 msgid "group name must match %1$s group name"
-msgstr ""
+msgstr "gruppenavnet skal matche %1$s gruppenavn"
 
 #: include/func.inc.php:568 include/func.inc.php:635 jsLoader.php:211
 msgctxt "hour short"
@@ -24893,11 +24897,11 @@ msgstr "H:i:s"
 
 #: include/html.inc.php:709 include/html.inc.php:714 include/html.inc.php:719
 msgid "has been disabled"
-msgstr ""
+msgstr "er blevet deaktiveret"
 
 #: include/html.inc.php:725
 msgid "has been manually disabled"
-msgstr ""
+msgstr "er blevet manuelt deaktiveret"
 
 #: include/classes/import/validators/C10XmlValidator.php:340
 msgctxt "XML time format"
@@ -24994,7 +24998,7 @@ msgstr ""
 #: include/classes/parsers/CExpressionParser.php:140
 #, c-format
 msgid "incorrect expression starting from \"%1$s\""
-msgstr ""
+msgstr "forkert udtryk startende fra \"%1$s\""
 
 #: include/classes/api/services/CAction.php:2851
 #: include/classes/api/services/CCorrelation.php:725
@@ -26172,7 +26176,7 @@ msgstr ""
 #: app/partials/layout.htmlpage.aside.php:74
 #: include/classes/html/CMultiSelect.php:68 jsLoader.php:330
 msgid "type here to search"
-msgstr ""
+msgstr "skriv her for at søge"
 
 #: app/controllers/CControllerWebScenarioStepCheck.php:79
 #: include/classes/validators/CApiInputValidator.php:2602
@@ -26307,13 +26311,13 @@ msgstr ""
 #: widgets/svggraph/views/widget.edit.php:171
 #: widgets/svggraph/views/widget.edit.php:184
 msgid "value"
-msgstr ""
+msgstr "værdi"
 
 #: app/controllers/CControllerActionOperationCheck.php:217
 #: app/controllers/CControllerUsergroupTagFilterCheck.php:119
 #, c-format
 msgid "value \"%1$s\" already exists"
-msgstr ""
+msgstr "værdien \"%1$s\" findes allerede"
 
 #: include/classes/import/CConfigurationImport.php:957
 #: include/classes/import/CConfigurationImport.php:996
@@ -26321,7 +26325,7 @@ msgstr ""
 #: include/classes/import/CConfigurationImport.php:3144
 #, c-format
 msgid "value \"%1$s\" not found"
-msgstr ""
+msgstr "værdien \"%1$s\" blev ikke fundet"
 
 #: app/controllers/CControllerPopupValueMapUpdate.php:70
 #: app/controllers/CControllerPopupValueMapUpdate.php:136
@@ -26334,12 +26338,12 @@ msgstr ""
 #: include/classes/validators/CApiInputValidator.php:2352
 #, c-format
 msgid "value %1$s already exists"
-msgstr ""
+msgstr "værdien %1$s findes allerede"
 
 #: include/classes/parsers/CEscapedStringParser.php:72
 #, c-format
 msgid "value contains unescaped character at position %1$d"
-msgstr ""
+msgstr "værdien indeholder ikke-escaped tegn på position %1$d"
 
 #: app/controllers/CControllerUsergroupTagFilterCheck.php:101
 #: app/controllers/CControllerUsergroupTagFilterCheck.php:107
@@ -26382,7 +26386,7 @@ msgstr ""
 #: include/classes/validators/CApiInputValidator.php:4013
 #: include/classes/validators/CApiInputValidator.php:4063
 msgid "value is too long"
-msgstr ""
+msgstr "værdien er for lang"
 
 #: include/classes/api/services/CValueMap.php:501
 msgid "value map with the same UUID already exists"
@@ -26397,8 +26401,8 @@ msgstr ""
 #, c-format
 msgid "value must be %1$s"
 msgid_plural "value must be one of %1$s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "værdien skal være %1$s"
+msgstr[1] "værdien skal være en af ​​%1$s"
 
 #: app/controllers/CControllerMaintenanceTimePeriodCheck.php:95
 #: include/classes/validators/CActionCondValidator.php:171
@@ -26407,38 +26411,38 @@ msgstr[1] ""
 #: widgets/svggraph/includes/WidgetForm.php:107
 #, c-format
 msgid "value must be between \"%1$s\" and \"%2$s\""
-msgstr ""
+msgstr "værdien skal være mellem \"%1$s\" og \"%2$s\""
 
 #: include/classes/validators/CApiInputValidator.php:676
 msgid "value must be empty"
-msgstr ""
+msgstr "værdien skal være tom"
 
 #: include/classes/validators/CApiInputValidator.php:671
 #, c-format
 msgid "value must be empty or %1$s"
 msgid_plural "value must be empty or one of %1$s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "værdien skal være tom eller %1$s"
+msgstr[1] "værdien skal være tom eller %1$s"
 
 #: include/classes/widgets/fields/CWidgetFieldTimePeriod.php:194
 #: widgets/gauge/includes/WidgetForm.php:133
 #, c-format
 msgid "value must be greater than \"%1$s\""
-msgstr ""
+msgstr "værdien skal være større end \"%1$s\""
 
 #: app/controllers/CControllerPopupItemTest.php:1342
 #: include/classes/validators/CNewValidator.php:220
 #: widgets/gauge/includes/WidgetForm.php:155
 #, c-format
 msgid "value must be no greater than \"%1$s\""
-msgstr ""
+msgstr "værdien må ikke være større end \"%1$s\""
 
 #: app/controllers/CControllerPopupItemTest.php:1336
 #: include/classes/validators/CNewValidator.php:208
 #: widgets/gauge/includes/WidgetForm.php:150
 #, c-format
 msgid "value must be no less than \"%1$s\""
-msgstr ""
+msgstr "værdien må ikke være mindre end \"%1$s\""
 
 #: app/controllers/CControllerWebScenarioStepCheck.php:97
 #: include/classes/api/services/CEvent.php:1583
@@ -26461,21 +26465,21 @@ msgstr ""
 #: include/validate.inc.php:612
 #, c-format
 msgid "value must be one of %1$s"
-msgstr ""
+msgstr "værdien skal være en af %1$s"
 
 #: include/classes/validators/CApiInputValidator.php:1176
 #, c-format
 msgid "value must be within the range of %1$s"
-msgstr ""
+msgstr "værdien skal være inden for området %1$s"
 
 #: app/views/js/correlation.edit.js.php:235
 #: include/classes/helpers/CCorrelationHelper.php:141
 msgid "value of new event tag"
-msgstr ""
+msgstr "værdien af det nye hændelsestag"
 
 #: include/classes/api/services/CScript.php:527
 msgid "values must be unique"
-msgstr ""
+msgstr "værdier skal være unikke"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:1193
 msgid "varpop() - Population variance"
