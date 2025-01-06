@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2024-12-16 19:20+0000\n"
+"PO-Revision-Date: 2025-01-05 19:26+0000\n"
 "Last-Translator: Vicente Salvador <vicentesalvadorcubedo@gmail.com>\n"
 "Language-Team: Zabbix <info@zabbix.com>\n"
 "Language: es\n"
@@ -2943,12 +2943,12 @@ msgstr[1] "No se pueden eliminar los grupos de usuarios"
 #: include/classes/api/services/CUserGroup.php:1306
 #, c-format
 msgid "Cannot delete user group \"%1$s\", because it is used by LDAP userdirectory \"%2$s\"."
-msgstr ""
+msgstr "No se puede eliminar el grupo de usuarios \"%1$s\" porque lo utiliza el directorio de usuarios LDAP \"%2$s\"."
 
 #: include/classes/api/services/CUserGroup.php:1301
 #, c-format
 msgid "Cannot delete user group \"%1$s\", because it is used by SAML userdirectory."
-msgstr ""
+msgstr "No se puede eliminar el grupo de usuarios \"%1$s\" porque lo utiliza el directorio de usuarios SAML."
 
 #: include/classes/api/services/CUserGroup.php:1397
 #, c-format
@@ -22815,7 +22815,7 @@ msgstr "Estado de energía de la máquina virtual VMware, \"url\": URL del servi
 
 #: include/classes/data/CItemData.php:2498
 msgid "VMware virtual machine private memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "Tamaño de memoria privada de la máquina virtual VMware, \"url\": URL del servicio VMware, \"uuid\": identificador único global de la máquina virtual VMware"
 
 #: include/classes/data/CItemData.php:2359
 msgid "VMware virtual machine private memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifierr"
