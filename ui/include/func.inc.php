@@ -1243,18 +1243,6 @@ function zbx_objectValues($value, $field) {
 	return $result;
 }
 
-function zbx_cleanHashes(&$value) {
-	if (is_array($value)) {
-		// reset() is needed to move internal array pointer to the beginning of the array
-		reset($value);
-		if (zbx_ctype_digit(key($value))) {
-			$value = array_values($value);
-		}
-	}
-
-	return $value;
-}
-
 function zbx_toCSV($values) {
 	$csv = '';
 	$glue = '","';
