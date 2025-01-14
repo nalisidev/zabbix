@@ -37,10 +37,13 @@ class testConfigVariables extends CIntegrationTest {
 		'_'
 	];
 
-	const INVALID_NAMES = [
-		'123var', // starts with a digit
-		'var-123', // contains a hyphen
-		'var 123', // contains a space
+	const INVALID_USER_PARAMS = [
+		'${123var}', // variable name starts with a digit
+		'${var-123}', // variable name contains a hyphen
+		'${var 123}', // variable name contains a space
+		'${EnvVar', // unclosed variable name
+		'echo ${EnvVar}', // variable mixed with text
+		'${EnvVar1}${EnvVar2}', // multiple variables
 	];
 
 	private static $include_files = [
@@ -53,13 +56,13 @@ class testConfigVariables extends CIntegrationTest {
 	private static $itemids = [];
 	private static $envvars = [];
 
-	private static function putenv($name, $value) {
+	private static function setEnv($name, $value) {
 		putenv($name . '=' . $value);
 		self::$envvars[] = $name;
 	}
 
 	public static function prepareTestEnv(): void {
-		self::putenv('StartPollers', self::START_POLLERS);
+		self::setEnv('StartPollers', self::START_POLLERS);
 	}
 
 	public static function cleanupTestEnv(): void {
@@ -219,7 +222,7 @@ class testConfigVariables extends CIntegrationTest {
 		foreach (self::VALID_NAMES as $idx => $var_name) {
 			// 'valid_usrprm0,echo valid_usrprm var123';
 			$var_val = 'valid_usrprm' . $idx . ',echo valid_usrprm ' . $var_name;
-			self::putenv($var_name, $var_val);
+			self::setEnv($var_name, $var_val);
 		}
 
 		// Currently multiple identical configuration parameters are not allowed by the test environment,
@@ -275,19 +278,13 @@ class testConfigVariables extends CIntegrationTest {
 	 * Test invalid variable names
 	 */
 	public function testConfigTestOption_InvalidVariableNames() {
-		foreach (self::INVALID_NAMES as $idx => $var_name) {
-			// 'invalid_usrprm0,echo invalid_usrprm var-123';
-			$var_val = 'invalid_usrprm' . $idx . ',echo invalid_usrprm ' . $var_name;
-			self::putenv($var_name, $var_val);
-		}
-
 		$def_config = self::getDefaultComponentConfiguration();
 
 		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
-			foreach (self::INVALID_NAMES as $name) {
+			foreach (self::INVALID_USER_PARAMS as $userParam) {
 				$config = [
 					$component => [
-						'UserParameter' => '${' . $name . '}'
+						'UserParameter' => $userParam
 					]
 				];
 
@@ -303,18 +300,107 @@ class testConfigVariables extends CIntegrationTest {
 
 				self::clearLog($component);
 				self::executeCommand($bin_path, ['-c', $config_path], $background);
-				sleep(1); // wait until the component starts and stops
-				$this->stopComponent($component); // for safety
-
 				if ($component === self::COMPONENT_AGENT) {
-					$needle = 'cannot load user parameters: user parameter "${' . $name . '}": not comma-separated';
+					$line = 'cannot load user parameters: user parameter "' . $userParam . '": not comma-separated';
 				} else {
-					$needle = 'Cannot initialize user parameters: cannot add user parameter "${' . $name . '}": not comma-separated';
+					$line = 'Cannot initialize user parameters: cannot add user parameter "' . $userParam . '": not comma-separated';
 				}
 
-				$log = CLogHelper::readLog(self::getLogPath($component), false);
-				$err_msg = 'String "' . $needle . '" is not found in log file for component "' . $component . '".';
-				$this->assertTrue(str_contains($log, $needle), $err_msg);
+				try {
+					self::waitForLogLineToBePresent($component, $line, true, 5, 1);
+				} finally {
+					$this->stopComponent($component); // for safety, agent should stop itself
+				}
+			}
+		}
+	}
+
+	/**
+	 * Test environment variable holding multi-string value (not allowed)
+	 */
+	public function testConfigTestOption_InvalidVariableWithMultiLineString() {
+		self::setEnv("EnvVarMultiLine", "This is multiline\nstring");
+
+		$def_config = self::getDefaultComponentConfiguration();
+
+		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
+			$config = [
+				$component => [
+					'UserParameter' => '${EnvVarMultiLine}'
+				]
+			];
+
+			$config[$component] = array_merge($config[$component], $def_config[$component]);
+			self::prepareComponentConfiguration($component, $config);
+
+			$config_path = PHPUNIT_CONFIG_DIR.'zabbix_'.$component.'.conf';
+			if (!file_exists($config_path)) {
+				throw new Exception('There is no configuration file for component "'.$component.'".');
+			}
+
+			$bin_path = PHPUNIT_BINARY_DIR.'zabbix_'.$component;
+			$exceptionThrown = false;
+
+			try {
+				self::executeCommand($bin_path, ['-c', $config_path]);
+			} catch (Exception $e) {
+				$exceptionThrown = true;
+				if ($component === self::COMPONENT_AGENT) {
+					$needle = 'multi-line string in environment variable "EnvVarMultiLine" value "This is multiline';
+				} else {
+					$needle = 'multi-line string in environment variable "${EnvVarMultiLine}" value "This is multiline\nstring" at line';
+				}
+				$err_msg = 'String "' . $needle . '" is not found in exception message when starting component "' . $component . '".';
+				$this->assertTrue(str_contains($e->getMessage(), $needle), $err_msg);
+			} finally {
+				$this->stopComponent($component); // for safety, agent should not start
+			}
+
+			$this->assertTrue($exceptionThrown, "No error message was detected for environment variable containing multi-line string when starting component " . $component . '".');
+		}
+	}
+
+	/**
+	 * Test undefined environment variable (configuration option should be set to default value in such case)
+	 *
+	 */
+	public function testConfigTestOption_UndefinedVariable() {
+		$def_config = self::getDefaultComponentConfiguration();
+
+		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
+			self::prepareComponentConfiguration($component, $def_config);
+
+			$config_path = PHPUNIT_CONFIG_DIR.'zabbix_'.$component.'.conf';
+			if (!file_exists($config_path)) {
+				throw new Exception('There is no configuration file for component "'.$component.'".');
+			}
+
+			$search = '/^Hostname=.*$/m';
+			$replace = 'Hostname=${EnvVarUndefined}';
+
+			$content = file_get_contents($config_path);
+			$content = preg_replace($search, $replace, $content);
+			file_put_contents($config_path, $content);
+
+			$background = ($component === self::COMPONENT_AGENT2);
+			$bin_path = PHPUNIT_BINARY_DIR.'zabbix_'.$component;
+
+			try {
+				self::executeCommand($bin_path, ['-c', $config_path], $background);
+				self::waitForStartup($component);
+
+				$usrprm_key = 'agent.hostname';
+				$expected_output = file_get_contents('/etc/hostname');;
+
+				$port =	$this->getConfigurationValue($component, 'ListenPort');
+				$output = shell_exec(PHPUNIT_BASEDIR . '/bin/zabbix_get -s 127.0.0.1 -p ' . $port .
+					' -k ' . $usrprm_key . ' -t 7');
+
+				$this->assertNotNull($output);
+				$this->assertNotFalse($output);
+				$this->assertEquals($expected_output, $output);
+			} finally {
+				$this->stopComponent($component);
 			}
 		}
 	}

@@ -342,7 +342,6 @@ class testUserParametersReload extends CIntegrationTest {
 
 		foreach ([self::COMPONENT_AGENT, self::COMPONENT_AGENT2] as $component) {
 			if (file_put_contents(PHPUNIT_CONFIG_DIR.'/'.$component.'_usrprm_with_vars.conf',
-					'UserParameter='.'${'.$component.'_UsrParamEnv1}'.PHP_EOL.
 					'UserParameter='.self::ITEM_NAME_04.',echo usr.prm.var.4'.PHP_EOL.
 					'UserParameter='.self::ITEM_NAME_05.',echo usr.prm.var.5') === false) {
 				throw new Exception('Failed to create include configuration file');
