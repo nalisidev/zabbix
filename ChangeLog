@@ -4,6 +4,7 @@ New features:
 ...G...... [ZBXNEXT-9686] improved Zabbix agent 2 Smart plugin error handling with missing privileges (esneiders)
 
 Bug fixes:
+.......PS. [ZBX-25903] fixed usmStatsNotInTimeWindows value being used when received and not handled by Net-SNMP library (vso)
 .......PS. [ZBX-25876] fixed escaping in script item parameters (askolmeisters)
 ..F....... [ZBX-24936] fixed button positioning in button split of multiselect (dfofanovs)
 ..F....... [ZBX-25467] fixed tabulation in Item history widget, Top hosts widget and latest data last value hintbox (dfofanovs)
@@ -242,6 +243,7 @@ Changes for 7.0.9rc2
 New features:
 
 Bug fixes:
+.......PS. [ZBX-25903] fixed usmStatsNotInTimeWindows value being used when received and not handled by Net-SNMP library (vso)
 
 --------------------------------------------------------------------------------
 Changes for 7.0.9rc1
