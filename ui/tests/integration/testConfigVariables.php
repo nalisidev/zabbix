@@ -390,7 +390,7 @@ class testConfigVariables extends CIntegrationTest {
 				self::waitForStartup($component);
 
 				$usrprm_key = 'agent.hostname';
-				$expected_output = file_get_contents('/etc/hostname');;
+				$expected_output = file_get_contents('/etc/hostname');
 
 				$port =	$this->getConfigurationValue($component, 'ListenPort');
 				$output = shell_exec(PHPUNIT_BASEDIR . '/bin/zabbix_get -s 127.0.0.1 -p ' . $port .
