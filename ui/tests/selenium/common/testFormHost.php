@@ -2056,8 +2056,7 @@ class testFormHost extends CWebTest {
 		$this->query('button:Apply')->one()->waitUntilClickable()->click();
 		$table->waitUntilReloaded();
 
-		$host_link = $table->findRow('Name', $host, true)->getColumn('Name')
-				->query($this->monitoring ? 'tag:a' : 'xpath:.//a[@data-action="host.edit"]')->waitUntilClickable();
+		$host_link = $table->findRow('Name', $host, true)->getColumn('Name')->query('link', $host)->waitUntilClickable();
 
 		if ($this->monitoring) {
 			$host_link->asPopupButton()->one()->select('Host');
