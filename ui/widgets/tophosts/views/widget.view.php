@@ -254,6 +254,7 @@ function createTextColumn(string $formatted_value, string $hint_value, string $c
 	}
 
 	return (new CCol())
+		->addStyle('width: 0;')
 		->setAttribute('bgcolor', $color !== '' ? '#'.$color : null)
 		->addItem(
 			(new CDiv($formatted_value))
