@@ -36,10 +36,9 @@ class testFormHost extends CWebTest {
 		];
 	}
 
-	/**
-	 * All objects created in dataSource DiscoveredHosts.
-	 */
 	const DISCOVERED_HOST = 'Discovered host from prototype 1'; // "LLD for Discovered host tests", Host: "Test of discovered host".
+	const TEST_FORM_HOST = 'testFormHost with items';
+	const HOST_UPDATE_VISIBLE_NAME = 'testFormHost_Update Visible name';
 	const TEMPLATE_NAMES = [
 		'Test of discovered host 1 template for unlink',
 		'Test of discovered host 2 template for clear',
@@ -50,11 +49,6 @@ class testFormHost extends CWebTest {
 	 * Link to page for opening host form.
 	 */
 	public $link;
-
-	/**
-	 * Flag for host form opened by direct link.
-	 */
-	public $standalone = false;
 
 	/**
 	 * Flag for form opened from Monitoring -> Hosts section.
@@ -173,7 +167,7 @@ class testFormHost extends CWebTest {
 		$result = CDataHelper::createHosts([
 			[
 				'host' => 'testFormHost_Update',
-				'name' => 'testFormHost_Update Visible name',
+				'name' => self::HOST_UPDATE_VISIBLE_NAME,
 				'description' => 'Created host via API to test update functionality in host form and interfaces',
 				'interfaces' => $interfaces,
 				'groups' => $groups,
@@ -182,7 +176,7 @@ class testFormHost extends CWebTest {
 				'status' => HOST_STATUS_MONITORED
 			],
 			[
-				'host' => 'testFormHost with items',
+				'host' => self::TEST_FORM_HOST,
 				'description' => 'Created host via API to test clone functionality in host form and interfaces 😀',
 				'interfaces' => $interfaces,
 				'groups' => $groups,
@@ -228,19 +222,13 @@ class testFormHost extends CWebTest {
 				]
 			]
 		]);
-
-		self::$hostids = $result['hostids'];
-		self::$itemids = $result['itemids'];
 	}
 
 	/**
 	 * Test for checking host form layout.
 	 */
 	public function checkHostLayout() {
-		$host = 'testFormHost with items';
-		$hostid = CDBHelper::getValue('SELECT hostid FROM hosts WHERE name='.zbx_dbstr($host));
-
-		$form = $this->openForm(($this->standalone ? $this->link.$hostid : $this->link), $host);
+		$form = $this->openForm($this->link, self::TEST_FORM_HOST);
 
 		// Check tabs available in the form.
 		$tabs = ['Host', 'IPMI', 'Tags', 'Macros', 'Inventory', 'Encryption', 'Value mapping'];
@@ -299,7 +287,7 @@ class testFormHost extends CWebTest {
 			if ($field === 'SNMPv3') {
 				// Check fields' lengths.
 				$field_lengths = [
-					'Max repetition count' =>  10,
+					'Max repetition count' => 10,
 					'Context name' => 255,
 					'Security name' => 64,
 					'Authentication passphrase' => 64,
@@ -342,9 +330,7 @@ class testFormHost extends CWebTest {
 		}
 
 		// Close host form popup to avoid unexpected alert in further cases.
-		if (!$this->standalone) {
-			COverlayDialogElement::find()->one()->close();
-		}
+		COverlayDialogElement::find()->one()->close();
 	}
 
 	public static function getCreateData() {
@@ -971,10 +957,7 @@ class testFormHost extends CWebTest {
 				$this->assertEquals($old_hash, CDBHelper::getHash($this->hosts_sql));
 				$this->assertEquals($interface_old_hash, CDBHelper::getHash($this->interface_snmp_sql));
 				$this->assertMessage(TEST_BAD, CTestArrayHelper::get($data, 'error_title', 'Cannot add host'), $data['error']);
-
-				if (!$this->standalone) {
-					COverlayDialogElement::find()->one()->close();
-				}
+				COverlayDialogElement::find()->one()->close();
 				break;
 		}
 	}
@@ -1587,7 +1570,7 @@ class testFormHost extends CWebTest {
 		$source = [
 			'host_fields' => [
 				'Host name' => 'testFormHost_Update',
-				'Visible name' => 'testFormHost_Update Visible name',
+				'Visible name' => self::HOST_UPDATE_VISIBLE_NAME,
 				'Host groups' => 'Zabbix servers',
 				'Description' => 'Created host via API to test update functionality in host form and interfaces',
 				'Monitored by' => 'Proxy',
@@ -1636,10 +1619,7 @@ class testFormHost extends CWebTest {
 			]
 		];
 
-		$host = 'testFormHost_Update Visible name';
-		$hostid = CDBHelper::getValue('SELECT hostid FROM hosts WHERE name='.zbx_dbstr($host));
-
-		$form = $this->openForm(($this->standalone ? $this->link.$hostid : $this->link), $host);
+		$form = $this->openForm($this->link, self::HOST_UPDATE_VISIBLE_NAME);
 		$form->fill(CTestArrayHelper::get($data, 'host_fields', []));
 
 		// Set name for field "Default".
@@ -1655,7 +1635,7 @@ class testFormHost extends CWebTest {
 
 				$host = (CTestArrayHelper::get($data, 'host_fields.Visible name') === "")
 					? CTestArrayHelper::get($data, 'host_fields.Host name', 'testFormHost_Update')
-					: CTestArrayHelper::get($data, 'host_fields.Visible name', 'testFormHost_Update Visible name');
+					: CTestArrayHelper::get($data, 'host_fields.Visible name', self::HOST_UPDATE_VISIBLE_NAME);
 
 				$form = $this->filterAndSelectHost($host);
 
@@ -1752,10 +1732,7 @@ class testFormHost extends CWebTest {
 
 				$error_title = CTestArrayHelper::get($data, 'error_title', 'Cannot update host');
 				$this->assertMessage(TEST_BAD, $error_title, $data['error']);
-
-				if (!$this->standalone) {
-					COverlayDialogElement::find()->one()->close();
-				}
+				COverlayDialogElement::find()->one()->close();
 				break;
 		}
 	}
@@ -1767,11 +1744,7 @@ class testFormHost extends CWebTest {
 		$host_old_hash = CDBHelper::getHash($this->hosts_sql);
 		$interface_old_hash = CDBHelper::getHash($this->interface_snmp_sql);
 
-		$host = 'testFormHost_Update';
-		$visible_name = 'testFormHost_Update Visible name';
-		$hostid = CDBHelper::getValue('SELECT hostid FROM hosts WHERE host='.zbx_dbstr($host));
-
-		$form = $this->openForm(($this->standalone ? $this->link.$hostid : $this->link), $visible_name);
+		$form = $this->openForm($this->link, self::HOST_UPDATE_VISIBLE_NAME);
 		$this->page->waitUntilReady();
 		$form->submit();
 		$this->assertMessage(TEST_GOOD, 'Host updated');
@@ -1786,7 +1759,7 @@ class testFormHost extends CWebTest {
 				[
 					'host' => 'testFormHost with secret Macro',
 					'items' => 0,
-					'fields'  => [
+					'fields' => [
 						'Host name' => microtime().' clone with secret Macros'
 					],
 					'expected' => TEST_ERROR,
@@ -1796,7 +1769,7 @@ class testFormHost extends CWebTest {
 			],
 			[
 				[
-					'host' => 'testFormHost with items',
+					'host' => self::TEST_FORM_HOST,
 					'items' => 3,
 					'fields' => [
 						'Host name' => microtime().' clone without interface changes'
@@ -1805,7 +1778,7 @@ class testFormHost extends CWebTest {
 			],
 			[
 				[
-					'host' => 'testFormHost with items',
+					'host' => self::TEST_FORM_HOST,
 					'items' => 3,
 					'fields' => [
 						'Host name' => microtime().' clone with interface changes',
@@ -1843,26 +1816,21 @@ class testFormHost extends CWebTest {
 	 * @param array     $data		   data provider with fields values
 	 */
 	public function cloneHost($data) {
-		$hostid = CDBHelper::getValue('SELECT hostid FROM hosts WHERE host='.zbx_dbstr($data['host']));
-		$form = $this->openForm(($this->standalone ? 'zabbix.php?action=popup&popup=host.edit&hostid='.$hostid : $this->link), $data['host']);
+		$form = $this->openForm($this->link, $data['host']);
 
 		// Get values from form.
 		$form->fill($data['fields']);
 		$original = $form->getFields()->filter(new CElementFilter(CElementFilter::VISIBLE))->asValues();
 
 		// Clone host.
-		$this->query('button', 'Clone')->waitUntilClickable()->one()->click();
-
-		$cloned_form = (!$this->standalone)
-			? COverlayDialogElement::find()->asForm()->waitUntilReady()->one()
-			: $this->query('id:host-form')->asForm()->waitUntilVisible()->one();
+		$this->query('button:Clone')->waitUntilClickable()->one()->click();
 
 		if (CTestArrayHelper::get($data, 'expected')) {
 			$this->assertMessage(TEST_ERROR, null, $data['error']);
 			CMessageElement::find()->one()->close();
 		}
 
-		$cloned_form->submit();
+		COverlayDialogElement::find()->asForm()->waitUntilReady()->one()->submit();
 		$this->page->waitUntilReady();
 		$this->assertMessage(TEST_GOOD, 'Host added');
 
@@ -1945,9 +1913,8 @@ class testFormHost extends CWebTest {
 		$host_old_hash = CDBHelper::getHash($this->hosts_sql);
 		$interface_old_hash = CDBHelper::getHash($this->interface_snmp_sql);
 
-		$host = 'testFormHost with items';
-		$hostid = CDBHelper::getValue('SELECT hostid FROM hosts WHERE host='.zbx_dbstr($host));
-		$new_name = microtime(true).' Cancel '.$host;
+		$host = self::TEST_FORM_HOST;
+		$new_name = microtime(true).' Cancel '.self::TEST_FORM_HOST;
 
 		$interface = [
 			[
@@ -1964,20 +1931,14 @@ class testFormHost extends CWebTest {
 
 		if ($data['action'] === 'Add') {
 			$this->page->login()->open($this->link)->waitUntilReady();
-
-			if (!$this->standalone) {
-				$this->query('button:Create host')->one()->waitUntilClickable()->click();
-				$form = COverlayDialogElement::find()->waitUntilReady()->one()->asForm();
-			}
-			else {
-				$form = $this->query('id:host-form')->asForm()->waitUntilReady()->one();
-			}
+			$this->query('button:Create host')->one()->waitUntilClickable()->click();
+			$form = COverlayDialogElement::find()->waitUntilReady()->one()->asForm();
 		}
 		else {
-			$form = $this->openForm(($this->standalone ? 'zabbix.php?action=popup&popup=host.edit&hostid='.$hostid : $this->link), $host);
+			$form = $this->openForm($this->link, self::TEST_FORM_HOST);
 		}
 
-		$form_type = ($this->standalone) ? $form : COverlayDialogElement::find()->waitUntilReady()->one();
+		$form_type = COverlayDialogElement::find()->waitUntilReady()->one();
 
 		// Change the host data to make sure that the changes are not saved to the database after cancellation.
 		$form->fill(['Host name' => $new_name]);
@@ -2022,7 +1983,7 @@ class testFormHost extends CWebTest {
 			[
 				[
 					'expected' => TEST_GOOD,
-					'name' => 'testFormHost with items'
+					'name' => self::TEST_FORM_HOST
 				]
 			],
 			[
@@ -2053,8 +2014,8 @@ class testFormHost extends CWebTest {
 			$ids = array_column($interfaceids, 'interfaceid');
 		}
 
-		$form = $this->openForm(($this->standalone ? $this->link.$hostid : $this->link), $data['name']);
-		$form_type = ($this->standalone) ? $form : COverlayDialogElement::find()->waitUntilReady()->one();
+		$this->openForm($this->link, $data['name']);
+		$form_type = COverlayDialogElement::find()->waitUntilReady()->one();
 		$form_type->query('button:Delete')->waitUntilClickable()->one()->click();
 		$this->page->acceptAlert();
 		$this->page->waitUntilReady();
@@ -2078,10 +2039,7 @@ class testFormHost extends CWebTest {
 			case TEST_BAD:
 				$this->assertEquals($old_hash, CDBHelper::getHash($this->hosts_sql));
 				$this->assertMessage(TEST_BAD, 'Cannot delete host', $data['error']);
-
-				if (!$this->standalone) {
-					$form_type->close();
-				}
+				$form_type->close();
 		}
 	}
 
@@ -2094,9 +2052,7 @@ class testFormHost extends CWebTest {
 	private function openForm($url, $host) {
 		$this->page->login()->open($url)->waitUntilReady();
 
-		return ($this->standalone)
-			? $this->query('id:host-form')->asForm()->waitUntilReady()->one()
-			: $this->filterAndSelectHost($host);
+		return $this->filterAndSelectHost($host);
 	}
 
 	/**
@@ -2139,13 +2095,8 @@ class testFormHost extends CWebTest {
 	}
 
 	public function checkDiscoveredHostLayout() {
-		$form = $this->openForm((
-				($this->standalone)
-					? $this->link.CDataHelper::get('DiscoveredHosts.discovered_hostid')
-					: $this->link
-				), self::DISCOVERED_HOST
-		);
-		$form_type = ($this->standalone) ? $form : COverlayDialogElement::find()->waitUntilReady()->one();
+		$form = $this->openForm($this->link, self::DISCOVERED_HOST);
+		$form_type = COverlayDialogElement::find()->waitUntilReady()->one();
 
 		// Check tabs available in the form.
 		$tabs = ['Host', 'IPMI', 'Tags', 'Macros', 'Inventory', 'Encryption'];
@@ -2172,11 +2123,11 @@ class testFormHost extends CWebTest {
 						['name' => 'id:add_templates_', 'value' => '', 'enabled' => true],
 						['name' => 'Host groups', 'value' => ['Group created from host prototype 1',
 								'Group for discovered host test'], 'enabled' => false],
-						['name' => 'id:interfaces_'.$discovered_interface_id.'_ip', 'value' =>  '127.0.0.1',
+						['name' => 'id:interfaces_'.$discovered_interface_id.'_ip', 'value' => '127.0.0.1',
 								'maxlength' => 64, 'enabled' => false],
-						['name' => 'id:interfaces_'.$discovered_interface_id.'_dns', 'value' =>  '',
+						['name' => 'id:interfaces_'.$discovered_interface_id.'_dns', 'value' => '',
 								'maxlength' => 255, 'enabled' => false],
-						['name' => 'id:interfaces_'.$discovered_interface_id.'_useip', 'value' =>  'IP', 'enabled' => false],
+						['name' => 'id:interfaces_'.$discovered_interface_id.'_useip', 'value' => 'IP', 'enabled' => false],
 						['name' => 'id:interfaces_'.$discovered_interface_id.'_port', 'value' => 10050,
 								'maxlength' => 64, 'enabled' => false],
 						['name' => 'id:interface_main_'.$discovered_interface_id , 'value' => $discovered_interface_id,
@@ -2301,8 +2252,6 @@ class testFormHost extends CWebTest {
 				->filter(new CElementFilter(CElementFilter::CLICKABLE))->count()
 		);
 
-		if (!$this->standalone) {
-			$form_type->close();
-		}
+		$form_type->close();
 	}
 }
