@@ -66,20 +66,6 @@ class testFormHost extends CWebTest {
 	private $interface_snmp_sql = 'SELECT * FROM interface_snmp ORDER BY interfaceid, community';
 
 	/**
-	 * Ids of the hosts that are created within this test specifically for the update scenario.
-	 *
-	 * @var array
-	 */
-	protected static $hostids;
-
-	/**
-	 * Ids of the items that are created within this test.
-	 *
-	 * @var array
-	 */
-	protected static $itemids;
-
-	/**
 	 * Default values of interfaces.
 	 *
 	 * @var array
