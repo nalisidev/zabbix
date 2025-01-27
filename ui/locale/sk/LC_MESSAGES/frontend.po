@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2024-12-19 17:53+0000\n"
+"PO-Revision-Date: 2025-01-14 09:51+0000\n"
 "Last-Translator: Tomáš Heřmánek <tomas.hermanek@initmax.cz>\n"
 "Language-Team: Zabbix translation team\n"
 "Language: sk\n"
@@ -7373,6 +7373,10 @@ msgstr "Zobraziť hodnotu položky ako"
 msgid "Display local time"
 msgstr "Zobraz miestny čas"
 
+#: widgets/itemhistory/views/column.edit.php:240
+msgid "Display log time"
+msgstr ""
+
 #: widgets/svggraph/includes/WidgetForm.php:364
 msgid "Display min/avg/max"
 msgstr "Zobrazenie min/priemer/max"
@@ -9547,6 +9551,10 @@ msgstr "Výber údajov z histórie"
 #: app/views/popup.triggerexpr.php:129
 msgid "History functions"
 msgstr "Funkcie histórie"
+
+#: app/views/administration.housekeeping.edit.php:218
+msgid "History, trends and audit log compression"
+msgstr ""
 
 #: include/classes/html/CTabFilter.php:167
 msgid "Home"
@@ -20767,6 +20775,10 @@ msgstr "Toto nastavenie by malo byť povolené, pretože tabulky trendov obsahuj
 msgid "This setting will display local time instead of the timestamp. \"Show timestamp\" must also be checked in the advanced configuration."
 msgstr "Toto nastavenie zobrazí miestny čas namiesto časovej pečiatky. V rozšírenej konfigurácii je potrebné zaškrtnúť aj \"Zobraziť časovú pečiatku\"."
 
+#: widgets/itemhistory/views/column.edit.php:241
+msgid "This setting will display log time instead of item's timestamp. \"Show timestamp\" must also be checked in the advanced configuration."
+msgstr ""
+
 #: include/views/configuration.item.edit.php:129
 #: include/views/configuration.item.prototype.edit.php:114
 msgid "This type of information may not match the key."
@@ -23001,7 +23013,7 @@ msgstr "Stav zapnutia virtuálneho počítača VMware, \"url\" – adresa URL sl
 
 #: include/classes/data/CItemData.php:2498
 msgid "VMware virtual machine private memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "Veľkosť privátnej pamäte virtuálneho počítača VMware, \"url\" – adresa URL služby VMware, \"uuid\" – globálny jedinečný identifikátor virtuálneho počítača VMware"
 
 #: include/classes/data/CItemData.php:2359
 msgid "VMware virtual machine private memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifierr"
