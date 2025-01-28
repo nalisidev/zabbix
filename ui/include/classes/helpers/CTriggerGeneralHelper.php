@@ -274,21 +274,34 @@ class CTriggerGeneralHelper {
 	 * @param array $input_tags
 	 */
 	public static function getInheritedTags(array $data, array $input_tags): array {
-		$items = [];
-		$item_prototypes = [];
-
-		foreach ($data['items'] as $item) {
-			if ($item['flags'] == ZBX_FLAG_DISCOVERY_NORMAL) {
-				$items[] = $item;
+		if (!array_key_exists('parent_discoveryid', $data)) {
+			if ($data['discoveryRule']) {
+				$item_parent_templates = getItemParentTemplates([$data['discoveryRule']],
+					ZBX_FLAG_DISCOVERY_RULE
+				)['templates'];
 			}
 			else {
-				$item_prototypes[] = $item;
+				$item_parent_templates = getItemParentTemplates($data['items'],
+					ZBX_FLAG_DISCOVERY_NORMAL
+				)['templates'];
 			}
 		}
+		else {
+			$items = [];
+			$item_prototypes = [];
 
-		$item_parent_templates = getItemParentTemplates($items, ZBX_FLAG_DISCOVERY_NORMAL)['templates']
-			+ getItemParentTemplates($item_prototypes, ZBX_FLAG_DISCOVERY_PROTOTYPE)['templates'];
+			foreach ($data['items'] as $item) {
+				if ($item['flags'] == ZBX_FLAG_DISCOVERY_NORMAL) {
+					$items[] = $item;
+				}
+				else {
+					$item_prototypes[] = $item;
+				}
+			}
 
+			$item_parent_templates = getItemParentTemplates($items, ZBX_FLAG_DISCOVERY_NORMAL)['templates']
+				+ getItemParentTemplates($item_prototypes, ZBX_FLAG_DISCOVERY_PROTOTYPE)['templates'];
+		}
 		unset($item_parent_templates[0]);
 
 		$db_templates = $item_parent_templates
