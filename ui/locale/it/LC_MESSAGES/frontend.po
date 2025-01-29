@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2024-07-31 16:01+0000\n"
-"Last-Translator: Federico <fedesesana@gmail.com>\n"
+"PO-Revision-Date: 2025-01-22 17:03+0000\n"
+"Last-Translator: Edoardo Ridolfi <edo2313@gmail.com>\n"
 "Language-Team: Zabbix <info@zabbix.com>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -254,8 +254,8 @@ msgstr[1] "%1s secondi"
 #, c-format
 msgid "%1$s unacknowledged problem"
 msgid_plural "%1$s unacknowledged problems"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s problema non confermato"
+msgstr[1] "%1$s problemi non confermati"
 
 #: widgets/problemhosts/views/widget.view.php:117
 #: widgets/problems/includes/WidgetProblems.php:347
@@ -284,17 +284,17 @@ msgstr "%1$s. %2$s: %3$s. %4$s."
 #: include/classes/core/CModuleManager.php:153
 #, c-format
 msgid "%1$s.php class must extend %2$s for module located at %3$s."
-msgstr ""
+msgstr "la classe %1$s.php deve estendere %2$s per il modulo situato in %3$s."
 
 #: app/controllers/CControllerMediatypeEnable.php:105
 #, c-format
 msgid "%1$s: %2$s"
-msgstr ""
+msgstr "%1$s: %2$s"
 
 #: include/classes/graph/CSvgGraph.php:1418
 #, c-format
 msgid "%1$sth percentile: %2$s"
-msgstr ""
+msgstr "%1$s° percentile: %2$s"
 
 #: include/func.inc.php:2050
 #, c-format
@@ -338,11 +338,11 @@ msgstr "(creato dalla host discovery)"
 #: include/views/configuration.item.edit.php:648
 #: include/views/configuration.item.prototype.edit.php:619
 msgid "(legacy) to retrieve a single value synchronously, optionally combined with other values"
-msgstr ""
+msgstr "(legacy) per recuperare un singolo valore in modo sincrono, eventualmente insieme ad altri valori"
 
 #: include/views/configuration.host.discovery.edit.php:553
 msgid "(legacy) to retrieve a subtree in JSON"
-msgstr ""
+msgstr "(legacy) per recuperare un ramo in JSON"
 
 #: app/partials/configuration.host.edit.html.php:133
 msgid "(linked by host discovery)"
@@ -428,11 +428,11 @@ msgstr "<manuale>"
 #: include/views/js/item.preprocessing.js.php:362
 #: include/views/js/item.preprocessing.js.php:371
 msgid "<metric name>{<label name>=\"<label value>\", ...} == <value>"
-msgstr ""
+msgstr "<nome metrica>{<nome etichetta>=\"<valore etichetta>\", ...} == <valore>"
 
 #: app/views/administration.script.edit.php:94
 msgid "<sub-menu/sub-menu/...>"
-msgstr ""
+msgstr "<sottomenu/sottomenu/...>"
 
 #: widgets/geomap/Widget.php:48
 msgctxt "abbreviation of severity level"
@@ -1191,7 +1191,7 @@ msgstr "Agent encryption"
 
 #: include/classes/data/CItemData.php:895
 msgid "Agent host metadata. Returns string"
-msgstr ""
+msgstr "Metadati dell'host agente. Restituisce una stringa"
 
 #: include/classes/data/CItemData.php:903
 msgid "Agent host name. Returns string"
@@ -1417,7 +1417,7 @@ msgstr "Un item con key \"%1$s\" esiste già sul template \"%2$s\"."
 #: tests/selenium/modules/clock32/includes/WidgetForm.php:74
 #: widgets/clock/includes/WidgetForm.php:74
 msgid "Analog"
-msgstr ""
+msgstr "Analogico"
 
 #: app/partials/trigger.edit.trigger.tab.php:111
 #: app/partials/trigger.edit.trigger.tab.php:191
@@ -1485,7 +1485,7 @@ msgstr "Tutti"
 #: app/views/js/trigger.edit.js.php:886
 #: app/views/js/trigger.massupdate.js.php:67
 msgid "Any changes made in the current form will be lost."
-msgstr ""
+msgstr "Tutte le modifiche apportate al modulo saranno perdute."
 
 #: app/views/js/administration.regex.edit.js.php:164
 #: include/classes/helpers/CRegexHelper.php:27
@@ -1494,11 +1494,11 @@ msgstr "Tutte le stringhe di caratteri incluse"
 
 #: app/views/js/popup.import.js.php:109
 msgid "Any existing host entities not present in the import file will be deleted. Click OK to proceed."
-msgstr ""
+msgstr "Tutte le entità definite sull'host e non presenti nel file di importazione verranno eliminate. Clic su OK per continuare."
 
 #: app/views/js/popup.import.js.php:106
 msgid "Any existing template entities not present in the import file will be deleted. Click OK to proceed."
-msgstr ""
+msgstr "Tutte le entità definite sul template e non presenti nel file di importazione verranno eliminate. Clic su OK per continuare."
 
 #: include/classes/core/CJsonRpc.php:225
 msgid "Application error."
@@ -1534,7 +1534,7 @@ msgstr "Prossimo"
 
 #: widgets/svggraph/includes/CWidgetFieldDataSetView.php:429
 msgid "Approximation"
-msgstr ""
+msgstr "Approssimazione"
 
 #: include/func.inc.php:239
 msgid "Apr"
@@ -1546,11 +1546,11 @@ msgstr "Aprile"
 
 #: widgets/gauge/includes/WidgetForm.php:246
 msgid "Arc background"
-msgstr ""
+msgstr "Sfondo dell'arco"
 
 #: widgets/gauge/includes/WidgetForm.php:305
 msgid "Arc size"
-msgstr ""
+msgstr "Dimensione arco"
 
 #: app/views/popup.tabfilter.edit.php:76
 msgid "Are you sure you want to delete this filter?"
@@ -1579,7 +1579,7 @@ msgstr "Aritmetica"
 #: include/classes/helpers/CServiceHelper.php:148
 #: widgets/tophosts/views/column.edit.php:182
 msgid "As is"
-msgstr ""
+msgstr "Così com'è"
 
 #: include/views/monitoring.history.php:97
 msgid "As plain text"
@@ -2120,7 +2120,7 @@ msgstr "Porta in primopiano"
 #: app/views/administration.timeouts.edit.php:130
 #: app/views/popup.proxy.edit.php:342 include/items.inc.php:99
 msgid "Browser"
-msgstr ""
+msgstr "Browser"
 
 #: include/locales.inc.php:35
 msgid "Bulgarian (bg_BG)"
@@ -2133,7 +2133,7 @@ msgstr "Per host"
 #: app/partials/monitoring.problem.filter.php:154
 #: widgets/problems/includes/WidgetForm.php:137
 msgid "By me"
-msgstr ""
+msgstr "Da me"
 
 #: report2.php:192
 msgid "By trigger template"
@@ -2185,23 +2185,23 @@ msgstr "Percentuale di utilizzo della CPU. Restituisce un decimale"
 
 #: app/views/popup.itemtestedit.view.php:321
 msgid "CRLF"
-msgstr ""
+msgstr "CRLF"
 
 #: tests/selenium/modules/module_number_7/Module.php:17
 msgid "CSRF test"
-msgstr ""
+msgstr "Test CSRF"
 
 #: tests/selenium/modules/module_number_7/views/csrf.form.view.php:25
 msgid "CSRF token test"
-msgstr ""
+msgstr "Test del token CSRF"
 
 #: tests/selenium/modules/module_number_7/actions/CsrfFormUpdate.php:35
 msgid "CSRF token validation succeeded."
-msgstr ""
+msgstr "La validazione del token CSRF ha avuto successo."
 
 #: include/items.inc.php:1554
 msgid "CSV to JSON"
-msgstr ""
+msgstr "Da CSV a JSON"
 
 #: include/classes/validators/CApiInputValidator.php:3175
 #: include/classes/validators/CNewValidator.php:352
@@ -2264,7 +2264,7 @@ msgstr "Annulla"
 #: app/controllers/CControllerTokenCreate.php:65
 #: app/controllers/CControllerTokenCreate.php:135
 msgid "Cannot add API token"
-msgstr ""
+msgstr "Impossibile aggiungere il token API"
 
 #: include/classes/api/services/CGraphGeneral.php:620
 #: include/classes/api/services/CGraphGeneral.php:642
@@ -2427,11 +2427,11 @@ msgstr "Impossibile aggiungere scenario web"
 
 #: jsLoader.php:135
 msgid "Cannot add widget: no widgets available."
-msgstr ""
+msgstr "Impossibile aggiungere il widget: nessun widget disponibile."
 
 #: jsLoader.php:134
 msgid "Cannot add widget: not enough free space on the dashboard."
-msgstr ""
+msgstr "Impossibile aggiungere il widget: spazio insufficiente nella dashboard."
 
 #: include/classes/api/services/CItem.php:1542
 #, c-format
@@ -2610,7 +2610,7 @@ msgstr "Impossibile creare il periodo di manutenzione"
 
 #: app/controllers/CControllerProxyConfigRefresh.php:79
 msgid "Cannot create request"
-msgstr ""
+msgstr "Impossibile creare la richiesta"
 
 #: app/controllers/CControllerPopupScheduledReportCreate.php:136
 #: app/controllers/CControllerScheduledReportCreate.php:59
@@ -3681,7 +3681,7 @@ msgstr[1] "Impossibile caricare i moduli in: %1$s."
 
 #: include/classes/api/services/CUser.php:1431
 msgid "Cannot log out."
-msgstr ""
+msgstr "Impossibile disconnettersi."
 
 #: include/classes/api/services/CHost.php:1034
 msgid "Cannot mass update host name."
@@ -3693,12 +3693,12 @@ msgstr "Impossibile aggiornare massivamente nome visibile host."
 
 #: jsLoader.php:435
 msgid "Cannot open URL"
-msgstr ""
+msgstr "Impossibile aprire l'URL"
 
 #: include/classes/api/services/CHostBase.php:1561
 #, c-format
 msgid "Cannot pass duplicate template IDs for the linkage: %1$s."
-msgstr ""
+msgstr "Impossibile passare ID template duplicati per il collegamento: %1$s."
 
 #: jsLoader.php:136
 msgid "Cannot paste inaccessible widget."
@@ -3740,7 +3740,7 @@ msgstr "Impossibile leggere XML: %1$s."
 #: include/classes/import/readers/CYamlImportReader.php:55
 #, c-format
 msgid "Cannot read YAML: %1$s."
-msgstr ""
+msgstr "Impossibile leggere YAML: %1$s."
 
 #: include/classes/server/CZabbixServer.php:567
 #, c-format
@@ -3759,7 +3759,7 @@ msgstr "Impossibile rinominare utente guest."
 #: app/controllers/CControllerUserResetTotp.php:85
 msgid "Cannot reset TOTP secret"
 msgid_plural "Cannot reset TOTP secrets"
-msgstr[0] ""
+msgstr[0] "Impossibile resettare il segreto TOTP"
 msgstr[1] ""
 
 #: include/classes/api/services/CDRule.php:273
@@ -3951,12 +3951,12 @@ msgstr "Impossibile aggiornare \"%1$s\" per un trigger discoverato \"%2$s\"."
 #: app/controllers/CControllerTokenUpdate.php:66
 #: app/controllers/CControllerTokenUpdate.php:142
 msgid "Cannot update API token"
-msgstr ""
+msgstr "Impossibile aggiornare il token API"
 
 #: app/controllers/CControllerSlaUpdate.php:70
 #: app/controllers/CControllerSlaUpdate.php:138
 msgid "Cannot update SLA"
-msgstr ""
+msgstr "Impossibile aggiornare la SLA"
 
 #: include/classes/api/services/CGraphGeneral.php:68
 msgid "Cannot update a discovered graph."
@@ -4548,7 +4548,7 @@ msgstr "Orologio"
 #: tests/selenium/modules/clock32/includes/WidgetForm.php:73
 #: widgets/clock/includes/WidgetForm.php:73
 msgid "Clock type"
-msgstr ""
+msgstr "Tipo di orologio"
 
 #: app/partials/scheduledreport.formgrid.html.php:225
 #: app/views/administration.iconmap.edit.php:140
@@ -4627,7 +4627,7 @@ msgstr "Chiudi i problemi"
 
 #: app/views/mfa.edit.php:90
 msgid "Code length"
-msgstr ""
+msgstr "Lunghezza del codice"
 
 #: app/views/js/monitoring.problem.view.js.php:194
 #: app/views/js/monitoring.problem.view.js.php:221
@@ -4671,7 +4671,7 @@ msgstr ""
 
 #: include/views/js/monitoring.sysmaps.js.php:807
 msgid "Color (OK)"
-msgstr ""
+msgstr "Colore (OK)"
 
 #: widgets/honeycomb/includes/WidgetForm.php:213
 msgid "Color interpolation"
@@ -4679,7 +4679,7 @@ msgstr ""
 
 #: widgets/gauge/views/widget.edit.php:92
 msgid "Colors"
-msgstr ""
+msgstr "Colori"
 
 #: widgets/graphprototype/includes/WidgetForm.php:82
 #: widgets/tophosts/includes/WidgetForm.php:140
@@ -4707,7 +4707,7 @@ msgstr "Comandi"
 
 #: app/views/administration.timeouts.edit.php:138
 msgid "Communication"
-msgstr ""
+msgstr "Comunicazione"
 
 #: include/items.inc.php:946
 msgctxt "SNMP Community"
@@ -5687,7 +5687,7 @@ msgstr ""
 
 #: app/partials/scheduledreport.formgrid.html.php:95
 msgid "Cycle"
-msgstr ""
+msgstr "Ciclo"
 
 #: include/locales.inc.php:39
 msgid "Czech (cs_CZ)"
@@ -5696,12 +5696,12 @@ msgstr "Czech (cs_CZ)"
 #: jsLoader.php:403
 msgctxt "Default color option"
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: widgets/geomap/Widget.php:46
 msgctxt "abbreviation of severity level"
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: include/classes/import/validators/C10XmlValidator.php:322
 msgctxt "XML date format"
@@ -5735,7 +5735,7 @@ msgstr "Per giorni"
 
 #: include/locales.inc.php:40
 msgid "Danish (da_DK)"
-msgstr ""
+msgstr "Danese (da_DK)"
 
 #: include/classes/core/ZBase.php:381
 msgid "Dark"
@@ -5835,7 +5835,7 @@ msgstr "Linea tratteggiata"
 #: include/classes/html/widgets/fields/CWidgetFieldColumnsListView.php:36
 #: widgets/tophosts/views/column.edit.php:59
 msgid "Data"
-msgstr ""
+msgstr "Dati"
 
 #: include/classes/helpers/CMenuHelper.php:215
 #: include/classes/helpers/CRoleHelper.php:347
@@ -6771,7 +6771,7 @@ msgstr ""
 #: tests/selenium/modules/clock32/includes/WidgetForm.php:75
 #: widgets/clock/includes/WidgetForm.php:75
 msgid "Digital"
-msgstr ""
+msgstr "Digitale"
 
 #: app/views/module.edit.php:53
 msgid "Directory"
@@ -7248,6 +7248,10 @@ msgstr ""
 #: widgets/itemhistory/views/column.edit.php:241
 msgid "Display local time"
 msgstr "Mostra l'ora locale"
+
+#: widgets/itemhistory/views/column.edit.php:240
+msgid "Display log time"
+msgstr ""
 
 #: widgets/svggraph/includes/WidgetForm.php:364
 msgid "Display min/avg/max"
@@ -9416,6 +9420,10 @@ msgstr ""
 
 #: app/views/popup.triggerexpr.php:129
 msgid "History functions"
+msgstr ""
+
+#: app/views/administration.housekeeping.edit.php:218
+msgid "History, trends and audit log compression"
 msgstr ""
 
 #: include/classes/html/CTabFilter.php:167
@@ -20584,6 +20592,10 @@ msgstr ""
 
 #: widgets/itemhistory/views/column.edit.php:242
 msgid "This setting will display local time instead of the timestamp. \"Show timestamp\" must also be checked in the advanced configuration."
+msgstr ""
+
+#: widgets/itemhistory/views/column.edit.php:241
+msgid "This setting will display log time instead of item's timestamp. \"Show timestamp\" must also be checked in the advanced configuration."
 msgstr ""
 
 #: include/views/configuration.item.edit.php:129
