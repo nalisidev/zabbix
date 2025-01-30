@@ -18,6 +18,16 @@ require 'include/forms.inc.php';
 
 class CControllerItemEdit extends CControllerItem {
 
+	/**
+	 * @var array
+	 */
+	private $host;
+
+	/**
+	 * @var array
+	 */
+	private $template;
+
 	protected function init() {
 		$this->disableCsrfValidation();
 	}
