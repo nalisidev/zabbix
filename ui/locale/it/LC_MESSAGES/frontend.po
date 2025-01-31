@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2025-01-22 17:03+0000\n"
+"PO-Revision-Date: 2025-01-27 13:16+0000\n"
 "Last-Translator: Edoardo Ridolfi <edo2313@gmail.com>\n"
 "Language-Team: Zabbix <info@zabbix.com>\n"
 "Language: it\n"
@@ -696,7 +696,7 @@ msgstr[1] "Azioni disabilitate"
 
 #: app/controllers/CControllerPopup.php:42
 msgid "Action edit"
-msgstr ""
+msgstr "Modifica azione"
 
 #: app/controllers/CControllerActionEnable.php:84
 msgid "Action enabled"
@@ -961,7 +961,7 @@ msgstr "Aggiungi un nuovo widget"
 
 #: widgets/navtree/Widget.php:34
 msgid "Add child element"
-msgstr ""
+msgstr "Aggiungi elemento child"
 
 #: widgets/navtree/Widget.php:39
 msgid "Add child elements"
@@ -1867,7 +1867,7 @@ msgstr "Selezione automatica icona"
 #: include/classes/helpers/CMediatypeHelper.php:300
 #: include/classes/helpers/CMenuHelper.php:342 include/html.inc.php:908
 msgid "Autoregistration"
-msgstr ""
+msgstr "Autoregistrazione"
 
 #: app/views/action.list.php:44 include/classes/helpers/CMenuHelper.php:258
 #: include/classes/helpers/CRoleHelper.php:473
@@ -1910,11 +1910,11 @@ msgstr "Media"
 
 #: include/classes/data/CItemData.php:2478
 msgid "Average number of outstanding read requests to the virtual disk during the collection interval , \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"instance\" - disk device instance"
-msgstr ""
+msgstr "Numero medio di richieste di lettura in sospeso sul disco virtuale durante l'intervallo di raccolta, \"url\" - URL del servizio VMware, \"uuid\" - Id universale della macchina virtuale VMware, \"instance\" - istanza del dispositivo disco"
 
 #: include/classes/data/CItemData.php:2513
 msgid "Average number of outstanding write requests to the virtual disk during the collection interval, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"instance\" - disk device instance"
-msgstr ""
+msgstr "Numero medio di richieste di scrittura in sospeso sul disco virtuale durante l'intervallo di raccolta, \"url\" - URL del servizio VMware, \"uuid\" - Id universale della macchina virtuale VMware, \"instance\" - istanza del dispositivo disco"
 
 #: app/views/administration.authentication.edit.php:131
 msgid "Avoid easy-to-guess passwords"
@@ -1965,7 +1965,7 @@ msgstr "DN base"
 #: widgets/svggraph/includes/CWidgetFieldOverrideView.php:201
 #: widgets/tophosts/views/column.edit.php:213
 msgid "Base color"
-msgstr ""
+msgstr "Colore di base"
 
 #: app/views/connector.edit.php:128 include/httptest.inc.php:28
 msgid "Basic"
@@ -1973,21 +1973,21 @@ msgstr "Basic"
 
 #: app/views/connector.edit.php:132
 msgid "Bearer"
-msgstr ""
+msgstr "Bearer"
 
 #: app/views/connector.edit.php:152
 msgid "Bearer token"
-msgstr ""
+msgstr "Bearer token"
 
 #: widgets/gauge/includes/WidgetForm.php:264
 #: widgets/item/includes/WidgetForm.php:208
 msgid "Before value"
-msgstr ""
+msgstr "Prima del valore"
 
 #: widgets/gauge/includes/WidgetForm.php:267
 #: widgets/item/includes/WidgetForm.php:211
 msgid "Below value"
-msgstr ""
+msgstr "Sotto il valore"
 
 #: app/partials/configuration.filter.items.php:147
 #: app/views/popup.massupdate.item.php:152 include/items.inc.php:133
@@ -2012,7 +2012,7 @@ msgstr "Associa password"
 #: app/controllers/CControllerPopupTriggerExpr.php:428
 #: app/controllers/CControllerPopupTriggerExpr.php:461
 msgid "Bits to shift"
-msgstr ""
+msgstr "Bit da spostare"
 
 #: app/views/popup.triggerexpr.php:127
 msgid "Bitwise functions"
