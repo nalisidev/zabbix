@@ -212,8 +212,8 @@ foreach ($data['mediatypes'] as $media_type) {
 		CMediatypeHelper::getMediaTypes($media_type['typeid']),
 		$status,
 		(new CCol($action_count_total))->addClass(ZBX_STYLE_CELL_WIDTH),
-		(new CCol($actions))->addClass(ZBX_STYLE_WORDBREAK),
-		(new CCol($details))->addClass(ZBX_STYLE_WORDBREAK),
+		$actions,
+		$details,
 		$test_link
 	]);
 }
