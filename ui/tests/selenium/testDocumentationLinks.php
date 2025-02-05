@@ -245,13 +245,7 @@ class testDocumentationLinks extends CWebTest {
 			// #10 Problems acknowledge popup.
 			[
 				[
-					'url' => 'zabbix.php?action=problem.view',
-					'actions' => [
-						[
-							'callback' => 'openFormWithLink',
-							'element' => 'link:Update'
-						]
-					],
+					'url' => 'zabbix.php?action=popup&popup=acknowledge.edit&eventids%5B0%5D=93',
 					'doc_link' => '/en/manual/acknowledgment#updating-problems'
 				]
 			],

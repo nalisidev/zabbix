@@ -538,7 +538,7 @@ class testFormGroups extends CWebTest {
 			$old_hash = CDBHelper::getHash(self::GROUPS_SQL);
 		}
 
-		$form = $this->openForm($data['name']);
+		$this->openForm($data['name']);
 		COverlayDialogElement::find()->one()->waitUntilReady()->getFooter()->query('button:Delete')->one()
 				->waitUntilClickable()->click();
 		$this->assertEquals('Delete selected '.$this->object.' group?', $this->page->getAlertText());
@@ -836,6 +836,7 @@ class testFormGroups extends CWebTest {
 		$group_form->selectTab(ucfirst($this->object).' permissions');
 		$group_form->getField('Permissions')->asMultifieldTable()->checkValue($data['groups_after']);
 		$group_form->selectTab('Problem tag filter');
+
 		// Tag permissions do not change for template groups.
 		$this->assertTableData(($this->object === 'template') ? $data['tags_before'] : $data['tags_after'],
 				'id:tag-filter-table'

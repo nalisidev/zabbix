@@ -150,7 +150,7 @@ class testFormHost extends CWebTest {
 		]);
 		$proxyid = $proxies['proxyids'][0];
 
-		$result = CDataHelper::createHosts([
+		CDataHelper::createHosts([
 			[
 				'host' => 'testFormHost_Update',
 				'name' => self::HOST_UPDATE_VISIBLE_NAME,
@@ -1898,8 +1898,6 @@ class testFormHost extends CWebTest {
 	public function checkCancel($data) {
 		$host_old_hash = CDBHelper::getHash($this->hosts_sql);
 		$interface_old_hash = CDBHelper::getHash($this->interface_snmp_sql);
-
-		$host = self::TEST_FORM_HOST;
 		$new_name = microtime(true).' Cancel '.self::TEST_FORM_HOST;
 
 		$interface = [
@@ -1943,7 +1941,7 @@ class testFormHost extends CWebTest {
 		// Check that the host creation page is open after cloning.
 		if ($data['action'] === 'Clone') {
 			$form_type->invalidate();
-			$id = CDBHelper::getValue('SELECT hostid FROM hosts WHERE host='.zbx_dbstr($host));
+			$id = CDBHelper::getValue('SELECT hostid FROM hosts WHERE host='.zbx_dbstr(self::TEST_FORM_HOST));
 			$expected_url = PHPUNIT_URL.'zabbix.php?action=popup&popup=host.edit&hostid='.$id;
 
 			$this->assertEquals($expected_url, $this->page->getCurrentUrl());
