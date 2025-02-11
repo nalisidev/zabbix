@@ -1,1 +1,1 @@
-..F....... [ZBX-25744] fixed top hosts sparkline chart incorrect width (isharha)
+..F....... [ZBX-25744] fixed column width in Top hosts widget Sparkline chart when has only one column configuration (isharha)
