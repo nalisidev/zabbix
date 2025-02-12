@@ -166,7 +166,10 @@ else {
 							->setTimePeriodFrom($column_config['sparkline']['time_period']['from_ts'])
 							->setTimePeriodTo($column_config['sparkline']['time_period']['to_ts'])
 						);
-						$row[] = createTextColumn($formatted_value, $column['value'] ?? '', $color)
+
+						$textColumn = createTextColumn($formatted_value, $column['value'] ?? '', $color);
+
+						$row[] = $textColumn
 							->addStyle('width: 0;')
 							->addClass(ZBX_STYLE_NOWRAP);
 					}
