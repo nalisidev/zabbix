@@ -45,7 +45,7 @@ typedef struct
 }
 zbx_async_task_t;
 
-void zbx_address_free(zbx_address_t *address)
+void	zbx_address_free(zbx_address_t *address)
 {
 	zbx_free(address->ip);
 	zbx_free(address);
@@ -215,7 +215,7 @@ static void	async_dns_event(int err, struct evutil_addrinfo *ai, void *arg)
 		struct timeval	tv = {task->timeout, 0};
 		char		ip[65];
 
-		if (FAIL == zbx_inet_ntop(ai, ip, (socklen_t)sizeof(ip)))
+		if (FAIL == zbx_inet_ntop(ai->ai_addr, ip, (socklen_t)sizeof(ip)))
 			ip[0] = '\0';
 
 		task->ai = ai;
@@ -261,37 +261,6 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase)
 	}
 }
 
-static int	zbx_ares_inet_ntop(struct sockaddr *ai_addr, char *ip, socklen_t len)
-{
-	if (AF_INET == ai_addr->sa_family)
-	{
-		const struct sockaddr_in	*sin = (const struct sockaddr_in *) (void *)ai_addr;
-
-		if (NULL == inet_ntop(AF_INET, &sin->sin_addr, ip, len))
-		{
-			zabbix_log(LOG_LEVEL_DEBUG, "cannot get ip from IPv4 address: %s", zbx_strerror(errno));
-			return FAIL;
-		}
-
-		return SUCCEED;
-	}
-	else if (AF_INET6 == ai_addr->sa_family)
-	{
-		const struct sockaddr_in6	*sin6 = (const struct sockaddr_in6 *) (void *)ai_addr;
-
-		if (NULL == inet_ntop(AF_INET6, &sin6->sin6_addr, ip, len))
-		{
-			zabbix_log(LOG_LEVEL_DEBUG, "cannot get ip from IPv6 address: %s", zbx_strerror(errno));
-			return FAIL;
-		}
-
-		return SUCCEED;
-	}
-
-	zabbix_log(LOG_LEVEL_DEBUG, "unknown address family:%d", ai_addr->sa_family);
-	return FAIL;
-}
-
 static void	ares_addrinfo_cb(void *arg, int status, int timeouts, struct ares_addrinfo *ai)
 {
 	zbx_async_task_t	*task = (zbx_async_task_t *)arg;
@@ -310,7 +279,7 @@ static void	ares_addrinfo_cb(void *arg, int status, int timeouts, struct ares_ad
 		{
 			char	ip[65];
 
-			if (FAIL == zbx_ares_inet_ntop(nodes->ai_addr, ip, (socklen_t)sizeof(ip)))
+			if (FAIL == zbx_inet_ntop(nodes->ai_addr, ip, (socklen_t)sizeof(ip)))
 				ip[0] = '\0';
 
 			zabbix_log(LOG_LEVEL_DEBUG, "resolved address '%s'", ip);
@@ -333,11 +302,11 @@ static void	ares_addrinfo_cb(void *arg, int status, int timeouts, struct ares_ad
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
-void	zbx_async_poller_add_task(struct event_base *ev, struct evdns_base *dnsbase, const char *addr,
-		void *data, int timeout, zbx_async_task_process_cb_t process_cb, zbx_async_task_clear_cb_t clear_cb)
+void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, struct evdns_base *dnsbase,
+	const char *addr, void *data, int timeout, zbx_async_task_process_cb_t process_cb,
+	zbx_async_task_clear_cb_t clear_cb)
 {
-	zbx_async_task_t		*task;
-	struct ares_addrinfo_hints	hints;
+	zbx_async_task_t	*task;
 
 	task = (zbx_async_task_t *)zbx_malloc(NULL, sizeof(zbx_async_task_t));
 	task->data = data;
@@ -355,24 +324,46 @@ void	zbx_async_poller_add_task(struct event_base *ev, struct evdns_base *dnsbase
 	task->address = NULL;
 	zbx_vector_address_create(&task->addresses);
 
-	memset(&hints, 0, sizeof(hints));
+	if (NULL != channel)
+	{
+		struct ares_addrinfo_hints	hints;
 
-	if (SUCCEED == zbx_is_ip4(addr))
-		hints.ai_flags = AI_NUMERICHOST;
-#ifdef HAVE_IPV6
-	else if (SUCCEED == zbx_is_ip6(addr))
-		hints.ai_flags = AI_NUMERICHOST;
-#endif
+		memset(&hints, 0, sizeof(hints));
+
+		if (SUCCEED == zbx_is_ip4(addr))
+			hints.ai_flags = AI_NUMERICHOST;
+	#ifdef HAVE_IPV6
+		else if (SUCCEED == zbx_is_ip6(addr))
+			hints.ai_flags = AI_NUMERICHOST;
+	#endif
+		else
+			hints.ai_flags = 0;
+	
+		hints.ai_family = PF_UNSPEC;
+		hints.ai_socktype = SOCK_STREAM;
+
+		ares_getaddrinfo(channel, addr, NULL, &hints, ares_addrinfo_cb, task);
+	}
 	else
-		hints.ai_flags = 0;
+	{
+		struct evutil_addrinfo	hints;
 
-	hints.ai_family = PF_UNSPEC;
-	hints.ai_socktype = SOCK_STREAM;
+		memset(&hints, 0, sizeof(hints));
 
-	extern ares_channel		channel;
+		if (SUCCEED == zbx_is_ip4(addr))
+			hints.ai_flags = AI_NUMERICHOST;
+#ifdef HAVE_IPV6
+		else if (SUCCEED == zbx_is_ip6(addr))
+			hints.ai_flags = AI_NUMERICHOST;
+#endif
+		else
+			hints.ai_flags = 0;
+	
+		hints.ai_family = PF_UNSPEC;
+		hints.ai_socktype = SOCK_STREAM;
 
-	ares_getaddrinfo(channel, addr, NULL, &hints, ares_addrinfo_cb, task);
-	//evdns_getaddrinfo(dnsbase, addr, NULL, &hints, async_dns_event, task);
+		evdns_getaddrinfo(dnsbase, addr, NULL, &hints, async_dns_event, task);
+	}
 }
 
 zbx_async_task_state_t	zbx_async_poller_get_task_state_for_event(short event)

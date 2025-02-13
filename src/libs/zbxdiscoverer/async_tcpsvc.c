@@ -352,7 +352,7 @@ int	zbx_async_check_tcpsvc(zbx_dc_item_t *item, unsigned char svc_type, AGENT_RE
 	if (SUCCEED == (ret = tcpsvc_send_context_init(tcpsvc_context->svc_type, ZBX_TCP_PROTOCOL,
 			&tcpsvc_context->tcp_send_context, result)))
 	{
-		zbx_async_poller_add_task(base, dnsbase, tcpsvc_context->item.interface.addr, tcpsvc_context,
+		zbx_async_poller_add_task(base, NULL, dnsbase, tcpsvc_context->item.interface.addr, tcpsvc_context,
 				item->timeout + 1, tcpsvc_task_process, clear_cb);
 	}
 	else

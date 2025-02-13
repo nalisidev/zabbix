@@ -375,7 +375,7 @@ void	zbx_async_check_telnet(zbx_dc_item_t *item, zbx_async_task_clear_cb_t clear
 
 	telnet_context->step = ZABBIX_TELNET_STEP_CONNECT_INIT;
 
-	zbx_async_poller_add_task(base, dnsbase, telnet_context->item.interface.addr, telnet_context,
+	zbx_async_poller_add_task(base, NULL, dnsbase, telnet_context->item.interface.addr, telnet_context,
 			item->timeout + 1, telnet_task_process, clear_cb);
 
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);

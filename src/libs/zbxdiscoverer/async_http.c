@@ -73,7 +73,7 @@ void	process_http_response(CURL *easy_handle, CURLcode err, void *arg)
 	else
 	{
 		http_context->res = SUCCEED;
-		zbx_async_poller_add_task(poller_config->base, poller_config->dnsbase,
+		zbx_async_poller_add_task(poller_config->base, NULL, poller_config->dnsbase,
 				http_context->async_result->dresult->ip, http_context, http_context->config_timeout,
 				http_task_process, process_http_result);
 	}

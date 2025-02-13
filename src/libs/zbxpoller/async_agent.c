@@ -329,8 +329,9 @@ void	zbx_async_check_agent_clean(zbx_agent_context *agent_context)
 }
 
 int	zbx_async_check_agent(zbx_dc_item_t *item, AGENT_RESULT *result,  zbx_async_task_clear_cb_t clear_cb,
-		void *arg, void *arg_action, struct event_base *base, struct evdns_base *dnsbase,
-		const char *config_source_ip, zbx_async_resolve_reverse_dns_t resolve_reverse_dns)
+		void *arg, void *arg_action, struct event_base *base, ares_channel_t *channel,
+		struct evdns_base *dnsbase, const char *config_source_ip,
+		zbx_async_resolve_reverse_dns_t resolve_reverse_dns)
 {
 	zbx_agent_context	*agent_context = zbx_malloc(NULL, sizeof(zbx_agent_context));
 	int			ret = NOTSUPPORTED;
@@ -418,7 +419,7 @@ int	zbx_async_check_agent(zbx_dc_item_t *item, AGENT_RESULT *result,  zbx_async_
 
 	agent_context->step = ZABBIX_AGENT_STEP_CONNECT_INIT;
 
-	zbx_async_poller_add_task(base, dnsbase, agent_context->item.interface.addr, agent_context, item->timeout + 1,
+	zbx_async_poller_add_task(base, channel, dnsbase, agent_context->item.interface.addr, agent_context, item->timeout + 1,
 			agent_task_process, clear_cb);
 
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s():%s", __func__, zbx_result_string(SUCCEED));

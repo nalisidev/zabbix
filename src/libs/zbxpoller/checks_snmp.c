@@ -3356,8 +3356,9 @@ void	zbx_async_check_snmp_clean(zbx_snmp_context_t *snmp_context)
 }
 
 int	zbx_async_check_snmp(zbx_dc_item_t *item, AGENT_RESULT *result, zbx_async_task_clear_cb_t clear_cb,
-		void *arg, void *arg_action, struct event_base *base, struct evdns_base *dnsbase,
-		const char *config_source_ip, zbx_async_resolve_reverse_dns_t resolve_reverse_dns, int retries)
+		void *arg, void *arg_action, struct event_base *base, ares_channel_t *channel,
+		struct evdns_base *dnsbase, const char *config_source_ip,
+		zbx_async_resolve_reverse_dns_t resolve_reverse_dns, int retries)
 {
 	int			ret = SUCCEED, pdu_type, is_oid_plain = 0;
 	AGENT_REQUEST		request;
@@ -3503,8 +3504,8 @@ int	zbx_async_check_snmp(zbx_dc_item_t *item, AGENT_RESULT *result, zbx_async_ta
 		zbx_vector_bulkwalk_context_append(&snmp_context->bulkwalk_contexts, bulkwalk_context);
 	}
 
-	zbx_async_poller_add_task(base, dnsbase, snmp_context->item.interface.addr, snmp_context, item->timeout,
-			snmp_task_process, clear_cb);
+	zbx_async_poller_add_task(base, channel, dnsbase, snmp_context->item.interface.addr, snmp_context,
+			item->timeout, snmp_task_process, clear_cb);
 
 	ret = SUCCEED;
 out:
@@ -3918,7 +3919,7 @@ void	get_values_snmp(zbx_dc_item_t *items, AGENT_RESULT *results, int *errcodes,
 		zbx_set_snmp_bulkwalk_options(progname);
 
 		if (SUCCEED == (errcodes[j] = zbx_async_check_snmp(&items[j], &results[j], process_snmp_result,
-				&snmp_result, NULL, snmp_result.base, dnsbase, config_source_ip,
+				&snmp_result, NULL, snmp_result.base, NULL, dnsbase, config_source_ip,
 				ZABBIX_ASYNC_RESOLVE_REVERSE_DNS_NO, ZBX_SNMP_DEFAULT_NUMBER_OF_RETRIES)))
 		{
 			if (1 == snmp_result.finished || -1 != event_base_dispatch(snmp_result.base))

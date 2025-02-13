@@ -287,8 +287,8 @@ static void	async_initiate_queued_checks(zbx_poller_config_t *poller_config, con
 			{
 				errcodes[i] = zbx_async_check_agent(&items[i], &results[i], process_agent_result,
 						poller_config, poller_config, poller_config->base,
-						poller_config->dnsbase, poller_config->config_source_ip,
-						ZABBIX_ASYNC_RESOLVE_REVERSE_DNS_NO);
+						poller_config->channel, poller_config->dnsbase,
+						poller_config->config_source_ip, ZABBIX_ASYNC_RESOLVE_REVERSE_DNS_NO);
 			}
 			else
 			{
@@ -296,9 +296,9 @@ static void	async_initiate_queued_checks(zbx_poller_config_t *poller_config, con
 				zbx_set_snmp_bulkwalk_options(zbx_progname);
 
 				errcodes[i] = zbx_async_check_snmp(&items[i], &results[i], process_snmp_result,
-						poller_config, poller_config, poller_config->base,
-						poller_config->dnsbase, poller_config->config_source_ip,
-						ZABBIX_ASYNC_RESOLVE_REVERSE_DNS_NO, ZBX_SNMP_DEFAULT_NUMBER_OF_RETRIES);
+					poller_config, poller_config, poller_config->base, poller_config->channel,
+					poller_config->dnsbase, poller_config->config_source_ip,
+					ZABBIX_ASYNC_RESOLVE_REVERSE_DNS_NO, ZBX_SNMP_DEFAULT_NUMBER_OF_RETRIES);
 	#else
 				errcodes[i] = NOTSUPPORTED;
 				SET_MSG_RESULT(&results[i], zbx_strdup(NULL, "Support for SNMP checks was not compiled"
@@ -347,8 +347,6 @@ static void	async_wake_cb(void *data)
 	event_active((struct event *)data, 0, 0);
 }
 
-ares_channel		channel;
-
 static void	async_timer(evutil_socket_t fd, short events, void *arg)
 {
 	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)arg;
@@ -358,7 +356,7 @@ static void	async_timer(evutil_socket_t fd, short events, void *arg)
 
 	if (ZBX_IS_RUNNING())
 	{
-		ares_process_fd(channel, ARES_SOCKET_BAD, ARES_SOCKET_BAD);
+		ares_process_fd(poller_config->channel, ARES_SOCKET_BAD, ARES_SOCKET_BAD);
 		zbx_async_manager_queue_sync(poller_config->manager);
 	}
 }
@@ -463,7 +461,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 static void	ares_sock_cb(evutil_socket_t fd, short events, void *arg)
 {
 	zabbix_log(LOG_LEVEL_WARNING, "process:%d", events);
-	ares_process_fd(channel, (events & EV_READ) ? fd : ARES_SOCKET_BAD, (events & EV_WRITE) ? fd : ARES_SOCKET_BAD);
+	ares_process_fd((ares_channel_t *)arg, (events & EV_READ) ? fd : ARES_SOCKET_BAD, (events & EV_WRITE) ? fd : ARES_SOCKET_BAD);
 }
 
 static void	sock_state_cb(void *data, int s, int read, int write)
@@ -486,7 +484,7 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 	}
 
 	struct event	*ev = event_new(poller_config->base, s,
-		(0 != read ? EV_READ : 0) | (0 != write ? EV_WRITE : 0), ares_sock_cb, &channel);
+		(0 != read ? EV_READ : 0) | (0 != write ? EV_WRITE : 0), ares_sock_cb, poller_config->channel);
 
 	if (NULL == ev)
 	{
@@ -521,14 +519,13 @@ static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread
 	optmask = ARES_OPT_SOCK_STATE_CB;
 	options.sock_state_cb = sock_state_cb;
 	options.sock_state_cb_data = poller_config;
-	status = ares_init_options(&channel, &options, optmask);
+	status = ares_init_options(&poller_config->channel, &options, optmask);
 
 	if (ARES_SUCCESS != status)
 	{
 		zabbix_log(LOG_LEVEL_ERR, "cannot set c-ares library options: %s", ares_strerror(status));
 		exit(EXIT_FAILURE);
 	}
-
 
 	if (NULL == (poller_config->dnsbase = evdns_base_new(poller_config->base, EVDNS_BASE_INITIALIZE_NAMESERVERS)))
 	{
