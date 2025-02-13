@@ -387,7 +387,8 @@ static int	fd_event_compare_func(const void *d1, const void *d2)
 
 static void	fd_event_clean(zbx_fd_event *fd_event)
 {
-	zabbix_log(LOG_LEVEL_WARNING, "removing event for socket:%d", fd_event->fd);
+	zabbix_log(LOG_LEVEL_DEBUG, "removing event for socket:%d", fd_event->fd);
+
 	if (0 != event_del(fd_event->event))
 		zabbix_log(LOG_LEVEL_WARNING, "cannot remove event for socket:%d", fd_event->fd);
 
@@ -725,7 +726,7 @@ ZBX_THREAD_ENTRY(zbx_async_poller_thread, args)
 			poller_config.processed = 0;
 			poller_config.queued = 0;
 			last_stat_time = time(NULL);
-			zabbix_log(LOG_LEVEL_INFORMATION, "number of active events:%d",
+			zabbix_log(LOG_LEVEL_TRACE, "number of active events:%d",
 				event_base_get_num_events(poller_config.base, EVENT_BASE_COUNT_ADDED));
 		}
 
