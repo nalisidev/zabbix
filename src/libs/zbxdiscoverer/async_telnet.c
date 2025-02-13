@@ -14,6 +14,7 @@
 
 #include "async_telnet.h"
 
+#include "zbxasyncpoller.h"
 #include "zbxpoller.h"
 #include "zbxtimekeeper.h"
 #include "zbxcomms.h"
@@ -160,8 +161,8 @@ static zbx_telnet_protocol_step_t	async_telnet_recv(zbx_telnet_context_t *telnet
 #undef OPT_SGA
 }
 
-static int	telnet_task_process(short event, void *data, int *fd, struct evutil_addrinfo **current_ai,
-		const char *addr, char *dnserr, struct event *timeout_event)
+static int	telnet_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses,
+		char *dnserr, struct event *timeout_event)
 {
 #	define	SET_RESULT_SUCCEED								\
 		SET_UI64_RESULT(&telnet_context->item.result, 1);				\
@@ -184,10 +185,10 @@ static int	telnet_task_process(short event, void *data, int *fd, struct evutil_a
 	short				event_new = 0;
 	zbx_async_task_state_t		state;
 	zbx_telnet_protocol_step_t	rc;
+	const char			*addr = 0 != addresses->values_num ? addresses->values[0]->ip : NULL;
 
 	ZBX_UNUSED(dnserr);
 	ZBX_UNUSED(timeout_event);
-	ZBX_UNUSED(current_ai);
 
 	if (NULL != poller_config && ZBX_PROCESS_STATE_IDLE == poller_config->state)
 	{
@@ -196,7 +197,8 @@ static int	telnet_task_process(short event, void *data, int *fd, struct evutil_a
 	}
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() step '%s' event:%d itemid:" ZBX_FS_UI64 " addr:%s", __func__,
-				get_telnet_step_string(telnet_context->step), event, telnet_context->item.itemid, addr);
+				get_telnet_step_string(telnet_context->step), event, telnet_context->item.itemid,
+				addr);
 
 
 	if (ZABBIX_ASYNC_STEP_REVERSE_DNS == telnet_context->rdns_step)

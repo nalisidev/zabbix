@@ -12,6 +12,7 @@
 ** If not, see <https://www.gnu.org/licenses/>.
 **/
 
+#include "zbxcommon.h"
 #include "zbxpoller.h"
 
 #include "async_manager.h"
@@ -45,6 +46,7 @@
 #include "zbxasyncpoller.h"
 
 #include <event2/dns.h>
+#include <ares.h>
 
 #ifndef EVDNS_BASE_INITIALIZE_NAMESERVERS
 #	define EVDNS_BASE_INITIALIZE_NAMESERVERS	1
@@ -417,9 +419,68 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
+ares_channel		channel;
+
+static void	ares_sock_cb(evutil_socket_t fd, short events, void *arg)
+{
+	zabbix_log(LOG_LEVEL_WARNING, "process:%d", events);
+	ares_process_fd(channel, (events & EV_READ) ? fd : ARES_SOCKET_BAD, (events & EV_WRITE) ? fd : ARES_SOCKET_BAD);
+}
+
+
+static void	sock_state_cb(void *data, int s, int read, int write)
+{
+	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)data;
+
+	zabbix_log(LOG_LEVEL_WARNING, "read:%d write:%d", read, write);
+
+	if (0 == read && 0 == write)
+	{
+		zabbix_log(LOG_LEVEL_WARNING, "remove event");
+		return;
+	}
+
+	struct event	*ev = event_new(poller_config->base, s,
+		(0 != read ? EV_READ : 0) | (0 != write ? EV_WRITE : 0), ares_sock_cb, &channel);
+
+	if (NULL == ev)
+	{
+		zabbix_log(LOG_LEVEL_WARNING, "Failed to create new event");
+		return;
+	}
+
+	if (0 != event_add(ev, NULL))
+	{
+		zabbix_log(LOG_LEVEL_WARNING,  "Failed to add event");
+		event_free(ev);
+	}
+}
+
 static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread_poller_args *poller_args_in)
 {
-	char	*timeout;
+	char			*timeout;
+	struct ares_options	options;
+	int			optmask, status;
+
+	status = ares_library_init(ARES_LIB_INIT_ALL);
+
+	if (ARES_SUCCESS != status)
+	{
+		zabbix_log(LOG_LEVEL_ERR, "cannot initialise c-ares library: %s", ares_strerror(status));
+		exit(EXIT_FAILURE);
+	}
+
+	optmask = ARES_OPT_SOCK_STATE_CB;
+	options.sock_state_cb = sock_state_cb;
+	options.sock_state_cb_data = poller_config;
+	status = ares_init_options(&channel, &options, optmask);
+
+	if (ARES_SUCCESS != status)
+	{
+		zabbix_log(LOG_LEVEL_ERR, "cannot set c-ares library options: %s", ares_strerror(status));
+		exit(EXIT_FAILURE);
+	}
+
 
 	if (NULL == (poller_config->dnsbase = evdns_base_new(poller_config->base, EVDNS_BASE_INITIALIZE_NAMESERVERS)))
 	{
@@ -615,6 +676,8 @@ ZBX_THREAD_ENTRY(zbx_async_poller_thread, args)
 			poller_config.processed = 0;
 			poller_config.queued = 0;
 			last_stat_time = time(NULL);
+			zabbix_log(LOG_LEVEL_INFORMATION, "number of active events:%d",
+				event_base_get_num_events(poller_config.base, EVENT_BASE_COUNT_ADDED));
 		}
 
 		if (SUCCEED == zbx_rtc_wait(&rtc, info, &rtc_cmd, &rtc_data, 0) && 0 != rtc_cmd)
@@ -645,7 +708,9 @@ ZBX_THREAD_ENTRY(zbx_async_poller_thread, args)
 #undef SNMP_ENGINEID_HK_INTERVAL
 #endif
 		if (ZBX_POLLER_TYPE_HTTPAGENT != poller_type)
+		{
 			zbx_async_dns_update_host_addresses(poller_config.dnsbase);
+		}
 	}
 
 	if (ZBX_POLLER_TYPE_HTTPAGENT != poller_type)

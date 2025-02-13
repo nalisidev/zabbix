@@ -12,6 +12,7 @@
 ** If not, see <https://www.gnu.org/licenses/>.
 **/
 
+#include "zbxcfg.h"
 #include "zbxpoller.h"
 
 #include "zbxasyncpoller.h"
@@ -49,8 +50,8 @@ static const char	*get_agent_step_string(zbx_zabbix_agent_step_t step)
 	}
 }
 
-static int	agent_task_process(short event, void *data, int *fd, struct evutil_addrinfo **current_ai,
-		const char *addr, char *dnserr, struct event *timeout_event)
+static int	agent_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses,
+		char *dnserr, struct event *timeout_event)
 {
 	zbx_agent_context	*agent_context = (zbx_agent_context *)data;
 	short			event_new = 0;
@@ -64,7 +65,7 @@ static int	agent_task_process(short event, void *data, int *fd, struct evutil_ad
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() step '%s' event:%d itemid:" ZBX_FS_UI64 " addr:%s", __func__,
 				get_agent_step_string(agent_context->step), event, agent_context->item.itemid,
-				ZBX_NULL2EMPTY_STR(addr));
+				0 != addresses->values_num ? addresses->values[0]->ip : "");
 
 	if (NULL != poller_config && ZBX_PROCESS_STATE_IDLE == poller_config->state)
 	{
@@ -74,8 +75,8 @@ static int	agent_task_process(short event, void *data, int *fd, struct evutil_ad
 
 	if (ZABBIX_ASYNC_STEP_REVERSE_DNS == agent_context->rdns_step)
 	{
-		if (NULL != addr)
-			agent_context->reverse_dns = zbx_strdup(NULL, addr);
+		if (0 != addresses->values_num)
+			agent_context->reverse_dns = zbx_strdup(NULL, addresses->values[0]->ip);
 
 		goto stop;
 	}
@@ -100,15 +101,17 @@ static int	agent_task_process(short event, void *data, int *fd, struct evutil_ad
 						agent_context->item.interface.port));
 				return ZBX_ASYNC_TASK_STOP;
 			case ZABBIX_AGENT_STEP_CONNECT_WAIT:
-				if (NULL != (*current_ai)->ai_next)
+				if (1 < addresses->values_num)
 				{
 					/* reset timeout and retry with next address */
 					struct timeval	tv = {agent_context->config_timeout, 0};
 
 					evtimer_add(timeout_event, &tv);
 
+					zbx_address_free(addresses->values[0]);
+					zbx_vector_address_remove(addresses, 0);
+
 					agent_context->step = ZABBIX_AGENT_STEP_CONNECT_INIT;
-					*current_ai = (*current_ai)->ai_next;
 					break;
 				}
 
@@ -158,20 +161,9 @@ static int	agent_task_process(short event, void *data, int *fd, struct evutil_ad
 					ZBX_TCP_PROTOCOL, &agent_context->tcp_send_context);
 			}
 
-			char	ip[65];
-
-			if (FAIL == zbx_inet_ntop(*current_ai, ip, (socklen_t)sizeof(ip)))
-			{
-				agent_context->item.ret = NETWORK_ERROR;
-				SET_MSG_RESULT(&agent_context->item.result,
-						zbx_dsprintf(NULL, "Get value from agent failed during %s: invalid"
-						" address", get_agent_step_string(agent_context->step)));
-				goto out;
-			}
-
 			if (SUCCEED != zbx_socket_connect(&agent_context->s, SOCK_STREAM,
-					agent_context->config_source_ip, ip, agent_context->item.interface.port,
-					agent_context->config_timeout))
+					agent_context->config_source_ip, addresses->values[0]->ip,
+					agent_context->item.interface.port, agent_context->config_timeout))
 			{
 				agent_context->item.ret = NETWORK_ERROR;
 				SET_MSG_RESULT(&agent_context->item.result,
@@ -187,10 +179,12 @@ static int	agent_task_process(short event, void *data, int *fd, struct evutil_ad
 			if (0 == getsockopt(agent_context->s.socket, SOL_SOCKET, SO_ERROR, &errnum, &optlen) &&
 					0 != errnum)
 			{
-				if (NULL != (*current_ai)->ai_next)
+				if (1 < addresses->values_num)
 				{
+					zbx_address_free(addresses->values[0]);
+					zbx_vector_address_remove(addresses, 0);
+
 					agent_context->step = ZABBIX_AGENT_STEP_CONNECT_INIT;
-					*current_ai =(*current_ai)->ai_next;
 					break;
 				}
 
@@ -319,7 +313,7 @@ stop:
 out:
 	zbx_tcp_send_context_clear(&agent_context->tcp_send_context);
 	if (ZABBIX_AGENT_STEP_CONNECT_INIT == agent_context->step)
-		return agent_task_process(0, data, fd, current_ai, addr, dnserr, NULL);
+		return agent_task_process(0, data, fd, addresses, dnserr, NULL);
 
 	return ZBX_ASYNC_TASK_STOP;
 }

@@ -12,16 +12,21 @@
 ** If not, see <https://www.gnu.org/licenses/>.
 **/
 
+#include "zbxalgo.h"
 #include "zbxasyncpoller.h"
 #include "zbxcommon.h"
 #include "zbxcomms.h"
 #include "zbxtime.h"
+#include <ares.h>
 
 #ifdef HAVE_LIBEVENT
 #include "zbxip.h"
 #include <event2/dns.h>
 #include <event2/event.h>
 #include <event2/util.h>
+
+ZBX_PTR_VECTOR_IMPL(address, zbx_address_t *)
+
 typedef struct
 {
 	void				*data;
@@ -36,8 +41,15 @@ typedef struct
 	struct evutil_addrinfo		*ai;
 	struct evutil_addrinfo		*current_ai;
 	char				*address;
+	zbx_vector_address_t		addresses;
 }
 zbx_async_task_t;
+
+void zbx_address_free(zbx_address_t *address)
+{
+	zbx_free(address->ip);
+	zbx_free(address);
+}
 
 static void	async_reverse_dns_event(int err, char type, int count, int ttl, void *addresses, void *arg);
 
@@ -57,6 +69,8 @@ static void	async_task_remove(zbx_async_task_t *task)
 	if (NULL != task->ai)
 		evutil_freeaddrinfo(task->ai);
 
+	zbx_vector_address_clear_ext(&task->addresses, zbx_address_free);
+	zbx_vector_address_destroy(&task->addresses);
 	zbx_free(task->address);
 	zbx_free(task->error);
 	zbx_free(task);
@@ -87,8 +101,7 @@ static void	async_event(evutil_socket_t fd, short what, void *arg)
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s()", __func__);
 
-	ret = task->process_cb(what, task->data, &fd, &task->current_ai, task->address, task->error,
-			task->timeout_event);
+	ret = task->process_cb(what, task->data, &fd, &task->addresses, task->error, task->timeout_event);
 
 	switch (ret)
 	{
@@ -248,11 +261,83 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase)
 	}
 }
 
+static int	zbx_ares_inet_ntop(struct sockaddr *ai_addr, char *ip, socklen_t len)
+{
+	if (AF_INET == ai_addr->sa_family)
+	{
+		const struct sockaddr_in	*sin = (const struct sockaddr_in *) (void *)ai_addr;
+
+		if (NULL == inet_ntop(AF_INET, &sin->sin_addr, ip, len))
+		{
+			zabbix_log(LOG_LEVEL_DEBUG, "cannot get ip from IPv4 address: %s", zbx_strerror(errno));
+			return FAIL;
+		}
+
+		return SUCCEED;
+	}
+	else if (AF_INET6 == ai_addr->sa_family)
+	{
+		const struct sockaddr_in6	*sin6 = (const struct sockaddr_in6 *) (void *)ai_addr;
+
+		if (NULL == inet_ntop(AF_INET6, &sin6->sin6_addr, ip, len))
+		{
+			zabbix_log(LOG_LEVEL_DEBUG, "cannot get ip from IPv6 address: %s", zbx_strerror(errno));
+			return FAIL;
+		}
+
+		return SUCCEED;
+	}
+
+	zabbix_log(LOG_LEVEL_DEBUG, "unknown address family:%d", ai_addr->sa_family);
+	return FAIL;
+}
+
+static void	ares_addrinfo_cb(void *arg, int status, int timeouts, struct ares_addrinfo *ai)
+{
+	zbx_async_task_t	*task = (zbx_async_task_t *)arg;
+
+	zabbix_log(LOG_LEVEL_INFORMATION, "In %s() result:%d", __func__, status);
+
+	if (0 != status)
+	{
+		zabbix_log(LOG_LEVEL_INFORMATION, "cannot resolve DNS name: %s", ares_strerror(status));
+		task->error = zbx_strdup(task->error, ares_strerror(status));
+		async_event(-1, EV_TIMEOUT, task);
+	}
+	else
+	{
+		for (struct ares_addrinfo_node	*nodes = ai->nodes; NULL != nodes; nodes = nodes->ai_next)
+		{
+			char	ip[65];
+
+			if (FAIL == zbx_ares_inet_ntop(nodes->ai_addr, ip, (socklen_t)sizeof(ip)))
+				ip[0] = '\0';
+
+			zabbix_log(LOG_LEVEL_DEBUG, "resolved address '%s'", ip);
+
+			zbx_address_t	*address = zbx_malloc(NULL, sizeof(zbx_address_t));
+
+			address->ip = zbx_strdup(NULL, ip);
+
+			zbx_vector_address_append(&task->addresses, address);
+		}
+
+		ares_freeaddrinfo(ai);
+
+		struct timeval	tv = {task->timeout, 0};
+
+		evtimer_add(task->timeout_event, &tv);
+		async_event(-1, 0, task);
+	}
+
+	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
+}
+
 void	zbx_async_poller_add_task(struct event_base *ev, struct evdns_base *dnsbase, const char *addr,
 		void *data, int timeout, zbx_async_task_process_cb_t process_cb, zbx_async_task_clear_cb_t clear_cb)
 {
-	zbx_async_task_t	*task;
-	struct evutil_addrinfo	hints;
+	zbx_async_task_t		*task;
+	struct ares_addrinfo_hints	hints;
 
 	task = (zbx_async_task_t *)zbx_malloc(NULL, sizeof(zbx_async_task_t));
 	task->data = data;
@@ -268,6 +353,7 @@ void	zbx_async_poller_add_task(struct event_base *ev, struct evdns_base *dnsbase
 	task->ai = NULL;
 	task->current_ai = NULL;
 	task->address = NULL;
+	zbx_vector_address_create(&task->addresses);
 
 	memset(&hints, 0, sizeof(hints));
 
@@ -283,7 +369,11 @@ void	zbx_async_poller_add_task(struct event_base *ev, struct evdns_base *dnsbase
 	hints.ai_family = PF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 
-	evdns_getaddrinfo(dnsbase, addr, NULL, &hints, async_dns_event, task);
+	extern ares_channel		channel;
+	
+
+	ares_getaddrinfo(channel, addr, NULL, &hints, ares_addrinfo_cb, task);
+	//evdns_getaddrinfo(dnsbase, addr, NULL, &hints, async_dns_event, task);
 }
 
 zbx_async_task_state_t	zbx_async_poller_get_task_state_for_event(short event)

@@ -2013,7 +2013,7 @@ if test "x$found_iconv" != "xyes"; then
 	AC_MSG_ERROR([Unable to use iconv (libiconv check failed)])
 fi
 LDFLAGS="$LDFLAGS $ICONV_LDFLAGS"
-LIBS="$LIBS $ICONV_LIBS"
+LIBS="-lcares $LIBS $ICONV_LIBS"
 
 TIMES_CHECK_NULL_ARG([no])
 

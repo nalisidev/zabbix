@@ -3061,8 +3061,8 @@ void	zbx_unset_snmp_bulkwalk_options(void)
 	snmp_bulkwalk_set_options(&default_opts);
 }
 
-static int	snmp_task_process(short event, void *data, int *fd, struct evutil_addrinfo **current_ai,
-	const char *addr, char *dnserr, struct event *timeout_event)
+static int	snmp_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses, char *dnserr,
+		struct event *timeout_event)
 {
 	zbx_bulkwalk_context_t	*bulkwalk_context;
 	zbx_snmp_context_t	*snmp_context = (zbx_snmp_context_t *)data;
@@ -3070,8 +3070,6 @@ static int	snmp_task_process(short event, void *data, int *fd, struct evutil_add
 	const char		*snmp_error;
 	int			ret, task_ret = ZBX_ASYNC_TASK_STOP;
 	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)snmp_context->arg_action;
-
-	ZBX_UNUSED(current_ai);
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() itemid:" ZBX_FS_UI64 " %s event:%d fd:%d", __func__,
 			snmp_context->item.itemid, zbx_get_event_string(event), event, *fd);
@@ -3086,8 +3084,8 @@ static int	snmp_task_process(short event, void *data, int *fd, struct evutil_add
 
 	if (ZABBIX_ASYNC_STEP_REVERSE_DNS == snmp_context->step)
 	{
-		if (NULL != addr)
-			snmp_context->reverse_dns = zbx_strdup(NULL, addr);
+		if (0 != addresses->values_num)
+			snmp_context->reverse_dns = zbx_strdup(NULL, addresses->values[0]->ip);
 
 		goto stop;
 	}
@@ -3269,11 +3267,12 @@ static int	snmp_task_process(short event, void *data, int *fd, struct evutil_add
 	}
 	else
 	{
-		if (NULL == (snmp_context->ssp = zbx_snmp_open_session(snmp_context->snmp_version, addr,
-				snmp_context->item.interface.port, snmp_context->snmp_community,
-				snmp_context->snmpv3_securityname, snmp_context->snmpv3_contextname,
-				snmp_context->snmpv3_securitylevel, snmp_context->snmpv3_authprotocol,
-				snmp_context->snmpv3_authpassphrase, snmp_context->snmpv3_privprotocol,
+		if (NULL == (snmp_context->ssp = zbx_snmp_open_session(snmp_context->snmp_version,
+				addresses->values[0]->ip, snmp_context->item.interface.port,
+				snmp_context->snmp_community, snmp_context->snmpv3_securityname,
+				snmp_context->snmpv3_contextname, snmp_context->snmpv3_securitylevel,
+				snmp_context->snmpv3_authprotocol, snmp_context->snmpv3_authpassphrase,
+				snmp_context->snmpv3_privprotocol,
 				snmp_context->snmpv3_privpassphrase, error, sizeof(error),
 				0, snmp_context->config_source_ip, snmp_context->item.itemid)))
 		{
