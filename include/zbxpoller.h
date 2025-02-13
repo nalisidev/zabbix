@@ -164,7 +164,7 @@ typedef struct
 	struct event_base	*base;
 	struct evdns_base	*dnsbase;
 	zbx_hashset_t		interfaces;
-	zbx_hashset_t		fds;
+	zbx_hashset_t		fd_events;
 #ifdef HAVE_LIBCURL
 	CURLM			*curl_handle;
 #endif

@@ -12,7 +12,6 @@
 ** If not, see <https://www.gnu.org/licenses/>.
 **/
 
-#include "zbxcfg.h"
 #include "zbxpoller.h"
 
 #include "zbxasyncpoller.h"

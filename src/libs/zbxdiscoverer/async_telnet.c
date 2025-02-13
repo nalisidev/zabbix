@@ -197,9 +197,7 @@ static int	telnet_task_process(short event, void *data, int *fd, zbx_vector_addr
 	}
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() step '%s' event:%d itemid:" ZBX_FS_UI64 " addr:%s", __func__,
-				get_telnet_step_string(telnet_context->step), event, telnet_context->item.itemid,
-				addr);
-
+			get_telnet_step_string(telnet_context->step), event, telnet_context->item.itemid, addr);
 
 	if (ZABBIX_ASYNC_STEP_REVERSE_DNS == telnet_context->rdns_step)
 	{

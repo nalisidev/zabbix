@@ -407,7 +407,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 			ZBX_DEFAULT_UINT64_COMPARE_FUNC, (zbx_clean_func_t)zbx_interface_status_clean,
 			ZBX_DEFAULT_MEM_MALLOC_FUNC, ZBX_DEFAULT_MEM_REALLOC_FUNC, ZBX_DEFAULT_MEM_FREE_FUNC);
 
-	zbx_hashset_create_ext(&poller_config->fds, 100, fd_event_hash_func,
+	zbx_hashset_create_ext(&poller_config->fd_events, 100, fd_event_hash_func,
 			fd_event_compare_func, (zbx_clean_func_t)fd_event_clean,
 			ZBX_DEFAULT_MEM_MALLOC_FUNC, ZBX_DEFAULT_MEM_REALLOC_FUNC, ZBX_DEFAULT_MEM_FREE_FUNC);
 
@@ -476,11 +476,11 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 	if (0 == read && 0 == write)
 	{
 		zabbix_log(LOG_LEVEL_WARNING, "remove event");
-		fd_event = zbx_hashset_search(&poller_config->fds, &fd_event_local);
+		fd_event = zbx_hashset_search(&poller_config->fd_events, &fd_event_local);
 		if (NULL == fd_event)
 			zabbix_log(LOG_LEVEL_WARNING, "cannt find event for socket:%d", s);
 		else
-			zbx_hashset_remove_direct(&poller_config->fds, fd_event);
+			zbx_hashset_remove_direct(&poller_config->fd_events, fd_event);
 
 		return;
 	}
@@ -501,7 +501,7 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 		return;
 	}
 	fd_event_local.event = ev;
-	zbx_hashset_insert(&poller_config->fds, &fd_event_local, sizeof(fd_event_local));
+	zbx_hashset_insert(&poller_config->fd_events, &fd_event_local, sizeof(fd_event_local));
 }
 
 static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread_poller_args *poller_args_in)
@@ -578,7 +578,7 @@ static void	async_poller_stop(zbx_poller_config_t *poller_config)
 
 static void	async_poller_destroy(zbx_poller_config_t *poller_config)
 {
-	zbx_hashset_destroy(&poller_config->fds);
+	zbx_hashset_destroy(&poller_config->fd_events);
 	zbx_async_manager_free(poller_config->manager);
 	event_base_free(poller_config->base);
 	zbx_hashset_clear(&poller_config->interfaces);
