@@ -338,7 +338,7 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 	#endif
 		else
 			hints.ai_flags = 0;
-	
+
 		hints.ai_family = PF_UNSPEC;
 		hints.ai_socktype = SOCK_STREAM;
 
@@ -358,7 +358,7 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 #endif
 		else
 			hints.ai_flags = 0;
-	
+
 		hints.ai_family = PF_UNSPEC;
 		hints.ai_socktype = SOCK_STREAM;
 

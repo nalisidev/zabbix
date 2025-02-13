@@ -461,7 +461,8 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 static void	ares_sock_cb(evutil_socket_t fd, short events, void *arg)
 {
 	zabbix_log(LOG_LEVEL_WARNING, "process:%d", events);
-	ares_process_fd((ares_channel_t *)arg, (events & EV_READ) ? fd : ARES_SOCKET_BAD, (events & EV_WRITE) ? fd : ARES_SOCKET_BAD);
+	ares_process_fd((ares_channel_t *)arg, (events & EV_READ) ? fd : ARES_SOCKET_BAD,
+			(events & EV_WRITE) ? fd : ARES_SOCKET_BAD);
 }
 
 static void	sock_state_cb(void *data, int s, int read, int write)

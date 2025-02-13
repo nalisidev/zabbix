@@ -419,8 +419,8 @@ int	zbx_async_check_agent(zbx_dc_item_t *item, AGENT_RESULT *result,  zbx_async_
 
 	agent_context->step = ZABBIX_AGENT_STEP_CONNECT_INIT;
 
-	zbx_async_poller_add_task(base, channel, dnsbase, agent_context->item.interface.addr, agent_context, item->timeout + 1,
-			agent_task_process, clear_cb);
+	zbx_async_poller_add_task(base, channel, dnsbase, agent_context->item.interface.addr,
+		agent_context, item->timeout + 1, agent_task_process, clear_cb);
 
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s():%s", __func__, zbx_result_string(SUCCEED));
 
