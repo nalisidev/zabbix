@@ -356,7 +356,8 @@ static void	async_timer(evutil_socket_t fd, short events, void *arg)
 
 	if (ZBX_IS_RUNNING())
 	{
-		ares_process_fd(poller_config->channel, ARES_SOCKET_BAD, ARES_SOCKET_BAD);
+		if (NULL != poller_config->channel)
+			ares_process_fd(poller_config->channel, ARES_SOCKET_BAD, ARES_SOCKET_BAD);
 		zbx_async_manager_queue_sync(poller_config->manager);
 	}
 }
@@ -428,6 +429,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 			poller_args_in->config_max_concurrent_checks_per_poller;
 	poller_config->clear_cache = 0;
 	poller_config->process_num = process_num;
+	//poller_config->channel = NULL;
 
 	if (NULL == (poller_config->async_wake_timer = event_new(poller_config->base, -1, EV_PERSIST, async_wake,
 			poller_config)))
