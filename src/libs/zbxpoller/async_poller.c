@@ -481,13 +481,15 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() event '%s' fd:%d", __func__, zbx_get_event_string(events), s);
 
+	fd_event = zbx_hashset_search(&poller_config->fd_events, &fd_event_local);
+
+	if (NULL != fd_event)
+		zbx_hashset_remove_direct(&poller_config->fd_events, fd_event);
+
 	if (0 == events)
 	{
-		fd_event = zbx_hashset_search(&poller_config->fd_events, &fd_event_local);
 		if (NULL == fd_event)
 			zabbix_log(LOG_LEVEL_WARNING, "cannt find event for socket:%d", s);
-		else
-			zbx_hashset_remove_direct(&poller_config->fd_events, fd_event);
 
 		goto out;
 	}
