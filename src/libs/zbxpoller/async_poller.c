@@ -463,47 +463,53 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 
 static void	ares_sock_cb(evutil_socket_t fd, short events, void *arg)
 {
-	zabbix_log(LOG_LEVEL_WARNING, "process:%d", events);
+	zabbix_log(LOG_LEVEL_DEBUG, "In %s() event '%s' fd:%d", __func__, zbx_get_event_string(events), fd);
+
 	ares_process_fd((ares_channel_t *)arg, (events & EV_READ) ? fd : ARES_SOCKET_BAD,
 			(events & EV_WRITE) ? fd : ARES_SOCKET_BAD);
+
+	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
 static void	sock_state_cb(void *data, int s, int read, int write)
 {
 	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)data;
 	zbx_fd_event		fd_event_local = {.fd = s}, *fd_event;
+	short			events;
 
-	zabbix_log(LOG_LEVEL_WARNING, "read:%d write:%d", read, write);
+	events = (0 != read ? EV_READ : 0) | (0 != write ? EV_WRITE : 0);
 
-	if (0 == read && 0 == write)
+	zabbix_log(LOG_LEVEL_DEBUG, "In %s() event '%s' fd:%d", __func__, zbx_get_event_string(events), s);
+
+	if (0 == events)
 	{
-		zabbix_log(LOG_LEVEL_WARNING, "remove event");
 		fd_event = zbx_hashset_search(&poller_config->fd_events, &fd_event_local);
 		if (NULL == fd_event)
 			zabbix_log(LOG_LEVEL_WARNING, "cannt find event for socket:%d", s);
 		else
 			zbx_hashset_remove_direct(&poller_config->fd_events, fd_event);
 
-		return;
+		goto out;
 	}
 
-	struct event	*ev = event_new(poller_config->base, s,
-		(0 != read ? EV_READ : 0) | (0 != write ? EV_WRITE : 0), ares_sock_cb, poller_config->channel);
+	struct event	*ev = event_new(poller_config->base, s, events, ares_sock_cb, poller_config->channel);
 
 	if (NULL == ev)
 	{
 		zabbix_log(LOG_LEVEL_WARNING, "Failed to create new event");
-		return;
+		goto out;
 	}
 
 	if (0 != event_add(ev, NULL))
 	{
 		zabbix_log(LOG_LEVEL_WARNING,  "Failed to add event");
 		event_free(ev);
-		return;
+		goto out;
 	}
 	fd_event_local.event = ev;
 	zbx_hashset_insert(&poller_config->fd_events, &fd_event_local, sizeof(fd_event_local));
+out:
+	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
 static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread_poller_args *poller_args_in)
