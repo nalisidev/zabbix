@@ -347,6 +347,8 @@ static void	async_wake_cb(void *data)
 	event_active((struct event *)data, 0, 0);
 }
 
+ares_channel		channel;
+
 static void	async_timer(evutil_socket_t fd, short events, void *arg)
 {
 	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)arg;
@@ -355,7 +357,42 @@ static void	async_timer(evutil_socket_t fd, short events, void *arg)
 	ZBX_UNUSED(events);
 
 	if (ZBX_IS_RUNNING())
+	{
+		ares_process_fd(channel, ARES_SOCKET_BAD, ARES_SOCKET_BAD);
 		zbx_async_manager_queue_sync(poller_config->manager);
+	}
+}
+typedef struct
+{
+	int		fd;
+	struct event	*event;
+}
+zbx_fd_event;
+
+static zbx_hash_t	fd_event_hash_func(const void *data)
+{
+	const zbx_fd_event	*fd_event = (const zbx_fd_event *)data;
+
+	return ZBX_DEFAULT_HASH_ALGO(&fd_event->fd, sizeof(fd_event->fd), ZBX_DEFAULT_HASH_SEED);
+}
+
+static int	fd_event_compare_func(const void *d1, const void *d2)
+{
+	const zbx_fd_event	*i1 = (const zbx_fd_event *)d1;
+	const zbx_fd_event	*i2 = (const zbx_fd_event *)d2;
+
+	ZBX_RETURN_IF_NOT_EQUAL(i1->fd, i2->fd);
+
+	return 0;
+}
+
+static void	fd_event_clean(zbx_fd_event *fd_event)
+{
+	zabbix_log(LOG_LEVEL_WARNING, "removing event for socket:%d", fd_event->fd);
+	if (0 != event_del(fd_event->event))
+		zabbix_log(LOG_LEVEL_WARNING, "cannot remove event for socket:%d", fd_event->fd);
+
+	event_free(fd_event->event);
 }
 
 static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_poller_args *poller_args_in,
@@ -368,6 +405,10 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 
 	zbx_hashset_create_ext(&poller_config->interfaces, 100, ZBX_DEFAULT_UINT64_HASH_FUNC,
 			ZBX_DEFAULT_UINT64_COMPARE_FUNC, (zbx_clean_func_t)zbx_interface_status_clean,
+			ZBX_DEFAULT_MEM_MALLOC_FUNC, ZBX_DEFAULT_MEM_REALLOC_FUNC, ZBX_DEFAULT_MEM_FREE_FUNC);
+
+	zbx_hashset_create_ext(&poller_config->fds, 100, fd_event_hash_func,
+			fd_event_compare_func, (zbx_clean_func_t)fd_event_clean,
 			ZBX_DEFAULT_MEM_MALLOC_FUNC, ZBX_DEFAULT_MEM_REALLOC_FUNC, ZBX_DEFAULT_MEM_FREE_FUNC);
 
 	if (NULL == (poller_config->base = event_base_new()))
@@ -419,24 +460,28 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
-ares_channel		channel;
-
 static void	ares_sock_cb(evutil_socket_t fd, short events, void *arg)
 {
 	zabbix_log(LOG_LEVEL_WARNING, "process:%d", events);
 	ares_process_fd(channel, (events & EV_READ) ? fd : ARES_SOCKET_BAD, (events & EV_WRITE) ? fd : ARES_SOCKET_BAD);
 }
 
-
 static void	sock_state_cb(void *data, int s, int read, int write)
 {
 	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)data;
+	zbx_fd_event		fd_event_local = {.fd = s}, *fd_event;
 
 	zabbix_log(LOG_LEVEL_WARNING, "read:%d write:%d", read, write);
 
 	if (0 == read && 0 == write)
 	{
 		zabbix_log(LOG_LEVEL_WARNING, "remove event");
+		fd_event = zbx_hashset_search(&poller_config->fds, &fd_event_local);
+		if (NULL == fd_event)
+			zabbix_log(LOG_LEVEL_WARNING, "cannt find event for socket:%d", s);
+		else
+			zbx_hashset_remove_direct(&poller_config->fds, fd_event);
+
 		return;
 	}
 
@@ -453,7 +498,10 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 	{
 		zabbix_log(LOG_LEVEL_WARNING,  "Failed to add event");
 		event_free(ev);
+		return;
 	}
+	fd_event_local.event = ev;
+	zbx_hashset_insert(&poller_config->fds, &fd_event_local, sizeof(fd_event_local));
 }
 
 static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread_poller_args *poller_args_in)
