@@ -578,6 +578,7 @@ static void	async_poller_stop(zbx_poller_config_t *poller_config)
 
 static void	async_poller_destroy(zbx_poller_config_t *poller_config)
 {
+	zbx_hashset_destroy(&poller_config->fds);
 	zbx_async_manager_free(poller_config->manager);
 	event_base_free(poller_config->base);
 	zbx_hashset_clear(&poller_config->interfaces);
