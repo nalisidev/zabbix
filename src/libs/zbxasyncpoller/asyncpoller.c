@@ -370,7 +370,6 @@ void	zbx_async_poller_add_task(struct event_base *ev, struct evdns_base *dnsbase
 	hints.ai_socktype = SOCK_STREAM;
 
 	extern ares_channel		channel;
-	
 
 	ares_getaddrinfo(channel, addr, NULL, &hints, ares_addrinfo_cb, task);
 	//evdns_getaddrinfo(dnsbase, addr, NULL, &hints, async_dns_event, task);
