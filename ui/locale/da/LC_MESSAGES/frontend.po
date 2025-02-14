@@ -13526,8 +13526,8 @@ msgid "Menu path"
 msgstr "Menusti"
 
 #: widgets/piechart/includes/WidgetForm.php:138
-msgid "Merge sectors smaller than"
-msgstr "Flet sektorer mindre end"
+msgid "Merge sectors smaller than "
+msgstr "Flet sektorer mindre end "
 
 #: app/partials/scheduledreport.formgrid.html.php:178
 #: app/views/mediatype.message.edit.php:96
