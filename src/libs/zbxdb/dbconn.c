@@ -56,8 +56,6 @@ static zbx_mutex_t		db_sqlite_access = ZBX_MUTEX_NULL;
 
 #define ZBX_DB_WAIT_DOWN	10
 
-#define ZBX_MAX_IDS	950
-
 static int	dbconn_execute(zbx_dbconn_t *db, const char *fmt, ...);
 static zbx_db_result_t	dbconn_select(zbx_dbconn_t *db, const char *fmt, ...);
 static int	dbconn_open(zbx_dbconn_t *db);
@@ -2228,6 +2226,7 @@ void	zbx_dbconn_select_uint64(zbx_dbconn_t *db, const char *sql, zbx_vector_uint
 static int	dbconn_prepare_multiple_query_str(zbx_dbconn_t *db, const char *query, const char *field_name,
 		const zbx_vector_uint64_t *ids, char **sql, size_t *sql_alloc, size_t *sql_offset)
 {
+#define ZBX_MAX_IDS	950
 	int			i, j, ret = SUCCEED;
 	zbx_vector_str_t	str_ids;
 
@@ -2254,6 +2253,7 @@ static int	dbconn_prepare_multiple_query_str(zbx_dbconn_t *db, const char *query
 	zbx_vector_str_destroy(&str_ids);
 
 	return ret;
+#undef ZBX_MAX_IDS
 }
 
 /******************************************************************************
