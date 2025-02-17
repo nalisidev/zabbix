@@ -1707,6 +1707,22 @@ if test "x$server" = "xyes" || test "x$proxy" = "xyes"; then
 
 	AC_SUBST(ZLIB_CFLAGS)
 
+	dnl Checking for cares support
+	CARES_CHECK_CONFIG([no])
+	if test "x$want_cares" = "xyes"; then
+		if test "x$found_cares" != "xyes"; then
+			AC_MSG_ERROR([Unable to use cares (cares check failed)])
+		fi
+		have_cares="yes"
+	fi
+	SERVER_LDFLAGS="$SERVER_LDFLAGS $CARES_LDFLAGS"
+	SERVER_LIBS="$SERVER_LIBS $CARES_LIBS"
+
+	PROXY_LDFLAGS="$PROXY_LDFLAGS $CARES_LDFLAGS"
+	PROXY_LIBS="$PROXY_LIBS $CARES_LIBS"
+
+	AC_SUBST(CARES_CFLAGS)
+
 	dnl Check for 'libpthread' library that supports PTHREAD_PROCESS_SHARED flag
 	LIBPTHREAD_CHECK_CONFIG([no])
 	if test "x$found_libpthread" != "xyes"; then
@@ -2013,7 +2029,7 @@ if test "x$found_iconv" != "xyes"; then
 	AC_MSG_ERROR([Unable to use iconv (libiconv check failed)])
 fi
 LDFLAGS="$LDFLAGS $ICONV_LDFLAGS"
-LIBS="-lcares $LIBS $ICONV_LIBS"
+LIBS="$LIBS $ICONV_LIBS"
 
 TIMES_CHECK_NULL_ARG([no])
 
@@ -2419,6 +2435,10 @@ fi
 
 if test "x$UNIXODBC_CFLAGS" != "x"; then
 	echo "    unixODBC:              ${UNIXODBC_CFLAGS}"
+fi
+
+if test "x$CARES_CFLAGS" != "x"; then
+	echo "    cares:              ${CARES_CFLAGS}"
 fi
 
 if test "x$SNMP_CFLAGS" != "x"; then

@@ -22,7 +22,11 @@
 #ifdef HAVE_LIBEVENT
 #include <event2/dns.h>
 #include <event2/event.h>
+#ifdef HAVE_CARES
 #include <ares.h>
+#else
+typedef void ares_channel_t;
+#endif
 #include "zbxalgo.h"
 
 typedef enum

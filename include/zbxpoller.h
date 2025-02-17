@@ -18,7 +18,11 @@
 #include "zbxcacheconfig.h"
 #include "zbxasyncpoller.h"
 #include "module.h"
-#include "ares.h"
+#ifdef HAVE_CARES
+#include <ares.h>
+#else
+typedef void ares_channel_t;
+#endif
 
 ZBX_PTR_VECTOR_DECL(agent_result_ptr, AGENT_RESULT*)
 
@@ -164,7 +168,9 @@ typedef struct
 	const char		*config_ssl_key_location;
 	struct event		*async_wake_timer;
 	struct event		*async_timer;
+#ifdef HAVE_CARES
 	struct event		*async_timeout_timer;
+#endif
 	struct event_base	*base;
 	struct evdns_base	*dnsbase;
 	ares_channel_t		*channel;

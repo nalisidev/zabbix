@@ -46,7 +46,11 @@
 #include "zbxasyncpoller.h"
 
 #include <event2/dns.h>
+#ifdef HAVE_CARES
 #include <ares.h>
+#else
+typedef void ares_channel_t;
+#endif
 
 #ifndef EVDNS_BASE_INITIALIZE_NAMESERVERS
 #	define EVDNS_BASE_INITIALIZE_NAMESERVERS	1
@@ -357,7 +361,7 @@ static void	async_timer(evutil_socket_t fd, short events, void *arg)
 	if (ZBX_IS_RUNNING())
 		zbx_async_manager_queue_sync(poller_config->manager);
 }
-
+#ifdef HAVE_CARES
 static void	async_timeout_timer(evutil_socket_t fd, short events, void *arg)
 {
 	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)arg;
@@ -384,6 +388,7 @@ static void	async_timeout_timer(evutil_socket_t fd, short events, void *arg)
 		evtimer_add(poller_config->async_timeout_timer, &tv_next);
 	}
 }
+#endif
 
 typedef struct
 {
@@ -473,7 +478,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	}
 
 	evtimer_add(poller_config->async_timer, &tv);
-
+#ifdef HAVE_CARES
 	if (NULL == (poller_config->async_timeout_timer = event_new(poller_config->base, -1, 0, async_timeout_timer,
 			poller_config)))
 	{
@@ -482,6 +487,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	}
 
 	evtimer_add(poller_config->async_timeout_timer, &tv);
+#endif
 
 	if (NULL == (poller_config->manager = zbx_async_manager_create(1, async_wake_cb,
 			(void *)poller_config->async_wake_timer, poller_args_in, &error)))
@@ -494,6 +500,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
+#ifdef HAVE_CARES
 static void	ares_sock_cb(evutil_socket_t fd, short events, void *arg)
 {
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() event '%s' fd:%d", __func__, zbx_get_event_string(events), fd);
@@ -547,9 +554,12 @@ out:
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
+#endif
+
 static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread_poller_args *poller_args_in)
 {
 	char			*timeout;
+#ifdef HAVE_CARES
 	struct ares_options	options;
 	int			optmask, status;
 
@@ -573,6 +583,7 @@ static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread
 		zabbix_log(LOG_LEVEL_ERR, "cannot set c-ares library options: %s", ares_strerror(status));
 		exit(EXIT_FAILURE);
 	}
+#endif
 
 	if (NULL == (poller_config->dnsbase = evdns_base_new(poller_config->base, EVDNS_BASE_INITIALIZE_NAMESERVERS)))
 	{
@@ -606,8 +617,10 @@ static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread
 
 static void	async_poller_dns_destroy(zbx_poller_config_t *poller_config)
 {
+#ifdef HAVE_CARES
 	ares_destroy(poller_config->channel);
 	ares_library_cleanup();
+#endif
 	evdns_base_free(poller_config->dnsbase, 1);
 }
 
@@ -615,7 +628,9 @@ static void	async_poller_stop(zbx_poller_config_t *poller_config)
 {
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s()", __func__);
 
+#ifdef HAVE_CARES
 	evtimer_del(poller_config->async_timeout_timer);
+#endif
 	evtimer_del(poller_config->async_timer);
 	evtimer_del(poller_config->async_wake_timer);
 	event_base_dispatch(poller_config->base);

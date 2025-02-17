@@ -17,7 +17,11 @@
 #include "zbxcommon.h"
 #include "zbxcomms.h"
 #include "zbxtime.h"
+#ifdef HAVE_CARES
 #include <ares.h>
+#else
+typedef void ares_channel_t;
+#endif
 
 #ifdef HAVE_LIBEVENT
 #include "zbxip.h"
@@ -194,7 +198,7 @@ static void	async_reverse_dns_event(int err, char type, int count, int ttl, void
 
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
-
+#ifdef HAVE_CARES
 static void	ares_addrinfo_cb(void *arg, int err, int timeouts, struct ares_addrinfo *ai)
 {
 	zbx_async_task_t	*task = (zbx_async_task_t *)arg;
@@ -235,7 +239,7 @@ static void	ares_addrinfo_cb(void *arg, int err, int timeouts, struct ares_addri
 
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
-
+#endif
 static void	async_dns_event(int err, struct evutil_addrinfo *ai, void *arg)
 {
 	zbx_async_task_t	*task = (zbx_async_task_t *)arg;
@@ -293,13 +297,16 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, ares_channe
 			int	ret;
 
 			zabbix_log(LOG_LEVEL_DEBUG, "%s() update host addresses", __func__);
-
+#ifdef HAVE_CARES
 			if (NULL != channel)
 			{
 				if (ARES_SUCCESS != (ret = ares_reinit(channel)))
 					zabbix_log(LOG_LEVEL_ERR, "cannot reinitialise ares: %s", ares_strerror(ret));
 			}
 			else
+#else
+			ZBX_UNUSED(channel);
+#endif
 			{
 				evdns_base_clear_nameservers_and_suspend(dnsbase);
 
@@ -339,7 +346,7 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 	task->ai = NULL;
 	task->current_ai = NULL;
 	zbx_vector_address_create(&task->addresses);
-
+#ifdef HAVE_CARES
 	if (NULL != channel)
 	{
 		struct ares_addrinfo_hints	hints;
@@ -361,6 +368,9 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 		ares_getaddrinfo(channel, addr, NULL, &hints, ares_addrinfo_cb, task);
 	}
 	else
+#else
+	ZBX_UNUSED(channel);
+#endif
 	{
 		struct evutil_addrinfo	hints;
 
