@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2025-01-30 02:50+0000\n"
+"PO-Revision-Date: 2025-02-17 01:54+0000\n"
 "Last-Translator: Akira <g42getd@gmail.com>\n"
 "Language-Team: Zabbix\n"
 "Language: ja\n"
@@ -1269,7 +1269,7 @@ msgstr "すべて"
 #: app/views/mediatype.list.php:79 app/views/mediatype.list.php:81
 #: app/views/mediatype.list.php:90 app/views/popup.operation.edit.php:160
 msgid "All available"
-msgstr ""
+msgstr "すべて利用可能"
 
 #: app/views/monitoring.dashboard.view.php:189
 msgid "All dashboards"
