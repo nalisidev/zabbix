@@ -416,10 +416,10 @@ static int	fd_event_compare_func(const void *d1, const void *d2)
 
 static void	fd_event_clean(zbx_fd_event *fd_event)
 {
-	zabbix_log(LOG_LEVEL_DEBUG, "removing event for socket:%d", fd_event->fd);
+	zabbix_log(LOG_LEVEL_DEBUG, "removing event for fd:%d", fd_event->fd);
 
 	if (0 != event_del(fd_event->event))
-		zabbix_log(LOG_LEVEL_WARNING, "cannot remove event for socket:%d", fd_event->fd);
+		zabbix_log(LOG_LEVEL_WARNING, "cannot remove event for fd:%d", fd_event->fd);
 
 	event_free(fd_event->event);
 }
@@ -534,7 +534,7 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 		goto out;
 	}
 
-	struct event	*ev = event_new(poller_config->base, s, events, ares_sock_cb, poller_config->channel);
+	struct event	*ev = event_new(poller_config->base, s, events|EV_PERSIST, ares_sock_cb, poller_config->channel);
 
 	if (NULL == ev)
 	{
