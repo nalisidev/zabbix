@@ -253,15 +253,26 @@ static void	async_dns_event(int err, struct evutil_addrinfo *ai, void *arg)
 	}
 	else
 	{
-		struct timeval	tv = {task->timeout, 0};
-		char		ip[65];
+		for (struct evutil_addrinfo	*current_ai = ai; NULL != current_ai; current_ai = current_ai->ai_next)
+		{
+			char	ip[65];
 
-		if (FAIL == zbx_inet_ntop(ai->ai_addr, ip, (socklen_t)sizeof(ip)))
-			ip[0] = '\0';
+			if (FAIL == zbx_inet_ntop(current_ai->ai_addr, ip, (socklen_t)sizeof(ip)))
+				ip[0] = '\0';
+
+			zabbix_log(LOG_LEVEL_DEBUG, "resolved address '%s'", ip);
+
+			zbx_address_t	*address = zbx_malloc(NULL, sizeof(zbx_address_t));
+
+			address->ip = zbx_strdup(NULL, ip);
+
+			zbx_vector_address_append(&task->addresses, address);
+		}
+
+		struct timeval	tv = {task->timeout, 0};
 
 		task->ai = ai;
 		task->current_ai = ai;
-		task->address = zbx_strdup(task->address, ip);
 		evtimer_add(task->timeout_event, &tv);
 		async_event(-1, 0, task);
 	}
@@ -332,10 +343,10 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 
 		if (SUCCEED == zbx_is_ip4(addr))
 			hints.ai_flags = AI_NUMERICHOST;
-	#ifdef HAVE_IPV6
+#ifdef HAVE_IPV6
 		else if (SUCCEED == zbx_is_ip6(addr))
 			hints.ai_flags = AI_NUMERICHOST;
-	#endif
+#endif
 		else
 			hints.ai_flags = 0;
 

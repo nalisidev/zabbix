@@ -61,12 +61,12 @@ typedef int (*zbx_async_task_process_cb_t)(short event, void *data, int *fd, zbx
 		char *dnserr, struct event *timeout_event);
 typedef void (*zbx_async_task_clear_cb_t)(void *data);
 
-void zbx_address_free(zbx_address_t *address);
+void			zbx_address_free(zbx_address_t *address);
 
 zbx_async_task_state_t	zbx_async_poller_get_task_state_for_event(short event);
-void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, struct evdns_base *dnsbase,
-		const char *addr, void *data, int timeout, zbx_async_task_process_cb_t process_cb,
-		zbx_async_task_clear_cb_t clear_cb);
+void			zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel,
+			struct evdns_base *dnsbase, const char *addr, void *data, int timeout,
+			zbx_async_task_process_cb_t process_cb, zbx_async_task_clear_cb_t clear_cb);
 const char		*zbx_resolv_conf_errstr(int error);
 const char		*zbx_get_event_string(short event);
 const char		*zbx_task_state_to_str(zbx_async_task_state_t task_state);
