@@ -574,7 +574,7 @@ static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread
 	optmask = ARES_OPT_SOCK_STATE_CB|ARES_OPT_TIMEOUT;
 	options.sock_state_cb = sock_state_cb;
 	options.sock_state_cb_data = poller_config;
-	options.timeout = poller_args_in->config_comms->config_timeout * 1000;
+	options.timeout = poller_args_in->config_comms->config_timeout;
 
 	status = ares_init_options(&poller_config->channel, &options, optmask);
 
