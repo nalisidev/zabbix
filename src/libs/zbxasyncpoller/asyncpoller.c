@@ -40,7 +40,6 @@ typedef struct
 	struct evdns_base		*dnsbase;
 	struct evutil_addrinfo		*ai;
 	struct evutil_addrinfo		*current_ai;
-	char				*address;
 	zbx_vector_address_t		addresses;
 }
 zbx_async_task_t;
@@ -71,7 +70,6 @@ static void	async_task_remove(zbx_async_task_t *task)
 
 	zbx_vector_address_clear_ext(&task->addresses, zbx_address_free);
 	zbx_vector_address_destroy(&task->addresses);
-	zbx_free(task->address);
 	zbx_free(task->error);
 	zbx_free(task);
 }
@@ -179,18 +177,17 @@ static void	async_reverse_dns_event(int err, char type, int count, int ttl, void
 	{
 		zabbix_log(LOG_LEVEL_DEBUG, "cannot reverse DNS name: %s", evdns_err_to_string(err));
 		task->error = zbx_strdup(task->error, evdns_err_to_string(err));
-		zbx_free(task->address);
+		task->addresses.values[0]->ip = zbx_strdup(task->addresses.values[0]->ip, "");
 	}
 	else
 	{
 		if (0 != count)
 		{
-			task->address = zbx_strdup(task->address, *(char **)addresses);
-			zabbix_log(LOG_LEVEL_DEBUG, "resolved reverse DNS name: %s", task->address);
-
+			task->addresses.values[0]->ip = zbx_strdup(task->addresses.values[0]->ip, *(char **)addresses);
+			zabbix_log(LOG_LEVEL_DEBUG, "resolved reverse DNS name: %s", task->addresses.values[0]->ip);
 		}
 		else
-			zbx_free(task->address);
+			task->addresses.values[0]->ip = zbx_strdup(task->addresses.values[0]->ip, "");
 	}
 
 	async_event(-1, 0, task);
@@ -253,7 +250,7 @@ static void	async_dns_event(int err, struct evutil_addrinfo *ai, void *arg)
 	}
 	else
 	{
-		for (struct evutil_addrinfo	*current_ai = ai; NULL != current_ai; current_ai = current_ai->ai_next)
+		for (struct evutil_addrinfo *current_ai = ai; NULL != current_ai; current_ai = current_ai->ai_next)
 		{
 			char	ip[65];
 
@@ -332,7 +329,6 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 	task->dnsbase = dnsbase;
 	task->ai = NULL;
 	task->current_ai = NULL;
-	task->address = NULL;
 	zbx_vector_address_create(&task->addresses);
 
 	if (NULL != channel)
