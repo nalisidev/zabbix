@@ -769,7 +769,7 @@ ZBX_THREAD_ENTRY(zbx_async_poller_thread, args)
 #endif
 		if (ZBX_POLLER_TYPE_HTTPAGENT != poller_type)
 		{
-			zbx_async_dns_update_host_addresses(poller_config.dnsbase);
+			zbx_async_dns_update_host_addresses(poller_config.dnsbase, poller_config.channel);
 		}
 	}
 

@@ -277,7 +277,7 @@ static void	async_dns_event(int err, struct evutil_addrinfo *ai, void *arg)
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
-void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase)
+void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, ares_channel_t *channel)
 {
 	static time_t	time_r = 0, time_h = 0;
 	static double	mtime = 0;
@@ -294,15 +294,24 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase)
 
 			zabbix_log(LOG_LEVEL_DEBUG, "%s() update host addresses", __func__);
 
-			evdns_base_clear_nameservers_and_suspend(dnsbase);
-
-			if (0 != (ret = evdns_base_resolv_conf_parse(dnsbase, DNS_OPTIONS_ALL, ZBX_RES_CONF_FILE)))
+			if (NULL != channel)
 			{
-				zabbix_log(LOG_LEVEL_ERR, "cannot parse resolv.conf result: %s",
-					zbx_resolv_conf_errstr(ret));
+				if (ARES_SUCCESS != (ret = ares_reinit(channel)))
+					zabbix_log(LOG_LEVEL_ERR, "cannot reinitialise ares: %s", ares_strerror(ret));
 			}
+			else
+			{
+				evdns_base_clear_nameservers_and_suspend(dnsbase);
 
-			evdns_base_resume(dnsbase);
+				if (0 != (ret = evdns_base_resolv_conf_parse(dnsbase, DNS_OPTIONS_ALL,
+						ZBX_RES_CONF_FILE)))
+				{
+					zabbix_log(LOG_LEVEL_ERR, "cannot parse resolv.conf result: %s",
+						zbx_resolv_conf_errstr(ret));
+				}
+
+				evdns_base_resume(dnsbase);
+			}
 		}
 		time_r = buf_r.st_mtime;
 		time_h = buf_h.st_mtime;

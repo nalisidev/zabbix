@@ -70,6 +70,6 @@ void			zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel,
 const char		*zbx_resolv_conf_errstr(int error);
 const char		*zbx_get_event_string(short event);
 const char		*zbx_task_state_to_str(zbx_async_task_state_t task_state);
-void			zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase);
+void			zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, ares_channel_t *channel);
 #endif
 #endif

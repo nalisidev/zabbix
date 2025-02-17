@@ -166,7 +166,7 @@ typedef struct
 	struct event		*async_timer;
 	struct event_base	*base;
 	struct evdns_base	*dnsbase;
-	ares_channel		channel;
+	ares_channel_t		*channel;
 	zbx_hashset_t		interfaces;
 	zbx_hashset_t		fd_events;
 #ifdef HAVE_LIBCURL
