@@ -62,9 +62,9 @@ static int	agent_task_process(short event, void *data, int *fd, zbx_vector_addre
 	ZBX_UNUSED(fd);
 	ZBX_UNUSED(timeout_event);
 
-	zabbix_log(LOG_LEVEL_DEBUG, "In %s() step '%s' event:%d itemid:" ZBX_FS_UI64 " addr:%s", __func__,
-				get_agent_step_string(agent_context->step), event, agent_context->item.itemid,
-				0 != addresses->values_num ? addresses->values[0]->ip : "");
+	zabbix_log(LOG_LEVEL_DEBUG, "In %s() step '%s' '%s' event:%d itemid:" ZBX_FS_UI64 " addr:%s", __func__,
+				get_agent_step_string(agent_context->step),zbx_get_event_string(event), event,
+				agent_context->item.itemid, 0 != addresses->values_num ? addresses->values[0]->ip : "");
 
 	if (NULL != poller_config && ZBX_PROCESS_STATE_IDLE == poller_config->state)
 	{
