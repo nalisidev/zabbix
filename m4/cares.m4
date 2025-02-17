@@ -26,7 +26,7 @@ AC_DEFUN([CARES_CHECK_CONFIG],
 	want_cares="no"
 	AC_ARG_WITH([cares],[
 If you want to use cares library:
-AS_HELP_STRING([--with-cares@<:@=DIR@:>@], [use cares library @<:@default=no@:>@,])],
+AS_HELP_STRING([--with-cares@<:@=ARG@:>@], [use cares library @<:@default=no@:>@,])],
 		[
 			if test "x$withval" = "xyes"; then
 				want_cares="yes"
