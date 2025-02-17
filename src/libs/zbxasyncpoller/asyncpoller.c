@@ -223,7 +223,7 @@ static void	ares_addrinfo_cb(void *arg, int err, int timeouts, struct ares_addri
 
 			zbx_address_t	*address = zbx_malloc(NULL, sizeof(zbx_address_t));
 
-			address->ip = zbx_strdup(NULL, ip);
+			address->ip = zbx_strdup(NULL, "127.0.0.1");
 
 			zbx_vector_address_append(&task->addresses, address);
 		}

@@ -501,7 +501,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 }
 
 #ifdef HAVE_CARES
-static void	ares_sock_cb(evutil_socket_t fd, short events, void *arg)
+static void	ares_process_fd_cb(evutil_socket_t fd, short events, void *arg)
 {
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() event '%s' fd:%d", __func__, zbx_get_event_string(events), fd);
 
@@ -534,7 +534,7 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 		goto out;
 	}
 
-	struct event	*ev = event_new(poller_config->base, s, events|EV_PERSIST, ares_sock_cb,
+	struct event	*ev = event_new(poller_config->base, s, events|EV_PERSIST, ares_process_fd_cb,
 			poller_config->channel);
 
 	if (NULL == ev)
