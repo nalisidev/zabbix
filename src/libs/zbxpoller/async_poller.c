@@ -368,7 +368,7 @@ static void	async_timeout_timer(evutil_socket_t fd, short events, void *arg)
 	if (ZBX_IS_RUNNING())
 	{
 		struct timeval	tv_next = {.tv_sec = poller_config->config_timeout};
-	
+
 		if (NULL != poller_config->channel)
 		{
 			zabbix_log(LOG_LEVEL_DEBUG, "processing timeouts");
