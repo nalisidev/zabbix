@@ -355,10 +355,33 @@ static void	async_timer(evutil_socket_t fd, short events, void *arg)
 	ZBX_UNUSED(events);
 
 	if (ZBX_IS_RUNNING())
-	{
-		if (NULL != poller_config->channel)
-			ares_process_fd(poller_config->channel, ARES_SOCKET_BAD, ARES_SOCKET_BAD);
 		zbx_async_manager_queue_sync(poller_config->manager);
+}
+
+static void	async_timeout_timer(evutil_socket_t fd, short events, void *arg)
+{
+	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)arg;
+
+	ZBX_UNUSED(fd);
+	ZBX_UNUSED(events);
+
+	if (ZBX_IS_RUNNING())
+	{
+		struct timeval	tv_next = {.tv_sec = poller_config->config_timeout};
+	
+		if (NULL != poller_config->channel)
+		{
+			zabbix_log(LOG_LEVEL_DEBUG, "processing timeouts");
+
+			ares_process_fd(poller_config->channel, ARES_SOCKET_BAD, ARES_SOCKET_BAD);
+			struct timeval	tv = {poller_config->config_timeout, 0};
+
+			ares_timeout(poller_config->channel, &tv, &tv_next);
+
+			zabbix_log(LOG_LEVEL_DEBUG, "next timer sec:%d usec:%d", tv_next.tv_sec, tv_next.tv_usec);
+		}
+
+		evtimer_add(poller_config->async_timeout_timer, &tv_next);
 	}
 }
 typedef struct
@@ -449,6 +472,15 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	}
 
 	evtimer_add(poller_config->async_timer, &tv);
+
+	if (NULL == (poller_config->async_timeout_timer = event_new(poller_config->base, -1, 0, async_timeout_timer,
+			poller_config)))
+	{
+		zabbix_log(LOG_LEVEL_ERR, "cannot create async timer event");
+		exit(EXIT_FAILURE);
+	}
+
+	evtimer_add(poller_config->async_timeout_timer, &tv);
 
 	if (NULL == (poller_config->manager = zbx_async_manager_create(1, async_wake_cb,
 			(void *)poller_config->async_wake_timer, poller_args_in, &error)))
@@ -582,6 +614,7 @@ static void	async_poller_stop(zbx_poller_config_t *poller_config)
 {
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s()", __func__);
 
+	evtimer_del(poller_config->async_timeout_timer);
 	evtimer_del(poller_config->async_timer);
 	evtimer_del(poller_config->async_wake_timer);
 	event_base_dispatch(poller_config->base);
@@ -770,9 +803,7 @@ ZBX_THREAD_ENTRY(zbx_async_poller_thread, args)
 #undef SNMP_ENGINEID_HK_INTERVAL
 #endif
 		if (ZBX_POLLER_TYPE_HTTPAGENT != poller_type)
-		{
 			zbx_async_dns_update_host_addresses(poller_config.dnsbase, poller_config.channel);
-		}
 	}
 
 	if (ZBX_POLLER_TYPE_HTTPAGENT != poller_type)

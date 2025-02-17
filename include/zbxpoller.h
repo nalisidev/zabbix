@@ -164,6 +164,7 @@ typedef struct
 	const char		*config_ssl_key_location;
 	struct event		*async_wake_timer;
 	struct event		*async_timer;
+	struct event		*async_timeout_timer;
 	struct event_base	*base;
 	struct evdns_base	*dnsbase;
 	ares_channel_t		*channel;
