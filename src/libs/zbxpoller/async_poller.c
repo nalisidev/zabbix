@@ -384,6 +384,7 @@ static void	async_timeout_timer(evutil_socket_t fd, short events, void *arg)
 		evtimer_add(poller_config->async_timeout_timer, &tv_next);
 	}
 }
+
 typedef struct
 {
 	int		fd;
@@ -521,7 +522,7 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 	if (0 == events)
 	{
 		if (NULL == fd_event)
-			zabbix_log(LOG_LEVEL_WARNING, "cannt find event for socket:%d", s);
+			zabbix_log(LOG_LEVEL_WARNING, "cannt find event for fd:%d", s);
 
 		goto out;
 	}
