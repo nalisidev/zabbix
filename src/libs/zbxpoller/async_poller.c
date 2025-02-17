@@ -571,6 +571,8 @@ static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread
 
 static void	async_poller_dns_destroy(zbx_poller_config_t *poller_config)
 {
+	ares_destroy(poller_config->channel);
+	ares_library_cleanup();
 	evdns_base_free(poller_config->dnsbase, 1);
 }
 
