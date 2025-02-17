@@ -534,7 +534,8 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 		goto out;
 	}
 
-	struct event	*ev = event_new(poller_config->base, s, events|EV_PERSIST, ares_sock_cb, poller_config->channel);
+	struct event	*ev = event_new(poller_config->base, s, events|EV_PERSIST, ares_sock_cb,
+			poller_config->channel);
 
 	if (NULL == ev)
 	{
