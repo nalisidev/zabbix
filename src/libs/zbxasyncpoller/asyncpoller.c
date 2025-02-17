@@ -43,7 +43,6 @@ typedef struct
 	char				*error;
 	struct evdns_base		*dnsbase;
 	struct evutil_addrinfo		*ai;
-	struct evutil_addrinfo		*current_ai;
 	zbx_vector_address_t		addresses;
 }
 zbx_async_task_t;
@@ -273,7 +272,6 @@ static void	async_dns_event(int err, struct evutil_addrinfo *ai, void *arg)
 		struct timeval	tv = {task->timeout, 0};
 
 		task->ai = ai;
-		task->current_ai = ai;
 		evtimer_add(task->timeout_event, &tv);
 		async_event(-1, 0, task);
 	}
@@ -344,7 +342,7 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 	task->error = NULL;
 	task->dnsbase = dnsbase;
 	task->ai = NULL;
-	task->current_ai = NULL;
+
 	zbx_vector_address_create(&task->addresses);
 #ifdef HAVE_CARES
 	if (NULL != channel)
