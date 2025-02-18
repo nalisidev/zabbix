@@ -283,16 +283,17 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, ares_channe
 			int	ret;
 
 			zabbix_log(LOG_LEVEL_DEBUG, "%s() update host addresses", __func__);
-#ifdef HAVE_ARES
+
 			if (NULL != channel)
 			{
+#ifdef HAVE_ARES
 				if (ARES_SUCCESS != (ret = ares_reinit(channel)))
 					zabbix_log(LOG_LEVEL_ERR, "cannot reinitialise ares: %s", ares_strerror(ret));
+#else
+				ZBX_UNUSED(channel);
+#endif
 			}
 			else
-#else
-			ZBX_UNUSED(channel);
-#endif
 			{
 				evdns_base_clear_nameservers_and_suspend(dnsbase);
 
