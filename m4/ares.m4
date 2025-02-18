@@ -29,7 +29,7 @@ If you want to use c-ares library:
 AS_HELP_STRING([--with-ares@<:@=ARG@:>@], [use c-ares library @<:@default=no@:>@,])],
 		[
 			if test "x$withval" = "xyes"; then
-				want_c=ares="yes"
+				want_ares="yes"
 			fi
 		]
 	)
