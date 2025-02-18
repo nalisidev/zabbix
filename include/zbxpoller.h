@@ -18,7 +18,7 @@
 #include "zbxcacheconfig.h"
 #include "zbxasyncpoller.h"
 #include "module.h"
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 #include <ares.h>
 #else
 typedef void ares_channel_t;
@@ -168,7 +168,7 @@ typedef struct
 	const char		*config_ssl_key_location;
 	struct event		*async_wake_timer;
 	struct event		*async_timer;
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 	struct event		*async_timeout_timer;
 #endif
 	struct event_base	*base;

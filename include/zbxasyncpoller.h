@@ -22,7 +22,7 @@
 #ifdef HAVE_LIBEVENT
 #include <event2/dns.h>
 #include <event2/event.h>
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 #include <ares.h>
 #else
 typedef void ares_channel_t;
