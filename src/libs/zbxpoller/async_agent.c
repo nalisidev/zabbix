@@ -163,10 +163,18 @@ static int	agent_task_process(short event, void *data, int *fd, zbx_vector_addre
 					agent_context->config_source_ip, addresses->values[0].ip,
 					agent_context->item.interface.port, agent_context->config_timeout))
 			{
+				if (1 < addresses->values_num)
+				{
+					zbx_vector_address_remove(addresses, 0);
+
+					agent_context->step = ZABBIX_AGENT_STEP_CONNECT_INIT;
+					break;
+				}
+
 				agent_context->item.ret = NETWORK_ERROR;
 				SET_MSG_RESULT(&agent_context->item.result,
-						zbx_dsprintf(NULL, "Get value from agent failed during %s",
-						get_agent_step_string(agent_context->step)));
+						zbx_dsprintf(NULL, "Get value from agent failed during %s: %s",
+						get_agent_step_string(agent_context->step), zbx_socket_strerror()));
 				goto out;
 			}
 
