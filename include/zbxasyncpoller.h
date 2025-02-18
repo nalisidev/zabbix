@@ -26,7 +26,7 @@
 #include <ares.h>
 typedef ares_channel_t zbx_channel_t;
 #else
-typedef void zbx_ares_channel_t;
+typedef ares_channel_t zbx_channel_t;
 #endif
 #include "zbxalgo.h"
 
