@@ -284,8 +284,6 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, zbx_channel
 #ifdef HAVE_ARES
 				if (ARES_SUCCESS != (ret = ares_reinit(channel)))
 					zabbix_log(LOG_LEVEL_ERR, "cannot reinitialise ares: %s", ares_strerror(ret));
-#else
-				ZBX_UNUSED(channel);
 #endif
 			}
 			else
@@ -329,9 +327,10 @@ void	zbx_async_poller_add_task(struct event_base *ev, zbx_channel_t *channel, st
 	task->reverse_dns = NULL;
 
 	zbx_vector_address_create(&task->addresses);
-#ifdef HAVE_ARES
+
 	if (NULL != channel)
 	{
+#ifdef HAVE_ARES
 		struct ares_addrinfo_hints	hints;
 
 		memset(&hints, 0, sizeof(hints));
@@ -349,30 +348,28 @@ void	zbx_async_poller_add_task(struct event_base *ev, zbx_channel_t *channel, st
 		hints.ai_socktype = SOCK_STREAM;
 
 		ares_getaddrinfo(channel, addr, NULL, &hints, ares_addrinfo_cb, task);
-	}
-	else
-#else
-	ZBX_UNUSED(channel);
+		return;
 #endif
-	{
-		struct evutil_addrinfo	hints;
+	}
 
-		memset(&hints, 0, sizeof(hints));
+	struct evutil_addrinfo	evutil_hints;
 
-		if (SUCCEED == zbx_is_ip4(addr))
-			hints.ai_flags = AI_NUMERICHOST;
+	memset(&evutil_hints, 0, sizeof(evutil_hints));
+
+	if (SUCCEED == zbx_is_ip4(addr))
+		evutil_hints.ai_flags = AI_NUMERICHOST;
 #ifdef HAVE_IPV6
-		else if (SUCCEED == zbx_is_ip6(addr))
-			hints.ai_flags = AI_NUMERICHOST;
+	else if (SUCCEED == zbx_is_ip6(addr))
+		evutil_hints.ai_flags = AI_NUMERICHOST;
 #endif
-		else
-			hints.ai_flags = 0;
+	else
+		evutil_hints.ai_flags = 0;
 
-		hints.ai_family = PF_UNSPEC;
-		hints.ai_socktype = SOCK_STREAM;
+	evutil_hints.ai_family = PF_UNSPEC;
+	evutil_hints.ai_socktype = SOCK_STREAM;
 
-		evdns_getaddrinfo(dnsbase, addr, NULL, &hints, async_dns_event, task);
-	}
+	evdns_getaddrinfo(dnsbase, addr, NULL, &evutil_hints, async_dns_event, task);
+
 }
 
 zbx_async_task_state_t	zbx_async_poller_get_task_state_for_event(short event)
