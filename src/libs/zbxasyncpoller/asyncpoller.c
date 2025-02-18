@@ -17,11 +17,6 @@
 #include "zbxcommon.h"
 #include "zbxcomms.h"
 #include "zbxtime.h"
-#ifdef HAVE_ARES
-#include <ares.h>
-#else
-typedef void ares_channel_t;
-#endif
 
 #ifdef HAVE_LIBEVENT
 #include "zbxip.h"
@@ -267,7 +262,7 @@ static void	async_dns_event(int err, struct evutil_addrinfo *ai, void *arg)
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
-void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, ares_channel_t *channel)
+void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, zbx_channel_t *channel)
 {
 	static time_t	time_r = 0, time_h = 0;
 	static double	mtime = 0;
@@ -313,7 +308,7 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, ares_channe
 	}
 }
 
-void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, struct evdns_base *dnsbase,
+void	zbx_async_poller_add_task(struct event_base *ev, zbx_channel_t *channel, struct evdns_base *dnsbase,
 	const char *addr, void *data, int timeout, zbx_async_task_process_cb_t process_cb,
 	zbx_async_task_clear_cb_t clear_cb)
 {

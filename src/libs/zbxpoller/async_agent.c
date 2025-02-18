@@ -327,7 +327,7 @@ void	zbx_async_check_agent_clean(zbx_agent_context *agent_context)
 }
 
 int	zbx_async_check_agent(zbx_dc_item_t *item, AGENT_RESULT *result,  zbx_async_task_clear_cb_t clear_cb,
-		void *arg, void *arg_action, struct event_base *base, ares_channel_t *channel,
+		void *arg, void *arg_action, struct event_base *base, zbx_channel_t *channel,
 		struct evdns_base *dnsbase, const char *config_source_ip,
 		zbx_async_resolve_reverse_dns_t resolve_reverse_dns)
 {

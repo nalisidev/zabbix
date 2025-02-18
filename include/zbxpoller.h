@@ -18,11 +18,6 @@
 #include "zbxcacheconfig.h"
 #include "zbxasyncpoller.h"
 #include "module.h"
-#ifdef HAVE_ARES
-#include <ares.h>
-#else
-typedef void ares_channel_t;
-#endif
 
 ZBX_PTR_VECTOR_DECL(agent_result_ptr, AGENT_RESULT*)
 
@@ -108,7 +103,7 @@ zbx_dc_item_context_t	*zbx_async_check_snmp_get_item_context(zbx_snmp_context_t 
 char	*zbx_async_check_snmp_get_reverse_dns(zbx_snmp_context_t *snmp_context);
 void	zbx_async_check_snmp_clean(zbx_snmp_context_t *snmp_context);
 int	zbx_async_check_snmp(zbx_dc_item_t *item, AGENT_RESULT *result, zbx_async_task_clear_cb_t clear_cb,
-		void *arg, void *arg_action, struct event_base *base, ares_channel_t *channel,
+		void *arg, void *arg_action, struct event_base *base, zbx_channel_t *channel,
 		struct evdns_base *dnsbase, const char *config_source_ip,
 		zbx_async_resolve_reverse_dns_t resolve_reverse_dns, int retries);
 
@@ -140,7 +135,7 @@ zbx_agent_context;
 void	zbx_async_check_agent_clean(zbx_agent_context *agent_context);
 
 int	zbx_async_check_agent(zbx_dc_item_t *item, AGENT_RESULT *result,  zbx_async_task_clear_cb_t clear_cb,
-		void *arg, void *arg_action, struct event_base *base, ares_channel_t *channel,
+		void *arg, void *arg_action, struct event_base *base, zbx_channel_t *channel,
 		struct evdns_base *dnsbase, const char *config_source_ip,
 		zbx_async_resolve_reverse_dns_t resolve_reverse_dns);
 
@@ -173,7 +168,7 @@ typedef struct
 #endif
 	struct event_base	*base;
 	struct evdns_base	*dnsbase;
-	ares_channel_t		*channel;
+	zbx_channel_t	*channel;
 	zbx_hashset_t		interfaces;
 	zbx_hashset_t		fd_events;
 #ifdef HAVE_LIBCURL
