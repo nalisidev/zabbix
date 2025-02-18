@@ -310,7 +310,7 @@ stop:
 out:
 	zbx_tcp_send_context_clear(&agent_context->tcp_send_context);
 	if (ZABBIX_AGENT_STEP_CONNECT_INIT == agent_context->step)
-		return agent_task_process(0, data, fd, addresses, dnserr, NULL);
+		return agent_task_process(0, data, fd, addresses, reverse_dns, dnserr, NULL);
 
 	return ZBX_ASYNC_TASK_STOP;
 }
