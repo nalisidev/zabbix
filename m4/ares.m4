@@ -24,7 +24,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 AC_DEFUN([ARES_CHECK_CONFIG],
 [
 	want_ares="no"
-	AC_ARG_WITH([cres],[
+	AC_ARG_WITH([ares],[
 If you want to use c-ares library:
 AS_HELP_STRING([--with-ares@<:@=ARG@:>@], [use c-ares library @<:@default=no@:>@,])],
 		[
