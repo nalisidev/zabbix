@@ -1707,21 +1707,21 @@ if test "x$server" = "xyes" || test "x$proxy" = "xyes"; then
 
 	AC_SUBST(ZLIB_CFLAGS)
 
-	dnl Checking for cares support
-	CARES_CHECK_CONFIG([no])
-	if test "x$want_cares" = "xyes"; then
-		if test "x$found_cares" != "xyes"; then
-			AC_MSG_ERROR([Unable to use cares (cares check failed)])
+	dnl Checking for c-ares support
+	ARES_CHECK_CONFIG([no])
+	if test "x$want_ares" = "xyes"; then
+		if test "x$found_ares" != "xyes"; then
+			AC_MSG_ERROR([Unable to use ares (ares check failed)])
 		fi
-		have_cares="yes"
+		have_ares="yes"
 	fi
-	SERVER_LDFLAGS="$SERVER_LDFLAGS $CARES_LDFLAGS"
-	SERVER_LIBS="$SERVER_LIBS $CARES_LIBS"
+	SERVER_LDFLAGS="$SERVER_LDFLAGS $ARES_LDFLAGS"
+	SERVER_LIBS="$SERVER_LIBS $ARES_LIBS"
 
-	PROXY_LDFLAGS="$PROXY_LDFLAGS $CARES_LDFLAGS"
-	PROXY_LIBS="$PROXY_LIBS $CARES_LIBS"
+	PROXY_LDFLAGS="$PROXY_LDFLAGS $ARES_LDFLAGS"
+	PROXY_LIBS="$PROXY_LIBS $ARES_LIBS"
 
-	AC_SUBST(CARES_CFLAGS)
+	AC_SUBST(ARES_CFLAGS)
 
 	dnl Check for 'libpthread' library that supports PTHREAD_PROCESS_SHARED flag
 	LIBPTHREAD_CHECK_CONFIG([no])
@@ -2437,8 +2437,8 @@ if test "x$UNIXODBC_CFLAGS" != "x"; then
 	echo "    unixODBC:              ${UNIXODBC_CFLAGS}"
 fi
 
-if test "x$CARES_CFLAGS" != "x"; then
-	echo "    cares:              ${CARES_CFLAGS}"
+if test "x$ARES_CFLAGS" != "x"; then
+	echo "    c-ares:              ${ARES_CFLAGS}"
 fi
 
 if test "x$SNMP_CFLAGS" != "x"; then

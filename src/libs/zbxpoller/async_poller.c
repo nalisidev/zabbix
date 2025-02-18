@@ -46,7 +46,7 @@
 #include "zbxasyncpoller.h"
 
 #include <event2/dns.h>
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 #include <ares.h>
 #else
 typedef void ares_channel_t;
@@ -361,7 +361,7 @@ static void	async_timer(evutil_socket_t fd, short events, void *arg)
 	if (ZBX_IS_RUNNING())
 		zbx_async_manager_queue_sync(poller_config->manager);
 }
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 static void	async_timeout_timer(evutil_socket_t fd, short events, void *arg)
 {
 	zbx_poller_config_t	*poller_config = (zbx_poller_config_t *)arg;
@@ -478,7 +478,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	}
 
 	evtimer_add(poller_config->async_timer, &tv);
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 	if (NULL == (poller_config->async_timeout_timer = event_new(poller_config->base, -1, 0, async_timeout_timer,
 			poller_config)))
 	{
@@ -500,7 +500,7 @@ static void	async_poller_init(zbx_poller_config_t *poller_config, zbx_thread_pol
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
 
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 static void	ares_process_fd_cb(evutil_socket_t fd, short events, void *arg)
 {
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() event '%s' fd:%d", __func__, zbx_get_event_string(events), fd);
@@ -560,7 +560,7 @@ out:
 static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread_poller_args *poller_args_in)
 {
 	char			*timeout;
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 	struct ares_options	options;
 	int			optmask, status;
 
@@ -618,7 +618,7 @@ static void	async_poller_dns_init(zbx_poller_config_t *poller_config, zbx_thread
 
 static void	async_poller_dns_destroy(zbx_poller_config_t *poller_config)
 {
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 	ares_destroy(poller_config->channel);
 	ares_library_cleanup();
 #endif
@@ -629,7 +629,7 @@ static void	async_poller_stop(zbx_poller_config_t *poller_config)
 {
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s()", __func__);
 
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 	evtimer_del(poller_config->async_timeout_timer);
 #endif
 	evtimer_del(poller_config->async_timer);

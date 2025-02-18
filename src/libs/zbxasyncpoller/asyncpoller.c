@@ -17,7 +17,7 @@
 #include "zbxcommon.h"
 #include "zbxcomms.h"
 #include "zbxtime.h"
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 #include <ares.h>
 #else
 typedef void ares_channel_t;
@@ -197,7 +197,7 @@ static void	async_reverse_dns_event(int err, char type, int count, int ttl, void
 
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 }
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 static void	ares_addrinfo_cb(void *arg, int err, int timeouts, struct ares_addrinfo *ai)
 {
 	zbx_async_task_t	*task = (zbx_async_task_t *)arg;
@@ -295,7 +295,7 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, ares_channe
 			int	ret;
 
 			zabbix_log(LOG_LEVEL_DEBUG, "%s() update host addresses", __func__);
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 			if (NULL != channel)
 			{
 				if (ARES_SUCCESS != (ret = ares_reinit(channel)))
@@ -344,7 +344,7 @@ void	zbx_async_poller_add_task(struct event_base *ev, ares_channel_t *channel, s
 	task->ai = NULL;
 
 	zbx_vector_address_create(&task->addresses);
-#ifdef HAVE_CARES
+#ifdef HAVE_ARES
 	if (NULL != channel)
 	{
 		struct ares_addrinfo_hints	hints;
