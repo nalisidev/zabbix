@@ -23,8 +23,8 @@
 #include "zbxip.h"
 #include "zbx_discoverer_constants.h"
 
-static int	http_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses, char *dnserr,
-	struct event *timeout_event)
+static int	http_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses,
+		const char *reverse_dns, char *dnserr, struct event *timeout_event)
 {
 	int					 task_ret = ZBX_ASYNC_TASK_STOP;
 	zbx_discovery_async_http_context_t	*http_context = (zbx_discovery_async_http_context_t *)data;
@@ -32,11 +32,12 @@ static int	http_task_process(short event, void *data, int *fd, zbx_vector_addres
 	ZBX_UNUSED(fd);
 	ZBX_UNUSED(dnserr);
 	ZBX_UNUSED(timeout_event);
+	ZBX_UNUSED(addresses);
 
 	if (ZBX_ASYNC_HTTP_STEP_RDNS == http_context->step)
 	{
-		if (0 != addresses->values_num)
-			http_context->reverse_dns = zbx_strdup(NULL, addresses->values[0]->ip);
+		if (NULL != reverse_dns)
+			http_context->reverse_dns = zbx_strdup(NULL, reverse_dns);
 
 		goto stop;
 	}

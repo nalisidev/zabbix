@@ -3061,8 +3061,8 @@ void	zbx_unset_snmp_bulkwalk_options(void)
 	snmp_bulkwalk_set_options(&default_opts);
 }
 
-static int	snmp_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses, char *dnserr,
-		struct event *timeout_event)
+static int	snmp_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses,
+		const char *reverse_dns, char *dnserr, struct event *timeout_event)
 {
 	zbx_bulkwalk_context_t	*bulkwalk_context;
 	zbx_snmp_context_t	*snmp_context = (zbx_snmp_context_t *)data;
@@ -3084,8 +3084,8 @@ static int	snmp_task_process(short event, void *data, int *fd, zbx_vector_addres
 
 	if (ZABBIX_ASYNC_STEP_REVERSE_DNS == snmp_context->step)
 	{
-		if (0 != addresses->values_num)
-			snmp_context->reverse_dns = zbx_strdup(NULL, addresses->values[0]->ip);
+		if (NULL != reverse_dns)
+			snmp_context->reverse_dns = zbx_strdup(NULL, reverse_dns);
 
 		goto stop;
 	}
@@ -3268,7 +3268,7 @@ static int	snmp_task_process(short event, void *data, int *fd, zbx_vector_addres
 	else
 	{
 		if (NULL == (snmp_context->ssp = zbx_snmp_open_session(snmp_context->snmp_version,
-				addresses->values[0]->ip, snmp_context->item.interface.port,
+				addresses->values[0].ip, snmp_context->item.interface.port,
 				snmp_context->snmp_community, snmp_context->snmpv3_securityname,
 				snmp_context->snmpv3_contextname, snmp_context->snmpv3_securitylevel,
 				snmp_context->snmpv3_authprotocol, snmp_context->snmpv3_authpassphrase,

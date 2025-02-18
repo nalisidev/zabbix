@@ -74,7 +74,7 @@ static int	tcpsvc_send_context_init(const unsigned char svc_type, unsigned char 
 }
 
 static int	tcpsvc_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses,
-		char *dnserr, struct event *timeout_event)
+		const char *reverse_dns, char *dnserr, struct event *timeout_event)
 {
 #	define	SET_RESULT_SUCCEED								\
 		SET_UI64_RESULT(&tcpsvc_context->item.result, 1);				\
@@ -109,13 +109,13 @@ static int	tcpsvc_task_process(short event, void *data, int *fd, zbx_vector_addr
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() step '%s' event:%d itemid:" ZBX_FS_UI64 " addr:%s", __func__,
 				get_tcpsvc_step_string(tcpsvc_context->step), event, tcpsvc_context->item.itemid,
-				0 != addresses->values_num ? addresses->values[0]->ip : "");
+				0 != addresses->values_num ? addresses->values[0].ip : "");
 
 
 	if (ZABBIX_ASYNC_STEP_REVERSE_DNS == tcpsvc_context->rdns_step)
 	{
-		if (0 != addresses->values_num)
-			tcpsvc_context->reverse_dns = zbx_strdup(NULL, addresses->values[0]->ip);
+		if (NULL != reverse_dns)
+			tcpsvc_context->reverse_dns = zbx_strdup(NULL, reverse_dns);
 
 		goto stop;
 	}
@@ -135,7 +135,7 @@ static int	tcpsvc_task_process(short event, void *data, int *fd, zbx_vector_addr
 					tcpsvc_context->item.itemid);
 
 			if (SUCCEED != zbx_socket_connect(&tcpsvc_context->s, SOCK_STREAM,
-					tcpsvc_context->config_source_ip, addresses->values[0]->ip,
+					tcpsvc_context->config_source_ip, addresses->values[0].ip,
 					tcpsvc_context->item.interface.port, tcpsvc_context->config_timeout))
 			{
 				tcpsvc_context->item.ret = NETWORK_ERROR;

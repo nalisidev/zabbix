@@ -50,7 +50,7 @@ static const char	*get_agent_step_string(zbx_zabbix_agent_step_t step)
 }
 
 static int	agent_task_process(short event, void *data, int *fd, zbx_vector_address_t *addresses,
-		char *dnserr, struct event *timeout_event)
+		const char *reverse_dns, char *dnserr, struct event *timeout_event)
 {
 	zbx_agent_context	*agent_context = (zbx_agent_context *)data;
 	short			event_new = 0;
@@ -64,7 +64,7 @@ static int	agent_task_process(short event, void *data, int *fd, zbx_vector_addre
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() step '%s' '%s' event:%d itemid:" ZBX_FS_UI64 " addr:%s", __func__,
 				get_agent_step_string(agent_context->step),zbx_get_event_string(event), event,
-				agent_context->item.itemid, 0 != addresses->values_num ? addresses->values[0]->ip : "");
+				agent_context->item.itemid, 0 != addresses->values_num ? addresses->values[0].ip : "");
 
 	if (NULL != poller_config && ZBX_PROCESS_STATE_IDLE == poller_config->state)
 	{
@@ -74,8 +74,8 @@ static int	agent_task_process(short event, void *data, int *fd, zbx_vector_addre
 
 	if (ZABBIX_ASYNC_STEP_REVERSE_DNS == agent_context->rdns_step)
 	{
-		if (0 != addresses->values_num)
-			agent_context->reverse_dns = zbx_strdup(NULL, addresses->values[0]->ip);
+		if (NULL != reverse_dns)
+			agent_context->reverse_dns = zbx_strdup(NULL, reverse_dns);
 
 		goto stop;
 	}
@@ -107,7 +107,6 @@ static int	agent_task_process(short event, void *data, int *fd, zbx_vector_addre
 
 					evtimer_add(timeout_event, &tv);
 
-					zbx_address_free(addresses->values[0]);
 					zbx_vector_address_remove(addresses, 0);
 
 					agent_context->step = ZABBIX_AGENT_STEP_CONNECT_INIT;
@@ -161,7 +160,7 @@ static int	agent_task_process(short event, void *data, int *fd, zbx_vector_addre
 			}
 
 			if (SUCCEED != zbx_socket_connect(&agent_context->s, SOCK_STREAM,
-					agent_context->config_source_ip, addresses->values[0]->ip,
+					agent_context->config_source_ip, addresses->values[0].ip,
 					agent_context->item.interface.port, agent_context->config_timeout))
 			{
 				agent_context->item.ret = NETWORK_ERROR;
@@ -180,7 +179,6 @@ static int	agent_task_process(short event, void *data, int *fd, zbx_vector_addre
 			{
 				if (1 < addresses->values_num)
 				{
-					zbx_address_free(addresses->values[0]);
 					zbx_vector_address_remove(addresses, 0);
 
 					agent_context->step = ZABBIX_AGENT_STEP_CONNECT_INIT;
