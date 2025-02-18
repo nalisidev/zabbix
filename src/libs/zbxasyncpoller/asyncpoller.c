@@ -171,7 +171,7 @@ static void	async_reverse_dns_event(int err, char type, int count, int ttl, void
 	{
 		zabbix_log(LOG_LEVEL_DEBUG, "cannot reverse DNS name: %s", evdns_err_to_string(err));
 		task->error = zbx_strdup(task->error, evdns_err_to_string(err));
-		task->reverse_dns = NULL;
+		zbx_free(task->reverse_dns);
 	}
 	else
 	{
@@ -181,7 +181,7 @@ static void	async_reverse_dns_event(int err, char type, int count, int ttl, void
 			zabbix_log(LOG_LEVEL_DEBUG, "resolved reverse DNS name: %s", task->reverse_dns);
 		}
 		else
-			task->reverse_dns = NULL;
+			zbx_free(task->reverse_dns);
 	}
 
 	async_event(-1, 0, task);
@@ -207,7 +207,7 @@ static void	ares_addrinfo_cb(void *arg, int err, int timeouts, struct ares_addri
 		{
 			zbx_address_t	address;
 
-			if (FAIL == zbx_inet_ntop(nodes->ai_addr, address.ip , (socklen_t)sizeof(address.ip)))
+			if (FAIL == zbx_inet_ntop(nodes->ai_addr, address.ip, (socklen_t)sizeof(address.ip)))
 				address.ip[0] = '\0';
 
 			zabbix_log(LOG_LEVEL_DEBUG, "resolved address '%s'", address.ip);
@@ -369,7 +369,6 @@ void	zbx_async_poller_add_task(struct event_base *ev, zbx_channel_t *channel, st
 	evutil_hints.ai_socktype = SOCK_STREAM;
 
 	evdns_getaddrinfo(dnsbase, addr, NULL, &evutil_hints, async_dns_event, task);
-
 }
 
 zbx_async_task_state_t	zbx_async_poller_get_task_state_for_event(short event)

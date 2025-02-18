@@ -534,13 +534,13 @@ static void	sock_state_cb(void *data, int s, int read, int write)
 
 	if (NULL == ev)
 	{
-		zabbix_log(LOG_LEVEL_WARNING, "Failed to create new event");
+		zabbix_log(LOG_LEVEL_WARNING, "cannot create new event");
 		goto out;
 	}
 
 	if (0 != event_add(ev, NULL))
 	{
-		zabbix_log(LOG_LEVEL_WARNING,  "Failed to add event");
+		zabbix_log(LOG_LEVEL_WARNING, "cannot add event");
 		event_free(ev);
 		goto out;
 	}

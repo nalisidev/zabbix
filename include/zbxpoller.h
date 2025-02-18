@@ -168,7 +168,7 @@ typedef struct
 #endif
 	struct event_base	*base;
 	struct evdns_base	*dnsbase;
-	zbx_channel_t	*channel;
+	zbx_channel_t		*channel;
 	zbx_hashset_t		interfaces;
 	zbx_hashset_t		fd_events;
 #ifdef HAVE_LIBCURL
