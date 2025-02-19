@@ -23,7 +23,7 @@ require_once dirname(__FILE__).'/../behaviors/CTagBehavior.php';
  *
  * @onBefore prepareProblemsData
  *
- * @dataSource UserPermissions
+ * @dataSource UserPermissions, WidgetCommunication
  */
 class testPageProblems extends CWebTest {
 
@@ -928,6 +928,9 @@ class testPageProblems extends CWebTest {
 						['Problem' => 'Symbols in Item metric'],
 						['Problem' => 'No operational data popup'],
 						['Problem' => 'Trigger for Age problem'],
+						['Problem' => 'trigger on host 3'],
+						['Problem' => 'trigger on host 2'],
+						['Problem' => 'trigger on host 1'],
 						['Problem' => 'Trigger for tag permissions Oracle'],
 						['Problem' => 'Trigger for tag permissions MySQL'],
 						['Problem' => 'Trigger for Age problem 1 day'],
@@ -1385,6 +1388,9 @@ class testPageProblems extends CWebTest {
 						['Problem' => 'Symbols in Item metric'],
 						['Problem' => 'No operational data popup'],
 						['Problem' => 'Trigger for Age problem'],
+						['Problem' => 'trigger on host 3'],
+						['Problem' => 'trigger on host 2'],
+						['Problem' => 'trigger on host 1'],
 						['Problem' => 'Trigger for tag permissions Oracle'],
 						['Problem' => 'Trigger for tag permissions MySQL'],
 						['Problem' => 'Trigger for Age problem 1 day'],
@@ -1444,6 +1450,9 @@ class testPageProblems extends CWebTest {
 						['Problem' => 'Symbols in Item metric'],
 						['Problem' => 'No operational data popup'],
 						['Problem' => 'Trigger for Age problem'],
+						['Problem' => 'trigger on host 3'],
+						['Problem' => 'trigger on host 2'],
+						['Problem' => 'trigger on host 1'],
 						['Problem' => 'Trigger for tag permissions Oracle'],
 						['Problem' => 'Trigger for tag permissions MySQL']
 					]
@@ -1473,6 +1482,7 @@ class testPageProblems extends CWebTest {
 						'Show timeline' => false
 					],
 					'result' => [
+						['Problem' => 'trigger on host 2'],
 						['Problem' => 'Test trigger with tag'],
 						['Problem' => 'Fourth test trigger with tag priority'],
 						['Problem' => 'Third test trigger with tag priority'],
