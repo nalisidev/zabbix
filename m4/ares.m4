@@ -36,7 +36,7 @@ AS_HELP_STRING([--with-ares@<:@=ARG@:>@], [use c-ares library @<:@default=no@:>@
 
 	AC_ARG_WITH([ares-include],
 		AS_HELP_STRING([--with-ares-include=DIR],
-			[use ares include headers from given path.]
+			[use c-ares include headers from given path.]
 		),
 		[
 			ARES_CFLAGS="-I$withval"
@@ -46,7 +46,7 @@ AS_HELP_STRING([--with-ares@<:@=ARG@:>@], [use c-ares library @<:@default=no@:>@
 
 	AC_ARG_WITH([ares-lib],
 		AS_HELP_STRING([--with-ares-lib=DIR],
-			[use ares libraries from given path.]
+			[use c-ares libraries from given path.]
 		),
 		[
 			ARES_LDFLAGS="-L$withval"
