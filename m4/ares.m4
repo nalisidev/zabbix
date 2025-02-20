@@ -16,8 +16,13 @@ AC_DEFUN([ARES_TRY_LINK],
 found_ares=$1
 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <ares.h>
+#include "string.h"
 ]], [[
+	struct ares_channeldata		*channel;
+	struct ares_addrinfo_hints	hints;
+
 	ares_library_init(ARES_LIB_INIT_ALL);
+	ares_getaddrinfo(channel, "localhost", NULL, &hints, NULL, NULL);
 ]])],[found_ares="yes"],[])
 ])dnl
 
@@ -41,6 +46,7 @@ AS_HELP_STRING([--with-ares@<:@=ARG@:>@], [use c-ares library @<:@default=no@:>@
 		[
 			ARES_CFLAGS="-I$withval"
 			_ares_dir_set="yes"
+			want_ares="yes"
 		]
 	)
 
@@ -51,6 +57,7 @@ AS_HELP_STRING([--with-ares@<:@=ARG@:>@], [use c-ares library @<:@default=no@:>@
 		[
 			ARES_LDFLAGS="-L$withval"
 			_ares_dir_set="yes"
+			want_ares="yes"
 		]
 	)
 

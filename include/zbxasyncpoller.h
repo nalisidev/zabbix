@@ -24,7 +24,7 @@
 #include <event2/event.h>
 #ifdef HAVE_ARES
 #include <ares.h>
-typedef ares_channel_t zbx_channel_t;
+typedef struct ares_channeldata zbx_channel_t;
 #else
 typedef void zbx_channel_t;
 #endif

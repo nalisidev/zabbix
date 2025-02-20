@@ -331,21 +331,10 @@ void	zbx_async_poller_add_task(struct event_base *ev, zbx_channel_t *channel, st
 	if (NULL != channel)
 	{
 #ifdef HAVE_ARES
-		struct ares_addrinfo_hints	hints;
+		struct ares_addrinfo_hints	hints = {.ai_family = PF_UNSPEC, .ai_socktype = SOCK_STREAM};
 
-		memset(&hints, 0, sizeof(hints));
-
-		if (SUCCEED == zbx_is_ip4(addr))
+		if (SUCCEED == zbx_is_supported_ip(addr))
 			hints.ai_flags = AI_NUMERICHOST;
-#ifdef HAVE_IPV6
-		else if (SUCCEED == zbx_is_ip6(addr))
-			hints.ai_flags = AI_NUMERICHOST;
-#endif
-		else
-			hints.ai_flags = 0;
-
-		hints.ai_family = PF_UNSPEC;
-		hints.ai_socktype = SOCK_STREAM;
 
 		ares_getaddrinfo(channel, addr, NULL, &hints, ares_addrinfo_cb, task);
 		return;
