@@ -1529,6 +1529,41 @@ class WidgetCommunication {
 										'value' => 0
 									]
 								]
+							],
+							[
+								'type' => 'hostcard',
+								'name' => 'Host card listener',
+								'x' => 29,
+								'y' => 12,
+								'width' => 24,
+								'height' => 4,
+								'fields' => [
+									[
+										'type' => ZBX_WIDGET_FIELD_TYPE_STR,
+										'name' => 'hostid._reference',
+										'value' => 'JRVYU._hostid'
+									],
+									[
+										'type' => ZBX_WIDGET_FIELD_TYPE_INT32,
+										'name' => 'sections.0',
+										'value' => 2
+									],
+									[
+										'type' => ZBX_WIDGET_FIELD_TYPE_INT32,
+										'name' => 'sections.1',
+										'value' => 3
+									],
+									[
+										'type' => ZBX_WIDGET_FIELD_TYPE_INT32,
+										'name' => 'sections.2',
+										'value' => 4
+									],
+									[
+										'type' => ZBX_WIDGET_FIELD_TYPE_INT32,
+										'name' => 'rf_rate',
+										'value' => 0
+									]
+								]
 							]
 						]
 					],

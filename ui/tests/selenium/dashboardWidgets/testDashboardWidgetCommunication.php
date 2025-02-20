@@ -255,7 +255,8 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 					'Host group' => self::THIRD_HOSTGROUP_NAME,
 					'Unknown' => '1'
 				]
-			]
+			],
+			'Host card listener' => null
 		]
 	];
 
@@ -799,6 +800,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::FIRST_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::FIRST_HOST_NAME
 						]
 					]
 				]
@@ -846,6 +850,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::SECOND_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::SECOND_HOST_NAME
 						]
 					]
 				]
@@ -893,6 +900,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::THIRD_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::THIRD_HOST_NAME
 						]
 					]
 				]
@@ -940,6 +950,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::FIRST_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::FIRST_HOST_NAME
 						]
 					]
 				]
@@ -987,6 +1000,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::SECOND_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::SECOND_HOST_NAME
 						]
 					]
 				]
@@ -1034,6 +1050,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::THIRD_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::THIRD_HOST_NAME
 						]
 					]
 				]
@@ -1088,6 +1107,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::FIRST_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::FIRST_HOST_NAME
 						]
 					]
 				]
@@ -1135,6 +1157,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::SECOND_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::SECOND_HOST_NAME
 						]
 					]
 				]
@@ -1182,6 +1207,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::THIRD_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::THIRD_HOST_NAME
 						]
 					]
 				]
@@ -1229,6 +1257,9 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 						'Web monitoring listener' => [
 							'Host group' => self::FIRST_HOSTGROUP_NAME,
 							'Unknown' => '1'
+						],
+						'Host card listener' => [
+							'Hostname' => self::FIRST_HOST_NAME
 						]
 					]
 				]
@@ -1435,6 +1466,20 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 			DBexecute('UPDATE widget_field SET value_str='.zbx_dbstr(self::BROADCASTER_REFERENCES[$data['broadcaster']]).
 					' WHERE value_str='.zbx_dbstr(self::BROADCASTER_REFERENCES[self::$current_broadcasters[$data['page']]])
 			);
+
+			/*
+			 * Hostcard widget uses reference "hostid" instead of "hostids", so for this widget the reference needs to
+			 * be updated separately. For this reason the last symbol ("s") is removed from the old and new references.
+			 */
+			if ($data['page'] === 'Hosts page') {
+				$new_reference = substr(self::BROADCASTER_REFERENCES[$data['broadcaster']], 0, -1);
+				$old_reference = substr(self::BROADCASTER_REFERENCES[self::$current_broadcasters[$data['page']]], 0, -1);
+
+				DBexecute('UPDATE widget_field SET value_str='.zbx_dbstr($new_reference).
+						' WHERE value_str='.zbx_dbstr($old_reference)
+				);
+			}
+
 			self::$current_broadcasters[$data['page']] = $data['broadcaster'];
 		}
 
@@ -1754,6 +1799,10 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 					);
 				}
 				else {
+					if ($listener_name === 'Host card listener') {
+						$field = 'Host';
+					}
+
 					$this->assertEquals(['Unavailable widget'], $widget_form->getField($field)->getValue());
 
 					// TODO: Move the below code right before closing the dialog after ZBX-25041 is fixed.
@@ -1785,6 +1834,12 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 			// It takes time for listener to load data. Listener has "is-loading" class while this process is active.
 			if ($listener->hasClass('is-loading')) {
 				$listener->waitUntilClassesNotPresent('is-loading');
+			}
+
+			if ($values === null) {
+				$this->assertEquals('Awaiting data', $listener->query('class:no-data-message')->one()->getText());
+
+				continue;
 			}
 
 			$listener_type = $this->getWidgetType($listener);
@@ -1890,6 +1945,11 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 								->isDisplayed(), 'The loaded map did not contain expected element.'
 						);
 					}
+					break;
+
+				case 'hostcard':
+					$this->assertEquals($values['Hostname'], $listener->query('class:host-name')->one()->getText());
+
 					break;
 			}
 		}
