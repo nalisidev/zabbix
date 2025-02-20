@@ -91,6 +91,7 @@ AS_HELP_STRING([--with-ares@<:@=ARG@:>@], [use c-ares library @<:@default=no@:>@
 			LIBS="$LIBS $ARES_LIBS"
 
 			ARES_TRY_LINK([no])
+			AC_CHECK_FUNCS([ares_reinit])
 
 			CFLAGS="$am_save_CFLAGS"
 			LDFLAGS="$am_save_LDFLAGS"

@@ -281,7 +281,7 @@ void	zbx_async_dns_update_host_addresses(struct evdns_base *dnsbase, zbx_channel
 
 			if (NULL != channel)
 			{
-#ifdef HAVE_ARES
+#if defined(HAVE_ARES) && defined(HAVE_ARES_REINIT)
 				if (ARES_SUCCESS != (ret = ares_reinit(channel)))
 					zabbix_log(LOG_LEVEL_ERR, "cannot reinitialise ares: %s", ares_strerror(ret));
 #endif
