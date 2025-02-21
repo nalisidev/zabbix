@@ -1925,7 +1925,7 @@ class testPageProblems extends CWebTest {
 					'popup rows' => []
 				]
 			],
-			'No popup in operaional data column' => [
+			'No popup in operational data column' => [
 				[
 					'custom data' => 'No popup "],*,a[x=": "],*,a[x="/\|\'/æ㓴🍭🍭',
 					'filter' => [
