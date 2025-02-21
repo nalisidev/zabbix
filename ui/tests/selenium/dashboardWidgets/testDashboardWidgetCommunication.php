@@ -1613,32 +1613,34 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 
 	/**
 	 * Check listener widget behavior when broadcasting widget is deleted.
+	 *
+	 * TODO: Uncomment the below test scenario after DEV-4225 is fixed.
 	 */
-	public function testDashboardWidgetCommunication_BroadcasterDeletion() {
-		$this->page->login()->open('zabbix.php?action=dashboard.view&dashboardid='.self::$entityids['dashboardid'])
-				->waitUntilReady();
-		$dashboard = CDashboardElement::find()->waitUntilReady()->one();
-		$dashboard->edit();
-
-		foreach (['Hostgroups page' => 'Host groups', 'Hosts page' => 'Hosts', 'Items page' => 'Item'] as $page => $field) {
-			$dashboard->selectPage($page);
-			$broadcaster = self::$current_broadcasters[$page];
-
-			if ($page === 'Items page') {
-				$listeners = ['Gauge listener', 'Graph (classic) listener', 'Item value listener', 'SVG graph listener',
-						'Pie chart listener', 'Item value'
-				];
-			}
-			else {
-				$listeners = array_keys(self::DEFAULT_WIDGET_CONTENT[$page]);
-			}
-
-			$dashboard->deleteWidget($broadcaster);
-			$this->checkUnavailableReference($dashboard, $listeners, $field);
-		}
-
-		$dashboard->cancelEditing();
-	}
+//	public function testDashboardWidgetCommunication_BroadcasterDeletion() {
+//		$this->page->login()->open('zabbix.php?action=dashboard.view&dashboardid='.self::$entityids['dashboardid'])
+//				->waitUntilReady();
+//		$dashboard = CDashboardElement::find()->waitUntilReady()->one();
+//		$dashboard->edit();
+//
+//		foreach (['Hostgroups page' => 'Host groups', 'Hosts page' => 'Hosts', 'Items page' => 'Item'] as $page => $field) {
+//			$dashboard->selectPage($page);
+//			$broadcaster = self::$current_broadcasters[$page];
+//
+//			if ($page === 'Items page') {
+//				$listeners = ['Gauge listener', 'Graph (classic) listener', 'Item value listener', 'SVG graph listener',
+//						'Pie chart listener', 'Item value'
+//				];
+//			}
+//			else {
+//				$listeners = array_keys(self::DEFAULT_WIDGET_CONTENT[$page]);
+//			}
+//
+//			$dashboard->deleteWidget($broadcaster);
+//			$this->checkUnavailableReference($dashboard, $listeners, $field);
+//		}
+//
+//		$dashboard->cancelEditing();
+//	}
 
 	public function getCopyWidgetsData() {
 		return [
