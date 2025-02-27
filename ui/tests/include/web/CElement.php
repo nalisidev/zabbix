@@ -581,13 +581,7 @@ class CElement extends CBaseElement implements IWaitable {
 	 */
 	public function doubleClick() {
 		$actions = new WebDriverActions(CElementQuery::getDriver());
-
-		try {
-			$actions->doubleClick($this)->perform();
-		}
-		catch (Exception $exception) {
-			throw $exception;
-		}
+		$actions->doubleClick($this)->perform();
 
 		return $this;
 	}
