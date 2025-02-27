@@ -576,8 +576,6 @@ class CElement extends CBaseElement implements IWaitable {
 	 * Double-click on element.
 	 *
 	 * @return $this
-	 *
-	 * @throws Exception
 	 */
 	public function doubleClick() {
 		$actions = new WebDriverActions(CElementQuery::getDriver());
