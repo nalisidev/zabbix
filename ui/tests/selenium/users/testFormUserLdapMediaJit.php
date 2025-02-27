@@ -209,7 +209,7 @@ class testFormUserLdapMediaJit extends CWebTest {
 		);
 
 		// Check that Type and Send to fields are read-only for provisioned media.
-		$media_table->findRow('Type', 'MS Teams Workflow')->getColumn('Action')->query('button:Edit')->one()->click();
+		$media_table->findRow('Type', 'MS Teams Workflow')->getColumn('Actions')->query('button:Edit')->one()->click();
 		$media_form = COverlayDialogElement::find()->one()->waitUntilReady()->asForm();
 
 		foreach (['Type', 'Send to'] as $field) {
@@ -440,7 +440,7 @@ class testFormUserLdapMediaJit extends CWebTest {
 		$form->selectTab('Media');
 		$media_field = $form->getField('Media')->asTable();
 		$row = $media_field->findRow('Type', $data['media']);
-		$row->getColumn('Action')->query('button:Edit')->one()->click();
+		$row->getColumn('Actions')->query('button:Edit')->one()->click();
 
 		$dialog = COverlayDialogElement::find()->one()->waitUntilReady();
 		$media_form = $dialog->asForm();
@@ -530,7 +530,7 @@ class testFormUserLdapMediaJit extends CWebTest {
 		$form->selectTab('Media');
 		$media_field = $this->query('name:user_form')->waitUntilVisible()->asForm()->one()->getField('Media')->asTable();
 		$row = $media_field->findRow('Type', $data['fields']['Type']);
-		$row->getColumn('Action')->query('button:Remove')->one()->click();
+		$row->getColumn('Actions')->query('button:Remove')->one()->click();
 		$form->query('button:Update')->one()->click();
 		$this->assertMessage(TEST_GOOD, 'User updated');
 
