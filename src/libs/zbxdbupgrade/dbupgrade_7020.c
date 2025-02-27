@@ -13,6 +13,7 @@
 **/
 
 #include "dbupgrade.h"
+#include "zbxdb.h"
 
 #include "zbxdb.h"
 #include "zbxalgo.h"
@@ -31,6 +32,26 @@ static int	DBpatch_7020000(void)
 }
 
 static int	DBpatch_7020001(void)
+{
+	if (0 == (DBget_program_type() & ZBX_PROGRAM_TYPE_SERVER))
+		return SUCCEED;
+
+	/* 1 - ZBX_FLAG_DISCOVERY */
+	/* 2 - LIFETIME_TYPE_IMMEDIATELY */
+	if (ZBX_DB_OK > zbx_db_execute(
+			"update items"
+				" set enabled_lifetime_type=2"
+				" where flags=1"
+					" and lifetime_type=2"
+					" and enabled_lifetime_type<>2"))
+	{
+		return FAIL;
+	}
+
+	return SUCCEED;
+}
+
+static int	DBpatch_7020002(void)
 {
 	int			ret = SUCCEED;
 	char			*sql = NULL;
@@ -108,5 +129,6 @@ DBPATCH_START(7020)
 
 DBPATCH_ADD(7020000, 0, 1)
 DBPATCH_ADD(7020001, 0, 0)
+DBPATCH_ADD(7020002, 0, 0)
 
 DBPATCH_END()
