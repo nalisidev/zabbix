@@ -613,7 +613,10 @@ static void	dc_trends_fetch_and_update(ZBX_DC_TREND *trends, int trends_num, zbx
 
 	zbx_db_add_condition_alloc(&sql, &sql_alloc, &sql_offset, "itemid", itemids, itemids_num);
 
-	result = zbx_db_select("%s order by itemid,clock", sql);
+	if (1 == upsert)
+		result = zbx_db_select("%s", sql);
+	else
+		result = zbx_db_select("%s order by itemid,clock", sql);
 
 	sql_offset = 0;
 
