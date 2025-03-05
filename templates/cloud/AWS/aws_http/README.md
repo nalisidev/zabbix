@@ -22,7 +22,9 @@ This template has been tested on:
 
 Before using the template, you need to create an IAM policy for the Zabbix role in your AWS account with the necessary permissions.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect metrics.
+
 ```json
 {
     "Version": "2012-10-17",
@@ -54,7 +56,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
 }
 ```
+
+### Assume Role Authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -93,7 +98,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -108,7 +116,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, add the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -147,7 +158,10 @@ If you are using role-based authorization, add the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -166,6 +180,7 @@ Next, add a principal to the trust relationships of the role you are using:
     ]
 }
 ```
+
 **Note**, Using role-based authorization is only possible when you use a Zabbix server or proxy inside AWS.
 
 To gather Request metrics, enable [Requests metrics](https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudwatch-monitoring.html) on your Amazon S3 buckets from the AWS console.
@@ -308,7 +323,9 @@ The template get AWS EC2 and attached AWS EBS volumes metrics and uses the scrip
 
 Before using the template, you need to create an IAM policy with the necessary permissions for the Zabbix role in your AWS account.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect Amazon EC2 metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -324,8 +341,11 @@ Add the following required permissions to your Zabbix IAM policy in order to col
         }
     ]
   }
-  ```
+```
+
+### Assume Role Authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -347,7 +367,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -362,7 +385,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -387,7 +413,10 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -588,7 +617,9 @@ The template get AWS RDS instance metrics and uses the script item to make HTTP 
 
 Before using the template, you need to create an IAM policy with the necessary permissions for the Zabbix role in your AWS account.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect Amazon RDS metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -606,7 +637,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
   }
 ```
+
+### Assume Role Authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -629,7 +663,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -644,7 +681,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -670,7 +710,10 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -921,7 +964,9 @@ The template gets AWS S3 metrics and uses the script item to make HTTP requests 
 
 Before using the template, you need to create an IAM policy for the Zabbix role in your AWS account with the necessary permissions.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect Amazon S3 metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -938,7 +983,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
   }
 ```
+
+### Assume role authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -960,7 +1008,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -975,7 +1026,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1000,7 +1054,10 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1158,7 +1215,9 @@ The template gets AWS ECS metrics and uses the script item to make HTTP requests
 
 Before using the template, you need to create an IAM policy for the Zabbix role in your AWS account with the necessary permissions.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect Amazon ECS metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -1175,7 +1234,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
   }
 ```
+
+### Assume role authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1197,7 +1259,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -1212,7 +1277,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1237,7 +1305,9 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1409,7 +1479,9 @@ The template gets AWS ECS metrics and uses the script item to make HTTP requests
 
 Before using the template, you need to create an IAM policy for the Zabbix role in your AWS account with the necessary permissions.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect Amazon ECS metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -1426,7 +1498,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
   }
 ```
+
+### Assume role authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1448,7 +1523,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -1463,7 +1541,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1488,7 +1569,10 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1657,7 +1741,9 @@ The template gets AWS ELB Application Load Balancer metrics and uses the script 
 
 Before using the template, you need to create an IAM policy with the necessary permissions for the Zabbix role in your AWS account. For more information, visit the [ELB policies page](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/elb-api-permissions.html) on the AWS website.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect AWS ELB Application Load Balancer metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -1674,7 +1760,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
   }
 ```
+
+### Assume role authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1696,7 +1785,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -1711,7 +1803,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1736,7 +1831,10 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1918,7 +2016,9 @@ The template gets AWS ELB Network Load Balancer metrics and uses the script item
 
 Before using the template, you need to create an IAM policy with the necessary permissions for the Zabbix role in your AWS account. For more information, visit the [ELB policies page](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/elb-api-permissions.html) on the AWS website.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect AWS ELB Network Load Balancer metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -1935,7 +2035,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
   }
 ```
+
+### Assume role authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1957,7 +2060,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -1972,7 +2078,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -1997,7 +2106,10 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -2171,7 +2283,9 @@ The template gets AWS Lambda metrics and uses the script item to make HTTP reque
 
 Before using the template, you need to create an IAM policy with the necessary permissions for the Zabbix role in your AWS account. For more information, visit the [Lambda permissions page](https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html) on the AWS website.
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect AWS Lambda metrics.
+
 ```json
 {
     "Version":"2012-10-17",
@@ -2187,7 +2301,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
   }
 ```
+
+### Assume role authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -2208,7 +2325,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -2223,7 +2343,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, set the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -2247,7 +2370,9 @@ If you are using role-based authorization, set the appropriate permissions:
     ]
 }
 ```
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -2374,7 +2499,9 @@ Before using the template, you need to create an IAM policy for the Zabbix role 
 
 * [IAM policies for AWS Cost Management](https://docs.aws.amazon.com/cost-management/latest/userguide/billing-permissions-ref.html)
 
+### Required Permissions
 Add the following required permissions to your Zabbix IAM policy in order to collect metrics.
+
 ```json
 {
     "Version": "2012-10-17",
@@ -2390,7 +2517,10 @@ Add the following required permissions to your Zabbix IAM policy in order to col
     ]
 }
 ```
+
+### Assume Role Authorization
 For using assume role authorization, add the appropriate permissions to the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -2411,7 +2541,10 @@ For using assume role authorization, add the appropriate permissions to the role
     ]
 }
 ```
+
+#### Trust Relationships for Assume Role Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -2426,7 +2559,10 @@ Next, add a principal to the trust relationships of the role you are using:
   ]
 }
 ```
+
+### Role-Based Authorization
 If you are using role-based authorization, add the appropriate permissions:
+
 ```json
 {
     "Version": "2012-10-17",
@@ -2449,7 +2585,10 @@ If you are using role-based authorization, add the appropriate permissions:
     ]
 }
 ```
+
+#### Trust Relationships for Role-Based Authorization
 Next, add a principal to the trust relationships of the role you are using:
+
 ```json
 {
     "Version": "2012-10-17",
