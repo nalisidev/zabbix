@@ -745,6 +745,7 @@ ZBX_THREAD_ENTRY(connector_manager_thread, args)
 					break;
 
 				running = 0;
+				timeout.ns = 0;
 			}
 		}
 	}
