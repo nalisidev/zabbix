@@ -3731,7 +3731,10 @@ ZBX_THREAD_ENTRY(service_manager_thread, args)
 			break;
 
 		if (!ZBX_IS_RUNNING())
+		{
 			running = 0;
+			timeout.ns = 0;
+		}
 	}
 out:
 	service_manager_free(&service_manager);
