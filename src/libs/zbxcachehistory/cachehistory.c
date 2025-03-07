@@ -1757,7 +1757,7 @@ void	zbx_dc_sync_trends(int parallel_num)
 	if (0 == (get_program_type_cb() & ZBX_PROGRAM_TYPE_SERVER))
 		return;
 
-	return DCsync_trends(parallel_num, ZBX_DC_SYNC_TREND_MODE_PARALLEL);
+	DCsync_trends(parallel_num, ZBX_DC_SYNC_TREND_MODE_PARALLEL);
 }
 
 static void	DCadd_update_inventory_sql(size_t *sql_offset, const zbx_vector_inventory_value_ptr_t *inventory_values)
