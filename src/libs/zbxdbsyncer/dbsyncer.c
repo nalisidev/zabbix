@@ -12,7 +12,6 @@
 ** If not, see <https://www.gnu.org/licenses/>.
 **/
 
-#include "zbxcommon.h"
 #include "zbxdbsyncer.h"
 
 #include "zbxnix.h"
