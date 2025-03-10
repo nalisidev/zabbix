@@ -1,0 +1,110 @@
+/*
+** Copyright (C) 2001-2025 Zabbix SIA
+**
+** This program is free software: you can redistribute it and/or modify it under the terms of
+** the GNU Affero General Public License as published by the Free Software Foundation, version 3.
+**
+** This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+** without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU Affero General Public License for more details.
+**
+** You should have received a copy of the GNU Affero General Public License along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+**/
+
+
+class ZVertical extends HTMLElement {
+
+	#inner_container = null;
+
+	constructor() {
+		super();
+
+		this.attachShadow({mode: 'open'});
+
+		const container_styles = window.getComputedStyle(this);
+
+		const div = document.createElement('div');
+		this.#inner_container = div;
+
+		Object.assign(div.style, {
+			display: 'inline-block',
+			position: 'absolute',
+			bottom: 0,
+			left: 0,
+			transform: `rotate(270deg)`
+		});
+
+		const props_to_inherit = {
+			maxHeight: 'maxWidth',
+			maxWidth: 'maxHeight',
+			width: 'height',
+			height: 'width',
+			minWidth: 'minHeight',
+			minHeight: 'minWidth',
+			textOverflow: 'textOverflow',
+			overflow: 'overflow',
+		}
+
+		for (const prop in props_to_inherit) {
+			if (container_styles[prop] !== 'auto' && container_styles[prop] !== 'none'
+					&& container_styles[prop] !== '0px') {
+				div.style[props_to_inherit[prop]] = container_styles[prop];
+			}
+		}
+
+		const slot = document.createElement('slot');
+		div.append(slot);
+
+		this.shadowRoot.append(div);
+	}
+
+	connectedCallback() {
+		this.registerEvents();
+		this._refresh();
+	}
+
+	disconnectedCallback() {
+		this.unregisterEvents();
+	}
+
+	_refresh() {
+		if (this.#inner_container === null) {
+			return;
+		}
+
+		this.style.width = `${this.#inner_container.scrollHeight}px`;
+		this.style.height = `${this.#inner_container.scrollWidth}px`;
+
+		const anchor_position = this.#inner_container.scrollHeight / 2;
+
+		this.#inner_container.style.transformOrigin = `${anchor_position}px ${anchor_position}px`;
+	}
+
+	registerEvents() {
+		this._events = {
+			resize: () => {
+				this._refresh();
+			},
+
+			update: () => {
+				this._refresh();
+			}
+		}
+
+		this._events_data = {
+			resize_observer: new ResizeObserver(this._events.resize),
+			mutation_observer: new MutationObserver(this._events.update)
+		}
+
+		this._events_data.resize_observer.observe(this);
+		this._events_data.mutation_observer.observe(this, {childList: true});
+	}
+
+	unregisterEvents() {
+		this._events_data.resize_observer.disconnect();
+		this._events_data.mutation_observer.disconnect();
+	}
+}
+
+customElements.define('z-vertical', ZVertical);
