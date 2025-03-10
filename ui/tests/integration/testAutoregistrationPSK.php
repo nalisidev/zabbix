@@ -20,7 +20,7 @@ require_once dirname(__FILE__).'/../include/CIntegrationTest.php';
  *
  * @required-components server, agent, agent2
  * @backup ids,hosts,items,actions,operations,optag,host_tag
- * @backup auditlog,changelog,settings,ha_node
+ * @backup auditlog,changelog,config,ha_node
  */
 class testAutoregistrationPSK extends CIntegrationTest {
 
