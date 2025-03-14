@@ -56,7 +56,7 @@ zabbix_export:
           name: 'Storage array item errors'
           type: DEPENDENT
           key: purestorage.flasharray.array.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from array data retrieval.'
           preprocessing:
@@ -605,7 +605,7 @@ zabbix_export:
           name: 'Authentication item errors'
           type: DEPENDENT
           key: purestorage.flasharray.auth.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from the authentication item.'
           preprocessing:
@@ -633,7 +633,7 @@ zabbix_export:
           name: 'Certificates item errors'
           type: DEPENDENT
           key: purestorage.flasharray.certificates.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from certificate retrieval.'
           preprocessing:
@@ -750,7 +750,7 @@ zabbix_export:
           name: 'Storage hardware item errors'
           type: DEPENDENT
           key: purestorage.flasharray.hardware.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from hardware retrieval.'
           preprocessing:
@@ -902,7 +902,7 @@ zabbix_export:
           name: 'Storage hosts item errors'
           type: DEPENDENT
           key: purestorage.flasharray.hosts.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from host data retrieval.'
           preprocessing:
@@ -1042,7 +1042,7 @@ zabbix_export:
           name: 'Storage network interfaces item errors'
           type: DEPENDENT
           key: purestorage.flasharray.net_ifs.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from network interface retrieval.'
           preprocessing:
@@ -1210,7 +1210,7 @@ zabbix_export:
           name: 'Storage pods item errors'
           type: DEPENDENT
           key: purestorage.flasharray.pods.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from pod retrieval.'
           preprocessing:
@@ -1365,7 +1365,7 @@ zabbix_export:
           name: 'Storage volumes item errors'
           type: DEPENDENT
           key: purestorage.flasharray.volumes.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from volume retrieval.'
           preprocessing:
@@ -4289,7 +4289,7 @@ zabbix_export:
           name: 'Alerts data item errors'
           type: DEPENDENT
           key: purestorage.flasharray.alert.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from alert data retrieval.'
           preprocessing:
@@ -4466,7 +4466,7 @@ zabbix_export:
           name: 'Storage array item errors'
           type: DEPENDENT
           key: purestorage.flasharray.array.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from array data retrieval.'
           preprocessing:
@@ -4969,7 +4969,7 @@ zabbix_export:
           name: 'Authentication item errors'
           type: DEPENDENT
           key: purestorage.flasharray.auth.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from the authentication item.'
           preprocessing:
@@ -4997,7 +4997,7 @@ zabbix_export:
           name: 'Certificates item errors'
           type: DEPENDENT
           key: purestorage.flasharray.certificates.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from certificate retrieval.'
           preprocessing:
@@ -5113,7 +5113,7 @@ zabbix_export:
           name: 'Storage hardware item errors'
           type: DEPENDENT
           key: purestorage.flasharray.hardware.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from hardware retrieval.'
           preprocessing:
@@ -5260,7 +5260,7 @@ zabbix_export:
           name: 'Storage hosts item errors'
           type: DEPENDENT
           key: purestorage.flasharray.hosts.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from host data retrieval.'
           preprocessing:
@@ -5386,7 +5386,7 @@ zabbix_export:
           name: 'Storage network interfaces item errors'
           type: DEPENDENT
           key: purestorage.flasharray.net_ifs.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from network interface retrieval.'
           preprocessing:
@@ -5543,7 +5543,7 @@ zabbix_export:
           name: 'Storage pods item errors'
           type: DEPENDENT
           key: purestorage.flasharray.pods.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from pod retrieval.'
           preprocessing:
@@ -5690,7 +5690,7 @@ zabbix_export:
           name: 'Support information item errors'
           type: DEPENDENT
           key: purestorage.flasharray.support.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from support information retrieval.'
           preprocessing:
@@ -5809,7 +5809,7 @@ zabbix_export:
           name: 'Storage volumes item errors'
           type: DEPENDENT
           key: purestorage.flasharray.volumes.errors
-          history: 7d
+          history: 1h
           value_type: TEXT
           description: 'Collects errors from volume retrieval.'
           preprocessing:
