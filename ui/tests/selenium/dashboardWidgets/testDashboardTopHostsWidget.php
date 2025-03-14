@@ -14,7 +14,7 @@
 **/
 
 
-require_once dirname(__FILE__).'/../common/testWidgets.php';
+require_once __DIR__.'/../common/testWidgets.php';
 
 /**
  * @dataSource AllItemValueTypes, ItemValueWidget, GlobalMacros, TopHostsWidget
@@ -5071,7 +5071,7 @@ class testDashboardTopHostsWidget extends testWidgets {
 			// Value mapping with aggregation function 'not used'.
 			[
 				[
-					'widget_name' => 'Value mapping with aggreagation Not used',
+					'widget_name' => 'Value mapping with aggregation Not used',
 					'column_fields' => [
 						[
 							// 'not used' is default value for aggregation function field.

@@ -42,9 +42,8 @@ var impl Plugin
 
 // Options -
 type Options struct {
-	plugin.SystemOptions `conf:"optional,name=System"`
-	Timeout              int    `conf:"optional,range=1:30"`
-	Path                 string `conf:"optional"`
+	Timeout int    `conf:"optional,range=1:30"`
+	Path    string `conf:"optional"`
 }
 
 // Plugin -
@@ -77,7 +76,7 @@ func init() {
 
 // Configure -
 func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
-	if err := conf.Unmarshal(options, &p.options); err != nil {
+	if err := conf.UnmarshalStrict(options, &p.options); err != nil {
 		p.Errf("cannot unmarshal configuration options: %s", err)
 	}
 
@@ -91,17 +90,26 @@ func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
 // Validate -
 func (p *Plugin) Validate(options interface{}) error {
 	var o Options
-	return conf.Unmarshal(options, &o)
+
+	err := conf.UnmarshalStrict(options, &o)
+	if err != nil {
+		return errs.Wrap(err, "plugin config validation failed")
+	}
+
+	return nil
 }
 
 // Export -
-func (p *Plugin) Export(key string, params []string, ctx plugin.ContextProvider) (result interface{}, err error) {
+//
+//nolint:cyclop
+func (p *Plugin) Export(key string, params []string, _ plugin.ContextProvider) (any, error) {
 	if len(params) > 0 && key != diskGet {
 		return nil, zbxerr.ErrorTooManyParameters
 	}
 
+	var err error
 	if err = p.checkVersion(); err != nil {
-		return
+		return nil, err
 	}
 
 	var jsonArray []byte
@@ -258,8 +266,10 @@ func (p *Plugin) attributeDiscovery() (jsonArray []byte, err error) {
 
 // setSingleDiskFields goes through provided device json data and sets required output fields.
 // It returns an error if there is an issue with unmarshal for the provided input JSON map.
-func setSingleDiskFields(dev []byte) (out map[string]interface{}, err error) {
-	attr := make(map[string]interface{})
+func setSingleDiskFields(dev []byte) (map[string]any, error) {
+	attr := make(map[string]any)
+
+	var err error
 	if err = json.Unmarshal(dev, &attr); err != nil {
 		return nil, errs.WrapConst(err, zbxerr.ErrorCannotMarshalJSON)
 	}
@@ -271,7 +281,7 @@ func setSingleDiskFields(dev []byte) (out map[string]interface{}, err error) {
 
 	diskType := getType(getTypeFromJson(attr), getRateFromJson(attr), getTablesFromJson(attr))
 
-	out = map[string]interface{}{}
+	out := map[string]any{}
 	out["disk_type"] = diskType
 	out["firmware_version"] = sd.Firmware
 	out["model_name"] = sd.ModelName
@@ -291,7 +301,7 @@ func setSingleDiskFields(dev []byte) (out map[string]interface{}, err error) {
 		out["power_on_time"] = sd.HealthLog.PowerOnTime
 		out["critical_warning"] = sd.HealthLog.CriticalWarning
 		out["media_errors"] = sd.HealthLog.MediaErrors
-		out["percentage_used"] = sd.HealthLog.Percentage_used
+		out["percentage_used"] = sd.HealthLog.PercentageUsed
 	} else {
 		out["temperature"] = sd.Temperature.Current
 		out["power_on_time"] = sd.PowerOnTime.Hours
@@ -305,10 +315,10 @@ func setSingleDiskFields(dev []byte) (out map[string]interface{}, err error) {
 			continue
 		}
 
-		out[strings.ToLower(a.Name)] = singleRequestAttribute{a.Raw.Value, a.Raw.Str}
+		out[strings.ToLower(a.Name)] = singleRequestAttribute{a.Raw.Value, a.Raw.Str, a.NormalizedValue}
 	}
 
-	return
+	return out, nil
 }
 
 // setSelfTest determines if device is self test capable and if the test is passed.
