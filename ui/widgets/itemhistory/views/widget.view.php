@@ -39,12 +39,12 @@ else {
 	if ($data['show_column_header'] != WidgetForm::COLUMN_HEADER_OFF) {
 		$table_header = [];
 
-		$tag = $data['show_column_header'] == WidgetForm::COLUMN_HEADER_VERTICAL
-				? new CVertical(_x('Timestamp', 'compact table header'))
-				: new CSpan(_x('Timestamp', 'compact table header'));
-
 		if ($data['show_timestamp']) {
-			$table_header[] = (new CColHeader($tag))
+			$table_header[] = (new CColHeader(
+				$data['show_column_header'] == WidgetForm::COLUMN_HEADER_VERTICAL
+					? new CVertical(_x('Timestamp', 'compact table header'))
+					: new CSpan(_x('Timestamp', 'compact table header'))
+			))
 				->addClass(ZBX_STYLE_CELL_WIDTH)
 				->addClass(ZBX_STYLE_NOWRAP);
 		}
