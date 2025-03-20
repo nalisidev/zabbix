@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2025-01-07 09:17+0000\n"
+"PO-Revision-Date: 2025-03-20 12:51+0000\n"
 "Last-Translator: Ryan Skov <rsk@capmon.dk>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -2697,7 +2697,7 @@ msgstr "Kan ikke slette standard bruger-bibliotek."
 #: include/classes/api/services/CDRule.php:772
 #, c-format
 msgid "Cannot delete discovery check \"%1$s\" of discovery rule \"%2$s\": %3$s."
-msgstr ""
+msgstr "Kan ikke slette opdagelseskontrol \"%1$s\" for opdagelsesreglen \"%2$s\": %3$s."
 
 #: app/controllers/CControllerDiscoveryDelete.php:68 host_discovery.php:390
 #: host_discovery.php:597
@@ -2709,7 +2709,7 @@ msgstr[1] "Kan ikke slette opdagelsesregler"
 #: include/classes/api/services/CDRule.php:979
 #, c-format
 msgid "Cannot delete discovery rule \"%1$s\": %2$s."
-msgstr ""
+msgstr "Kan ikke slette opdagelsesreglen \"%1$s\": %2$s."
 
 #: app/controllers/CControllerCorrelationDelete.php:68
 msgid "Cannot delete event correlation"
@@ -2738,7 +2738,7 @@ msgstr[1] "Kan ikke slette vært"
 #: include/classes/api/services/CHost.php:1631
 #, c-format
 msgid "Cannot delete host \"%1$s\": %2$s."
-msgstr ""
+msgstr "Kan ikke slette værten \"%1$s\": %2$s."
 
 #: include/classes/api/services/CHost.php:1461
 #, c-format
@@ -2756,7 +2756,7 @@ msgstr[1] "Kan ikke slette værts-grupper"
 #: include/classes/api/services/CHostGroup.php:767
 #, c-format
 msgid "Cannot delete host group \"%1$s\": %2$s."
-msgstr ""
+msgstr "Kan ikke slette værtsgruppen \"%1$s\": %2$s."
 
 #: include/classes/api/services/CHostGroup.php:858
 #, c-format
@@ -2903,7 +2903,7 @@ msgstr[1] "Kan ikke slette skabelon"
 #: include/classes/api/services/CTemplate.php:805
 #, c-format
 msgid "Cannot delete template \"%1$s\": %2$s."
-msgstr ""
+msgstr "Kan ikke slette skabelonen \"%1$s\": %2$s."
 
 #: app/controllers/CControllerTemplateGroupDelete.php:75
 msgid "Cannot delete template group"
@@ -2943,7 +2943,7 @@ msgstr[1] "Kan ikke slette udløsere"
 #: include/classes/api/managers/CTriggerManager.php:126
 #, c-format
 msgid "Cannot delete trigger \"%1$s\": %2$s."
-msgstr ""
+msgstr "Kan ikke slette udøseren \"%1$s\": %2$s."
 
 #: app/controllers/CControllerTriggerPrototypeDelete.php:72
 msgid "Cannot delete trigger prototype"
@@ -2981,7 +2981,7 @@ msgstr "Kan ikke slette brugergruppen \"%1$s\", fordi den bruges af SAML-brugerm
 #: include/classes/api/services/CUserGroup.php:1397
 #, c-format
 msgid "Cannot delete user group \"%1$s\", because it is used by provisioned user \"%2$s\"."
-msgstr ""
+msgstr "Kan ikke slette brugergruppen \"%1$s\", fordi den bruges af den provisioneret bruger \"%2$s\"."
 
 #: app/controllers/CControllerUserroleDelete.php:59
 msgid "Cannot delete user role"
@@ -4702,7 +4702,7 @@ msgstr "Farve (OK)"
 
 #: widgets/honeycomb/includes/WidgetForm.php:213
 msgid "Color interpolation"
-msgstr ""
+msgstr "Farveinterpolation"
 
 #: widgets/gauge/views/widget.edit.php:92
 msgid "Colors"
@@ -5284,7 +5284,7 @@ msgstr "Kopier til udklipsholder"
 
 #: app/controllers/CControllerPopup.php:44
 msgid "Correlation edit"
-msgstr ""
+msgstr "Korrelationsredigering"
 
 #: app/controllers/CControllerPopupTriggerExpr.php:52
 #: app/controllers/CControllerPopupTriggerExpr.php:693
@@ -5963,7 +5963,7 @@ msgstr "Database TLS nøglefil"
 #: include/classes/api/clients/CLocalApiClient.php:124
 #: include/classes/api/clients/CLocalApiClient.php:138
 msgid "Database error occurred."
-msgstr ""
+msgstr "Der opstod en databasefejl."
 
 #: app/partials/administration.system.info.php:130
 msgid "Database history tables use primary key"
@@ -6663,19 +6663,19 @@ msgstr "Slettet"
 
 #: include/actions.inc.php:143
 msgid "Deleted host"
-msgstr ""
+msgstr "Slettet vært"
 
 #: include/actions.inc.php:125
 msgid "Deleted host group"
-msgstr ""
+msgstr "Slettet værtsgruppe"
 
 #: include/actions.inc.php:710
 msgid "Deleted host group(s)"
-msgstr ""
+msgstr "Slettede værtsgruppe(r)"
 
 #: include/actions.inc.php:134
 msgid "Deleted trigger"
-msgstr ""
+msgstr "Slettet udløser"
 
 #: app/views/administration.regex.edit.php:54
 msgid "Delimiter"
@@ -7310,7 +7310,7 @@ msgstr "Vis lokal tid"
 
 #: widgets/itemhistory/views/column.edit.php:240
 msgid "Display log time"
-msgstr ""
+msgstr "Vis logtid"
 
 #: widgets/svggraph/includes/WidgetForm.php:364
 msgid "Display min/avg/max"
@@ -9482,7 +9482,7 @@ msgstr "Historie funktioner"
 
 #: app/views/administration.housekeeping.edit.php:218
 msgid "History, trends and audit log compression"
-msgstr ""
+msgstr "Historik, trends og komprimering af revisionslog"
 
 #: include/classes/html/CTabFilter.php:167
 msgid "Home"
@@ -10618,15 +10618,15 @@ msgstr "Forkert handlings betingelse op opdagelsestjek. Opdagelsestjek findes ik
 
 #: include/classes/validators/CActionCondValidator.php:95
 msgid "Incorrect action condition discovery object."
-msgstr ""
+msgstr "Forkert registreringsobjekt for handlingstilstand."
 
 #: include/classes/api/services/CAction.php:3410
 msgid "Incorrect action condition discovery rule. Discovery rule does not exist or you have no access to it."
-msgstr ""
+msgstr "Forkert registreringsregel for handlingstilstand. Opdagelsesregel eksisterer ikke, eller du har ikke adgang til den."
 
 #: include/classes/validators/CActionCondValidator.php:140
 msgid "Incorrect action condition discovery status."
-msgstr ""
+msgstr "Forkert registreringsstatus for handlingstilstand."
 
 #: include/classes/validators/CActionCondValidator.php:164
 msgid "Incorrect action condition event type."
@@ -10634,15 +10634,15 @@ msgstr "Forkert handlingstilstandshændelsestype."
 
 #: include/classes/api/services/CAction.php:3134
 msgid "Incorrect action condition or operation host group. Host group does not exist or you have no access to it."
-msgstr ""
+msgstr "Forkert handlingstilstand eller operationsværtsgruppe. Værtsgruppen eksisterer ikke, eller du har ikke adgang til den."
 
 #: include/classes/api/services/CAction.php:3193
 msgid "Incorrect action condition or operation host. Host does not exist or you have no access to it."
-msgstr ""
+msgstr "Forkert handlingstilstand eller operationsvært. Værten eksisterer ikke, eller du har ikke adgang til den."
 
 #: include/classes/api/services/CAction.php:3330
 msgid "Incorrect action condition or operation template. Template does not exist or you have no access to it."
-msgstr ""
+msgstr "Forkert handlingstilstand eller driftsskabelon. Skabelonen findes ikke, eller du har ikke adgang til den."
 
 #: include/classes/validators/CActionCondValidator.php:131
 #, c-format
@@ -11923,7 +11923,7 @@ msgstr "Inventar felt"
 #: include/classes/widgets/fields/CWidgetFieldMultiSelectHostInventory.php:48
 #: widgets/hostcard/includes/WidgetForm.php:50
 msgid "Inventory fields"
-msgstr ""
+msgstr "Inventar felter"
 
 #: app/views/popup.massupdate.host.php:175
 #: app/views/popup.operation.edit.php:402
@@ -13578,7 +13578,7 @@ msgstr "Menusti"
 
 #: widgets/piechart/includes/WidgetForm.php:149
 msgid "Merge sectors smaller than"
-msgstr ""
+msgstr "Flet sektorer mindre end"
 
 #: widgets/piechart/includes/WidgetForm.php:138
 msgid "Merge sectors smaller than "
@@ -13918,7 +13918,7 @@ msgstr "Mere end 10 minutter"
 
 #: include/classes/helpers/CServiceHelper.php:27
 msgid "Most critical if all children have problems"
-msgstr ""
+msgstr "Mest kritisk, hvis alle børn har problemer"
 
 #: include/classes/helpers/CServiceHelper.php:26
 msgid "Most critical of child services"
@@ -16035,7 +16035,7 @@ msgstr "Siden modtog forkerte data"
 #: include/classes/helpers/CPagerHelper.php:159
 msgctxt "page navigation"
 msgid "Pager"
-msgstr ""
+msgstr "Personsøger"
 
 #: app/partials/administration.system.info.php:30
 msgid "Parameter"
@@ -17504,7 +17504,7 @@ msgstr "Omdøb"
 #: app/controllers/CControllerScheduledReportUpdate.php:86
 #: app/partials/scheduledreport.formgrid.html.php:135
 msgid "Repeat on"
-msgstr ""
+msgstr "Gentag på"
 
 #: app/partials/scheduledreport.table.html.php:42
 msgid "Repeats"
@@ -17777,7 +17777,7 @@ msgstr "Resultatet er SAND"
 #: app/controllers/CControllerPopupItemTestSend.php:456
 #, c-format
 msgid "Result is truncated due to its size (%1$s)."
-msgstr ""
+msgstr "Resultatet er afkortet på grund af dets størrelse (%1$s)."
 
 #: app/views/popup.testtriggerexpr.php:30
 msgid "Result type"
@@ -17857,7 +17857,7 @@ msgstr "Returnerer antallet af UDP-sockets, der matcher parametre. Returnerer he
 
 #: include/classes/data/CItemData.php:2862
 msgid "Returns number of state changes from disk/memory mode since start. Frequent state changes indicates that either memory buffer size or age must be increased."
-msgstr ""
+msgstr "Returnerer antallet af tilstandsændringer fra disk/hukommelsestilstand siden start. Hyppige tilstandsændringer indikerer, at enten hukommelsesbufferstørrelse eller alder skal øges."
 
 #: include/classes/data/CItemData.php:976
 msgid "Returns percentage of lost ICMP ping packets."
@@ -17940,7 +17940,7 @@ msgstr "Kør scriptet \"%1$s\" på nuværende vært"
 #: include/actions.inc.php:601
 #, c-format
 msgid "Run script \"%1$s\" on deleted object(s)"
-msgstr ""
+msgstr "Kør scriptet \"%1$s\" på slettede objekt(er)"
 
 #: include/actions.inc.php:622
 #, c-format
@@ -18782,7 +18782,7 @@ msgstr "Tjeneste"
 #: include/classes/api/services/CService.php:1549
 #, c-format
 msgid "Service \"%1$s\" cannot have problem tags and children at the same time."
-msgstr ""
+msgstr "Tjenesten \"%1$s\" kan ikke have problem-tags og under-tags på samme tid."
 
 #: app/views/action.list.php:36 include/classes/helpers/CMenuHelper.php:240
 #: include/classes/helpers/CRoleHelper.php:471
@@ -19240,7 +19240,7 @@ msgstr "Sidebar kontrol"
 
 #: app/views/administration.authentication.edit.php:356
 msgid "Sign"
-msgstr ""
+msgstr "Tegn"
 
 #: include/views/general.login.php:64 include/views/general.login.php:79
 msgid "Sign in"
@@ -20612,11 +20612,11 @@ msgstr "Disse parametre sendes til scriptet som kommandolinjeargumenter i den an
 
 #: app/views/action.list.php:163
 msgid "This action has conditions or operations referencing deleted object(s)."
-msgstr ""
+msgstr "Denne handling har betingelser eller operationer, der refererer til slettede objekt(er)."
 
 #: app/views/action.list.php:158
 msgid "This action has missing conditions or operations due to previously deleted object(s)."
-msgstr ""
+msgstr "Denne handling mangler betingelser eller handlinger på grund af tidligere slettede objekt(er)."
 
 #: app/controllers/CControllerDiscoveryEdit.php:175
 #, c-format
@@ -20670,7 +20670,7 @@ msgstr "Denne indstilling viser lokal tid i stedet for tidsstemplet. \"Vis tidss
 
 #: widgets/itemhistory/views/column.edit.php:241
 msgid "This setting will display log time instead of item's timestamp. \"Show timestamp\" must also be checked in the advanced configuration."
-msgstr ""
+msgstr "Denne indstilling viser logtid i stedet for datapunktets tidsstempel. \"Vis tidsstempel\" skal også være afkrydset i den avancerede konfiguration."
 
 #: include/views/configuration.item.edit.php:129
 #: include/views/configuration.item.prototype.edit.php:114
@@ -20914,7 +20914,7 @@ msgstr "I dag indtil videre"
 
 #: app/controllers/CControllerPopup.php:60
 msgid "Token edit"
-msgstr ""
+msgstr "Token redigering"
 
 #: include/views/js/monitoring.sysmaps.js.php:40
 #: include/views/js/monitoring.sysmaps.js.php:159
@@ -22653,119 +22653,119 @@ msgstr "VMware datastore hypervisors liste, \"url\" - VMware service URL, \"data
 
 #: include/classes/data/CItemData.php:1813
 msgid "VMware datastore performance counter, \"url\" - VMware service URL, \"uuid\" - VMware datastore global unique identifier, \"path\" - performance counter path, \"instance\" - datastore perfcounter instance from vmware.hv.diskinfo.get"
-msgstr ""
+msgstr "VMware datastore ydeevnetæller, \"url\" - VMware service URL, \"uuid\" - VMware datastore global unik identifikator, \"sti\" - ydeevnetællersti, \"instans\" - datastore perfcounter instans fra vmware.hv.diskinfo.get"
 
 #: include/classes/data/CItemData.php:1820
 msgid "VMware datastore property, \"url\" - VMware service URL, \"uuid\" - VMware datastore global unique identifier, \"prop\" - property path"
-msgstr ""
+msgstr "VMware datastore egenskab, \"url\" - VMware service URL, \"uuid\" - VMware datastore global unik identifikator, \"prop\" - egenskabssti"
 
 #: include/classes/data/CItemData.php:1827
 msgid "VMware datastore read statistics, \"url\" - VMware service URL, \"datastore\" - datastore name, \"mode\"- latency/maxlatency - average or maximum"
-msgstr ""
+msgstr "VMware datastore læse statistik, \"url\" - VMware service URL, \"datastore\" - datastore navn, \"mode\" - latency/maxlatency - gennemsnit eller maksimum"
 
 #: include/classes/data/CItemData.php:1841
 msgid "VMware datastore tags array, \"url\" - VMware service URL, \"uuid\" - VMware datastore global unique identifier. Returns JSON"
-msgstr ""
+msgstr "VMware datastore tags array, \"url\" - VMware service URL, \"uuid\" - VMware datastore global unik identifikator. Returnerer JSON"
 
 #: include/classes/data/CItemData.php:1848
 msgid "VMware datastore write statistics, \"url\" - VMware service URL, \"datastore\" - datastore name, \"mode\"- latency/maxlatency - average or maximum"
-msgstr ""
+msgstr "VMware datastore skrive statistik, \"url\" - VMware service URL, \"datastore\" - datastore navn, \"mode\" - latency/maxlatency - gennemsnit eller maksimum"
 
 #: include/classes/data/CItemData.php:1890
 msgid "VMware event log, \"url\" - VMware service URL, \"mode\"- all (default) or skip - skip processing of older data, \"severity\" - filtering is disabled by default or \"error,warning,info,user\" in any combination"
-msgstr ""
+msgstr "VMware hændelseslog, \"url\" - VMware service URL, \"mode\" - alle (standard) eller spring over - spring behandling af ældre data over, \"alvorlighed\" - filtrering er deaktiveret som standard eller \"fejl, advarsel, info, bruger\" i enhver kombination"
 
 #: include/classes/data/CItemData.php:1890
 msgid "VMware event log, \"url\" - VMware service URL, \"mode\"- all (default), skip - skip processing of older data"
-msgstr ""
+msgstr "VMware hændelseslog, \"url\" - VMware service URL, \"mode\" - alle (standard), spring over - spring behandling af ældre data over"
 
 #: include/classes/data/CItemData.php:2072
 msgid "VMware hypervisor BIOS UUID, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor BIOS UUID, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2163
 msgid "VMware hypervisor HW vendor state sensors, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns JSON"
-msgstr ""
+msgstr "VMware hypervisor HW leverandørtilstandssensorer, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator. Returnerer JSON"
 
 #: include/classes/data/CItemData.php:1904
 msgid "VMware hypervisor alarms data, returns JSON, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor alarmerer data, returnerer JSON, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2093
 msgid "VMware hypervisor ballooned memory size, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor ballooned hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:1911
 msgid "VMware hypervisor cluster name, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor cluster navn, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:1918
 msgid "VMware hypervisor connection state, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor forbindelsestilstand, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:1946
 msgid "VMware hypervisor datacenter name, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns string"
-msgstr ""
+msgstr "VMware hypervisor datacenternavn, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator. Returnerer streng"
 
 #: include/classes/data/CItemData.php:1974
 msgid "VMware hypervisor datastore read statistics, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier, \"datastore\" - datastore name, \"mode\"- latency"
-msgstr ""
+msgstr "VMware hypervisor datastore læse statistik, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator, \"datastore\" - datastore navn, \"mode\" - latency"
 
 #: include/classes/data/CItemData.php:1988
 msgid "VMware hypervisor datastore write statistics, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier, \"datastore\" - datastore name, \"mode\"- latency"
-msgstr ""
+msgstr "VMware hypervisor datastore skrive statistik, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator, \"datastore\" - datastore navn, \"mode\" - latency"
 
 #: include/classes/data/CItemData.php:1960
 msgid "VMware hypervisor datastores list, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor datastores liste, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2156
 msgid "VMware hypervisor health state rollup sensor, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns 0 - gray; 1 - green; 2 - yellow; 3 - red"
-msgstr ""
+msgstr "VMware hypervisor sundhedstilstand rollup sensor, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator. Returnerer 0 - grå; 1 - grøn; 2 - gul; 3 - rød"
 
 #: include/classes/data/CItemData.php:2237
 msgid "VMware hypervisor maintenance status, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns 0 - not in maintenance; 1 - in maintenance"
-msgstr ""
+msgstr "VMware hypervisor vedligeholdelsesstatus, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator. Returnerer 0 - ikke i vedligeholdelse; 1 - i vedligeholdelse"
 
 #: include/classes/data/CItemData.php:2051
 msgid "VMware hypervisor model, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor model, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2009
 msgid "VMware hypervisor name, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor navn, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2114
 msgid "VMware hypervisor network input statistics, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier, \"mode\"- bps"
-msgstr ""
+msgstr "VMware hypervisor netværk input statistik, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator, \"mode\" - bps"
 
 #: include/classes/data/CItemData.php:2121
 msgid "VMware hypervisor network interface speed, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier, <ifname> - interface name"
-msgstr ""
+msgstr "VMware hypervisor netværk interface hastighed, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator, <ifname> - interface navn"
 
 #: include/classes/data/CItemData.php:2128
 msgid "VMware hypervisor network output statistics, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier, \"mode\"- bps"
-msgstr ""
+msgstr "VMware hypervisor netværk output statistik, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator, \"mode\" - bps"
 
 #: include/classes/data/CItemData.php:2135
 msgid "VMware hypervisor performance counter, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier, \"path\" - performance counter path, \"instance\" - performance counter instance"
-msgstr ""
+msgstr "VMware hypervisor ydeevnetæller, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator, \"sti\" - ydeevnetællersti, \"instans\" - performance counter instans"
 
 #: include/classes/data/CItemData.php:2016
 msgid "VMware hypervisor processor frequency, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor processor frekvens, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2023
 msgid "VMware hypervisor processor model, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor processor model, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:1932
 msgid "VMware hypervisor processor usage in Hz, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "Brug af VMware hypervisor processor i Hz, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2149
 msgid "VMware hypervisor property , \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier, \"prop\" - property path"
-msgstr ""
+msgstr "VMware hypervisor egenskab , \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator, \"prop\" - egenskabssti"
 
 #: include/classes/data/CItemData.php:2058
 msgid "VMware hypervisor sensors value, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns JSON"
@@ -22773,35 +22773,35 @@ msgstr "VMware hypervisor sensorer værdi, \"url\" - VMware service URL, \"uuid\
 
 #: include/classes/data/CItemData.php:2065
 msgid "VMware hypervisor serialnumber, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor serienummer, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2170
 msgid "VMware hypervisor status, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor status, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2177
 msgid "VMware hypervisor tags array, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns JSON"
-msgstr ""
+msgstr "VMware hypervisor tags array, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator. Returnerer JSON"
 
 #: include/classes/data/CItemData.php:2044
 msgid "VMware hypervisor total memory size, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor total hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2184
 msgid "VMware hypervisor uptime, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor oppetid, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2100
 msgid "VMware hypervisor used memory size, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor brugt hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2079
 msgid "VMware hypervisor vendor name, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor leverandørnavn, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:2191
 msgid "VMware hypervisor version, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier"
-msgstr ""
+msgstr "VMware hypervisor version, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator"
 
 #: include/classes/data/CItemData.php:1897
 msgid "VMware service full name, \"url\" - VMware service URL"
@@ -22817,143 +22817,143 @@ msgstr "VMware virtuelt center alarm data, returnerer JSON, \"url\" - VMware ser
 
 #: include/classes/data/CItemData.php:2226
 msgid "VMware virtual machine alarms data, returns JSON, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine alarmerer data, returnerer JSON, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine globalt unikt id"
 
 #: include/classes/data/CItemData.php:2338
 msgid "VMware virtual machine ballooned memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine ballooned hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2471
 msgid "VMware virtual machine committed storage space, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine engageret lagerplads, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2345
 msgid "VMware virtual machine compressed memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine komprimeret hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2233
 msgid "VMware virtual machine custom attribute value, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"name\" - custom attribute name"
-msgstr ""
+msgstr "VMware virtual machine custom attribut værdi, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unik identifikator, \"name\" - custom attribut navn"
 
 #: include/classes/data/CItemData.php:2303
 msgid "VMware virtual machine datacenter name, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier. Returns string"
-msgstr ""
+msgstr "VMware virtuel maskine datacenternavn, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator. Returnerer streng"
 
 #: include/classes/data/CItemData.php:2548
 msgid "VMware virtual machine disk device read statistics, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"instance\" - disk device instance, \"mode\"- bps/ops - bytes/operations per second"
-msgstr ""
+msgstr "VMware virtuel maskine disk enhed læse statistik, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator, \"instans\" - disk enhed instans, \"mode\" - bps/ops - bytes/operationer pr."
 
 #: include/classes/data/CItemData.php:2555
 msgid "VMware virtual machine disk device write statistics, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"instance\" - disk device instance, \"mode\"- bps/ops - bytes/operations per second"
-msgstr ""
+msgstr "VMware virtuel maskine disk enhed skrive statistik, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator, \"instans\" - disk enhed instans, \"mode\" - bps/ops - bytes/operationer pr."
 
 #: include/classes/data/CItemData.php:2247
 msgid "VMware virtual machine disk requires consolidation, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine disk kræver konsolidering, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2569
 msgid "VMware virtual machine file system statistics, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"fsname\" - file system name, \"mode\"- total/free/used/pfree/pused"
-msgstr ""
+msgstr "VMware virtuel maskine filsystem statistik, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator, \"fsname\" - filsystem navn, \"mode\" - total/free/used/pfree/pused"
 
 #: include/classes/data/CItemData.php:2380
 msgid "VMware virtual machine guest memory usage, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "Brug af gæstehukommelse for VMware virtuel maskine, \"url\" - VMware-tjeneste URL, \"uuid\" - Global unik identifikator for VMware virtuel maskine"
 
 #: include/classes/data/CItemData.php:2387
 msgid "VMware virtual machine host memory usage, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "Brug af VMware virtuel maskine værtshukommelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2482
 msgid "VMware virtual machine hypervisor maintenance status, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier. Returns 0 - not in maintenance; 1 - in maintenance"
-msgstr ""
+msgstr "VMware virtual machine hypervisor vedligeholdelsesstatus, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator. Returnerer 0 - ikke i vedligeholdelse; 1 - i vedligeholdelse"
 
 #: include/classes/data/CItemData.php:2331
 msgid "VMware virtual machine hypervisor name, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine hypervisor navn, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2240
 msgid "VMware virtual machine name, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine navn, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2415
 msgid "VMware virtual machine network interface input statistics, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"instance\" - network interface instance, \"mode\"- bps/pps - bytes/packets per second"
-msgstr ""
+msgstr "VMware virtuel maskine netværksgrænseflade inputstatistik, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator, \"instans\" - netværks interface instans, \"mode\" - bps/pps - bytes/pakker pr. sekund"
 
 #: include/classes/data/CItemData.php:2422
 msgid "VMware virtual machine network interface output statistics, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"instance\" - network interface instance, \"mode\"- bps/pps - bytes/packets per second"
-msgstr ""
+msgstr "VMware virtuel maskine netværk interface output statistik, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator, \"instans\" - netværk interface instans, \"mode\" - bps/pps - bytes/pakker pr. sekund"
 
 #: include/classes/data/CItemData.php:2436
 msgid "VMware virtual machine performance counter, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"path\" - performance counter path, \"instance\" - performance counter instance"
-msgstr ""
+msgstr "VMware virtual machine performance counter, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unik identifikator, \"path\" - performance counter path, \"instance\" - performance counter instans"
 
 #: include/classes/data/CItemData.php:2443
 msgid "VMware virtual machine power state, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine strømtilstand, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2498
 msgid "VMware virtual machine private memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine privat hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2359
 msgid "VMware virtual machine private memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifierr"
-msgstr ""
+msgstr "VMware virtuel maskine privat hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2275
 msgid "VMware virtual machine processor ready time ms, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine processor klar tid ms, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2296
 msgid "VMware virtual machine processor usage in Hz, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "Brug af VMware virtuel maskine processor i Hz, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2450
 msgid "VMware virtual machine property, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"prop\" - property path"
-msgstr ""
+msgstr "VMware virtuel maskine egenskab, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator, \"prop\" - egenskabssti"
 
 #: include/classes/data/CItemData.php:2366
 msgid "VMware virtual machine shared memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine delt hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2457
 msgid "VMware virtual machine snapshot state, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier. Returns JSON"
-msgstr ""
+msgstr "VMware virtuel maskine snapshot tilstand, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator. Returnerer JSON"
 
 #: include/classes/data/CItemData.php:2464
 msgid "VMware virtual machine state, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine tilstand, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2373
 msgid "VMware virtual machine swapped memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine byttet hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2520
 msgid "VMware virtual machine tags array, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier. Returns JSON"
-msgstr ""
+msgstr "VMware virtuel maskine tags array, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator. Returnerer JSON"
 
 #: include/classes/data/CItemData.php:2527
 msgid "VMware virtual machine tools state, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier, \"mode\"- version or status"
-msgstr ""
+msgstr "VMware virtuelle maskinværktøjstilstand, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator, \"mode\" - version eller status"
 
 #: include/classes/data/CItemData.php:2394
 msgid "VMware virtual machine total memory size, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine samlet hukommelsesstørrelse, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2499
 msgid "VMware virtual machine uncommitted storage space, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine uforpligtet lagerplads, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2506
 msgid "VMware virtual machine unshared storage space, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine udelt lagerplads, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2534
 msgid "VMware virtual machine uptime, \"url\" - VMware service URL, \"uuid\" - VMware virtual machine global unique identifier"
-msgstr ""
+msgstr "VMware virtuel maskine oppetid, \"url\" - VMware service URL, \"uuid\" - VMware virtuel maskine global unik identifikator"
 
 #: include/classes/data/CItemData.php:2086
 msgid "VVMware hypervisor maintenance status, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unique identifier. Returns 0 - not in maintenance; 1 - in maintenance"
-msgstr ""
+msgstr "VVMware hypervisor vedligeholdelsesstatus, \"url\" - VMware service URL, \"uuid\" - VMware hypervisor global unik identifikator. Returnerer 0 - ikke i vedligeholdelse; 1 - i vedligeholdelse"
 
 #: app/views/administration.miscconfig.edit.php:112
 msgid "Valid URI schemes"
@@ -23118,7 +23118,7 @@ msgstr ""
 
 #: include/classes/data/CItemData.php:1225
 msgid "Value of any Windows performance counter. Returns integer, float, string or text (depending on the request)"
-msgstr ""
+msgstr "Værdien af enhver Windows-ydelsestæller. Returnerer heltal, float, streng eller tekst (afhængigt af anmodningen)"
 
 #: app/views/js/correlation.edit.js.php:268
 #: include/classes/helpers/CCorrelationHelper.php:153
@@ -23172,7 +23172,7 @@ msgstr "Forskellige oplysninger om specifikke processer. Returnere decimaltal"
 #: include/classes/setup/CSetupWizard.php:791
 #: include/classes/setup/CSetupWizard.php:807
 msgid "Vault API endpoint"
-msgstr ""
+msgstr "Vault API-slutpunkt"
 
 #: include/classes/setup/CSetupWizard.php:598
 #: include/classes/setup/CSetupWizard.php:799
@@ -23288,7 +23288,7 @@ msgstr "Se relaterede rapporter"
 
 #: include/classes/data/CItemData.php:1735
 msgid "Virtual space size in bytes or in percentage from total. Returns integer for bytes; float for percentage"
-msgstr ""
+msgstr "Virtuel størrelse i bytes eller i procent af totalen. Returnerer heltal for bytes; flyde i procent"
 
 #: app/partials/configuration.host.edit.html.php:102
 #: app/views/configuration.discovery.edit.php:168
@@ -24145,37 +24145,37 @@ msgstr "acos() - Arccosinus for en værdi som en vinkel, udtrykt i radianer"
 #: include/classes/api/services/CDRule.php:773
 #, c-format
 msgid "action \"%1$s\" uses this discovery check"
-msgstr ""
+msgstr "handling \"%1$s\" bruger denne opdagelseskontrol"
 
 #: include/classes/api/services/CDRule.php:980
 #, c-format
 msgid "action \"%1$s\" uses this discovery rule"
-msgstr ""
+msgstr "handling \"%1$s\" bruger denne opdagelsesregel"
 
 #: include/classes/api/services/CHost.php:1632
 #, c-format
 msgid "action \"%1$s\" uses this host"
-msgstr ""
+msgstr "handling \"%1$s\" bruger denne vært"
 
 #: include/classes/api/services/CHostGroup.php:768
 #, c-format
 msgid "action \"%1$s\" uses this host group"
-msgstr ""
+msgstr "handling \"%1$s\" bruger denne værtsgruppe"
 
 #: include/classes/api/services/CService.php:487
 #, c-format
 msgid "action \"%1$s\" uses this service"
-msgstr ""
+msgstr "handling \"%1$s\" bruger denne tjeneste"
 
 #: include/classes/api/services/CTemplate.php:806
 #, c-format
 msgid "action \"%1$s\" uses this template"
-msgstr ""
+msgstr "handling \"%1$s\" bruger denne skabelon"
 
 #: include/classes/api/managers/CTriggerManager.php:127
 #, c-format
 msgid "action \"%1$s\" uses this trigger"
-msgstr ""
+msgstr "handling \"%1$s\" bruger denne udløser"
 
 #: app/partials/monitoring.charts.subfilter.php:182
 #: app/partials/monitoring.latest.subfilter.php:186 include/forms.inc.php:144
@@ -25987,7 +25987,7 @@ msgstr "søgestreng"
 #: include/classes/helpers/CMaintenanceHelper.php:45
 msgctxt "adjective"
 msgid "second"
-msgstr ""
+msgstr "sekunder"
 
 #: include/forms.inc.php:1355 include/views/js/item.preprocessing.js.php:343
 msgid "seconds"
@@ -26606,7 +26606,7 @@ msgstr ""
 
 #: include/actions.inc.php:552 include/actions.inc.php:568
 msgid "via"
-msgstr ""
+msgstr "via"
 
 #: include/func.inc.php:633
 msgctxt "week short"
@@ -26615,11 +26615,11 @@ msgstr ""
 
 #: include/classes/api/services/CHttpTest.php:440
 msgid "web scenario with the same UUID already exists"
-msgstr ""
+msgstr "webscenarie med samme UUID eksisterer allerede"
 
 #: app/views/popup.usergroupmapping.edit.php:80
 msgid "wildcard patterns with '*' may be used"
-msgstr ""
+msgstr "wildcard-mønstre med '*' kan bruges"
 
 #: include/html.inc.php:684 include/html.inc.php:710 include/html.inc.php:730
 #: include/html.inc.php:806
