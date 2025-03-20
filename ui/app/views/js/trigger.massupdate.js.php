@@ -70,32 +70,6 @@
 		jQuery('#dependencies_' + triggerid).remove();
 	}
 
-	function removeCallbackOnClosePopup(subscriptions) {
-		document.addEventListener('click', (e) => {
-			if (e.target.closest('.overlay-dialogue-header button')
-					&& e.target.classList.contains('btn-overlay-close')) {
-				ZABBIX.EventHub.unsubscribeAll(subscriptions)
-			}
-		});
-	}
-
-	function removeCallbackOnCancelPopup(subscriptions) {
-		const dialogue_footer = document.querySelectorAll('.overlay-dialogue-footer');
-
-		if (dialogue_footer.length > 0) {
-			const footer = dialogue_footer[0];
-
-			const observer_footer = new MutationObserver(() => {
-				footer.addEventListener('click', function(e) {
-					if (e.target.closest('button') && e.target.classList.contains('js-cancel')) {
-						ZABBIX.EventHub.unsubscribeAll(subscriptions);
-					}
-				});
-			});
-			observer_footer.observe(footer, {childList: true, subtree: true});
-		}
-	}
-
 	(() => {
 		const massupdate_overlay = overlays_stack.end();
 
@@ -123,6 +97,10 @@
 			);
 		}
 
+		massupdate_overlay.$dialogue[0].addEventListener('dialogue.close', () => {
+			ZABBIX.EventHub.unsubscribeAll(subscriptions);
+		});
+
 		subscriptions.push(
 			ZABBIX.EventHub.subscribe({
 				require: {
@@ -133,8 +111,5 @@
 				callback: () => ZABBIX.EventHub.unsubscribeAll(subscriptions)
 			})
 		);
-
-		removeCallbackOnClosePopup(subscriptions);
-		removeCallbackOnCancelPopup(subscriptions);
 	})();
 </script>
