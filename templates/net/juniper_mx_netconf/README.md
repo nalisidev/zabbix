@@ -54,7 +54,7 @@ For this template to work, you must enable the NETCONF sessions over SSH service
       user@host# commit
       ```
 
-Set the macros: `{$JUNIPER.NETCONF.USERNAME}`, `{$JUNIPER.NETCONF.PASSWORD}`.
+Set the macros: `{$JUNIPER.MX.NETCONF.USERNAME}`, `{$JUNIPER.MX.NETCONF.PASSWORD}`.
 
 For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/documentation/us/en/software/junos/netconf/topics/topic-map/netconf-ssh-connection.html).
 
@@ -63,12 +63,12 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Default|
 |----|-----------|-------|
-|{$JUNIPER.NETCONF.USERNAME}|<p>Juniper NETCONF username.</p>||
-|{$JUNIPER.NETCONF.PASSWORD}|<p>Juniper NETCONF password.</p>||
-|{$JUNIPER.NETCONF.IP}|<p>The IP address of the Juniper MX.</p>|`<SET JUNIPER MX IP NETCONF>`|
-|{$JUNIPER.NETCONF.PORT}|<p>The NETCONF port of the Juniper MX.</p>|`830`|
-|{$JUNIPER.NETCONF.TIMEOUT}|<p>SSH response timeout.</p>|`15s`|
-|{$NETCONF.RESPONSE_TIME.MAX.WARN}|<p>The maximum Juniper NETCONF response time expressed in seconds for a trigger expression.</p>|`10`|
+|{$JUNIPER.MX.NETCONF.USERNAME}|<p>Juniper NETCONF username.</p>||
+|{$JUNIPER.MX.NETCONF.PASSWORD}|<p>Juniper NETCONF password.</p>||
+|{$JUNIPER.MX.NETCONF.IP}|<p>The IP address of the Juniper MX.</p>|`<SET JUNIPER MX IP NETCONF>`|
+|{$JUNIPER.MX.NETCONF.PORT}|<p>The NETCONF port of the Juniper MX.</p>|`830`|
+|{$JUNIPER.MX.NETCONF.TIMEOUT}|<p>SSH response timeout.</p>|`15s`|
+|{$JUNIPER.MX.NETCONF.RESPONSE_TIME.MAX.WARN}|<p>The maximum Juniper NETCONF response time expressed in seconds for a trigger expression.</p>|`10`|
 |{$JUNIPER.MX.NET.IF.NAME.MATCHES}|<p>Used for network physical-interface discovery. Can be overridden on the host or linked template level.</p>|`^.*$`|
 |{$JUNIPER.MX.NET.IF.NAME.NOT_MATCHES}|<p>Filters out `loopbacks`, `nulls`, docker `veth` links and `docker0` bridge by default.</p>|`Macro too long. Please see the template.`|
 |{$JUNIPER.MX.NET.IF.IFOPERSTATUS.MATCHES}|<p>Used for network physical-interface discovery. Can be overridden on the host or linked template level.</p>|`^.*$`|
@@ -104,33 +104,33 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|NETCONF: Service status|<p>Checks if a service is running and accepting NETCONF connections.</p><p>Return value: 0 - the service is down; 1 - the service is running.</p>|Simple check|net.tcp.service[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"]|
-|NETCONF: Service response time|<p>Checks the performance of a TCP service.</p><p>Return value: Float: 0.000000 - the service is down; seconds - the number of seconds spent while connecting to the service.</p>|Simple check|net.tcp.service.perf[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"]|
+|NETCONF: Service status|<p>Checks if a service is running and accepting NETCONF connections.</p><p>Return value: 0 - the service is down; 1 - the service is running.</p>|Simple check|net.tcp.service[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"]|
+|NETCONF: Service response time|<p>Checks the performance of a TCP service.</p><p>Return value: Float: 0.000000 - the service is down; seconds - the number of seconds spent while connecting to the service.</p>|Simple check|net.tcp.service.perf[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"]|
 |Alarm: Get data|<p>Get alarms raw data.</p>|Dependent item|juniper.mx.alarm.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..["rpc-reply"]["alarm-information"]`</p></li></ul>|
-|DOM: Get data|<p>Get interface optics diagnostics information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxDom,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|DOM: Get rpc error|<p>Check that the remote procedure call have metrics data has been received correctly.</p>|Dependent item|juniper.mx.dom.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..["rpc-reply"]["rpc-error"]`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
-|Resource: Get data|<p>Get resource information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|Resource: Get rpc error|<p>Check that the remote procedure call have metrics data has been received correctly.</p>|Dependent item|juniper.mx.resource.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..["rpc-reply"]["rpc-error"]`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
-|Routing protocols: Get data|<p>Get routing protocols information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxBgpOspf,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|Routing protocols: Get rpc error|<p>Check that the remote procedure call have metrics data has been received correctly.</p>|Dependent item|juniper.mx.bgp.ospf.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..["rpc-reply"]["rpc-error"]`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
-|BGP: Get data|<p>Get BGP raw data.</p>|Dependent item|juniper.mx.bgp.data<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|OSPF: Get data|<p>Get OSPF raw data.</p>|Dependent item|juniper.mx.ospf.data<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|Storage: Get data|<p>Get storage raw data.</p>|Dependent item|juniper.mx.storage.data<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
-|PEM: Get data|<p>Get PEM raw data.</p>|Dependent item|juniper.mx.pem.data<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
-|FAN: Get data|<p>Get FAN raw data.</p>|Dependent item|juniper.mx.fan.data<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
-|Temperature: Get data|<p>Get temperature raw data.</p>|Dependent item|juniper.mx.temperature.data<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|FPC: Get data|<p>Get raw data information for Packet Forwarding Engines (FPC).</p>|Dependent item|juniper.mx.fpc.data<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..["rpc-reply"]["fpc-information"]["fpc"]`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|Routing Engine: Get data|<p>Get get route engine information raw data.</p>|Dependent item|juniper.mx.routing.engine.data<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|Interface information: Get data|<p>Get interface information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxInterface,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
-|Interface information: Get rpc error|<p>Check that the remote procedure call have metrics data has been received correctly.</p>|Dependent item|juniper.mx.interface.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..["rpc-reply"]["rpc-error"]`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
+|DOM: Get data|<p>Get interface optics diagnostics information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxDom,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|DOM: Get rpc error|<p>Check that the remote procedure call have metrics and data has been received correctly.</p>|Dependent item|juniper.mx.dom.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.error`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
+|Resource: Get data|<p>Get resource information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|Resource: Get rpc error|<p>Check that the remote procedure call have metrics and data has been received correctly.</p>|Dependent item|juniper.mx.resource.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..content.first()`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
+|Routing protocols: Get data|<p>Get routing protocols information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxBgpOspf,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|Routing protocols: Get rpc error|<p>Check that the remote procedure call have metrics and data has been received correctly.</p>|Dependent item|juniper.mx.bgp.ospf.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..content.first()`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
+|BGP: Get data|<p>Get BGP raw data.</p>|Dependent item|juniper.mx.bgp.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|OSPF: Get data|<p>Get OSPF raw data.</p>|Dependent item|juniper.mx.ospf.data.get<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|Storage: Get data|<p>Get storage raw data.</p>|Dependent item|juniper.mx.storage.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
+|PEM: Get data|<p>Get PEM raw data.</p>|Dependent item|juniper.mx.pem.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
+|FAN: Get data|<p>Get FAN raw data.</p>|Dependent item|juniper.mx.fan.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
+|Temperature: Get data|<p>Get temperature raw data.</p>|Dependent item|juniper.mx.temperature.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|FPC: Get data|<p>Get raw data information for Packet Forwarding Engines (FPC).</p>|Dependent item|juniper.mx.fpc.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..["rpc-reply"]["fpc-information"]["fpc"]`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|Routing Engine: Get data|<p>Get get route engine information raw data.</p>|Dependent item|juniper.mx.routing.engine.data.get<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|Interface information: Get data|<p>Get interface information data using RPC request NETCONF server.</p>|SSH agent|ssh.run[JuniperMxInterface,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|Interface information: Get rpc error|<p>Check that the remote procedure call have metrics and data has been received correctly.</p>|Dependent item|juniper.mx.interface.error<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.results..content.first()`</p><p>⛔️Custom on fail: Set value to</p></li><li><p>Discard unchanged with heartbeat: `3h`</p></li></ul>|
 
 ### Triggers
 
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
-|Juniper MX: NETCONF is not available||`last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"])=0`|Average|**Manual close**: Yes|
-|Juniper MX: NETCONF response time is too high||`min(/Juniper MX by NETCONF/net.tcp.service.perf[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"],5m)>{$NETCONF.RESPONSE_TIME.MAX.WARN}`|Warning|**Manual close**: Yes<br>**Depends on**:<br><ul><li>Juniper MX: NETCONF is not available</li></ul>|
-|Juniper MX: Failed to get DOM data|<p>Failed to get metrics for interface optics diagnostics informatio.</p>|`length(last(/Juniper MX by NETCONF/juniper.mx.dom.error))>0`|Warning||
+|Juniper MX: NETCONF is not available|<p>Checks the availability of NETCONF on the TCP port.</p>|`last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"])=0`|Average|**Manual close**: Yes|
+|Juniper MX: NETCONF response time is too high||`min(/Juniper MX by NETCONF/net.tcp.service.perf[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"],5m)>{$JUNIPER.MX.NETCONF.RESPONSE_TIME.MAX.WARN}`|Warning|**Manual close**: Yes<br>**Depends on**:<br><ul><li>Juniper MX: NETCONF is not available</li></ul>|
+|Juniper MX: Failed to get DOM data|<p>Failed to get metrics for interface optics diagnostics information.</p>|`length(last(/Juniper MX by NETCONF/juniper.mx.dom.error))>0`|Warning||
 |Juniper MX: Failed to get resource data|<p>Failed to get metrics for resource.</p>|`length(last(/Juniper MX by NETCONF/juniper.mx.resource.error))>0`|Warning||
 |Juniper MX: Failed to get routing protocol data|<p>Failed to get metrics for routing protocol.</p>|`length(last(/Juniper MX by NETCONF/juniper.mx.bgp.ospf.error))>0`|Warning||
 |Juniper MX: Failed to get interface information data|<p>Failed to get metrics for interface information.</p>|`length(last(/Juniper MX by NETCONF/juniper.mx.interface.error))>0`|Warning||
@@ -154,11 +154,11 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 |Routing Engine Slot [{#SLOT}]: Start time|<p>Time at which the Routing Engine started running.</p>|Dependent item|juniper.mx.routing.engine.start.time["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["start-time"]["@seconds"].first()`</p></li></ul>|
 |Routing Engine Slot [{#SLOT}]: Memory utilization|<p>Percentage of Routing Engine memory being used.</p>|Dependent item|juniper.mx.routing.engine.mem.util["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["memory-buffer-utilization"].first()`</p></li></ul>|
 |Routing Engine Slot [{#SLOT}]: DRAM available|<p>Total DRAM available to the Routing Engine's processor.</p>|Dependent item|juniper.mx.routing.engine.dram["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["memory-dram-size"].first()`</p></li><li><p>Right trim: `MB`</p></li><li><p>Custom multiplier: `1048576`</p></li><li><p>Discard unchanged with heartbeat: `12h`</p></li></ul>|
-|Routing Engine Slot [{#SLOT}]: CPU total utilization|<p>Percentage of total CPU utilization.</p>|Calculated|juniper.mx.routing.engine.cpu.total["{#SLOT}"]|
-|Routing Engine Slot [{#SLOT}]: CPU user utilization|<p>Percentage of CPU time being used by user processes.</p>|Dependent item|juniper.mx.routing.engine.cpu.user["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-user"].first()`</p></li></ul>|
-|Routing Engine Slot [{#SLOT}]: CPU system utilization|<p>Percentage of CPU time being used by system processes.</p>|Dependent item|juniper.mx.routing.engine.cpu.system["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-system"].first()`</p></li></ul>|
-|Routing Engine Slot [{#SLOT}]: CPU interrupt utilization|<p>Percentage of CPU time being used by interrupts.</p>|Dependent item|juniper.mx.routing.engine.cpu.interrupt["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-interrupt"].first()`</p></li></ul>|
-|Routing Engine Slot [{#SLOT}]: CPU background utilization|<p>Percentage of CPU time being used by background processes.</p>|Dependent item|juniper.mx.routing.engine.cpu.background["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-background"].first()`</p></li></ul>|
+|Routing Engine Slot [{#SLOT}]: CPU total utilization|<p>Percentage of total CPU utilization.</p>|Calculated|juniper.mx.routing.engine.cpu.total.util["{#SLOT}"]|
+|Routing Engine Slot [{#SLOT}]: CPU user utilization|<p>Percentage of CPU time being used by user processes.</p>|Dependent item|juniper.mx.routing.engine.cpu.user.util["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-user"].first()`</p></li></ul>|
+|Routing Engine Slot [{#SLOT}]: CPU system utilization|<p>Percentage of CPU time being used by system processes.</p>|Dependent item|juniper.mx.routing.engine.cpu.system.util["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-system"].first()`</p></li></ul>|
+|Routing Engine Slot [{#SLOT}]: CPU interrupt utilization|<p>Percentage of CPU time being used by interrupts.</p>|Dependent item|juniper.mx.routing.engine.cpu.interrupt.util["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-interrupt"].first()`</p></li></ul>|
+|Routing Engine Slot [{#SLOT}]: CPU background utilization|<p>Percentage of CPU time being used by background processes.</p>|Dependent item|juniper.mx.routing.engine.cpu.background.util["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-background"].first()`</p></li></ul>|
 |Routing Engine Slot [{#SLOT}]: CPU idle|<p>Percentage of CPU time that is idle.</p>|Dependent item|juniper.mx.routing.engine.cpu.idle["{#SLOT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$..["cpu-idle"].first()`</p></li></ul>|
 
 ### Trigger prototypes for Routing Engine discovery
@@ -167,7 +167,7 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 |----|-----------|----------|--------|--------------------------------|
 |Juniper MX: Routing Engine Slot [{#SLOT}]: Status not "OK"|<p>Check the routing engine errors.</p>|`last(/Juniper MX by NETCONF/juniper.mx.routing.engine.status["{#SLOT}"])<>"OK"`|High||
 |Juniper MX: High Routing Engine memory utilization|<p>The system is running out of free memory.</p>|`min(/Juniper MX by NETCONF/juniper.mx.routing.engine.mem.util["{#SLOT}"],5m)>{$JUNIPER.MX.MEMORY.UTIL.MAX}`|Average||
-|Juniper MX: High Routing Engine CPU utilization|<p>Routing Engine CPU utilization is too high.</p>|`min(/Juniper MX by NETCONF/juniper.mx.routing.engine.cpu.total["{#SLOT}"], 10m) >= {$JUNIPER.MX.CPU.UTIL.MIN}`|Average||
+|Juniper MX: High Routing Engine CPU utilization|<p>Routing Engine CPU utilization is too high.</p>|`min(/Juniper MX by NETCONF/juniper.mx.routing.engine.cpu.total.util["{#SLOT}"], 10m) >= {$JUNIPER.MX.CPU.UTIL.MIN}`|Average||
 
 ### LLD rule FPC's discovery
 
@@ -200,20 +200,20 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|Network interfaces discovery|<p>Discovering interfaces from Juniper device.</p>|Dependent item|juniper.mx.net.if.discovery<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
+|Network interfaces discovery|<p>Discovering interfaces from Juniper device.</p>|Dependent item|juniper.mx.net.if.discovery<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
 
 ### Item prototypes for Network interfaces discovery
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|Interface [{#IFNAME}][{#IFDESCR}]: Get metrics data|<p>Get data physical-interface `[{#IFNAME}]`.</p>|Dependent item|juniper.mx.interface.get["{#IFNAME}","{#IFDESCR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$[?(@.name == "{#IFNAME}")].first()`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
-|Interface [{#IFNAME}][{#IFDESCR}]: Operational status|<p>Get operational status physical-interface `[{#IFNAME}]`.</p>|Dependent item|juniper.mx.net.if.oper.status["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["oper-status"]`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
-|Interface [{#IFNAME}][{#IFDESCR}]: Speed|<p>Get speed interface `[{#IFNAME}]`.</p>|Dependent item|juniper.mx.net.if.speed["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["speed"]`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `12h`</p></li></ul>|
-|Interface [{#IFNAME}][{#IFDESCR}]: Link level type|<p>Get link level type interface `[{#IFNAME}]`.</p>|Dependent item|juniper.mx.net.link.level.type["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["link-level-type"]`</p></li><li><p>Discard unchanged with heartbeat: `12h`</p></li></ul>|
-|Interface [{#IFNAME}][{#IFDESCR}]: Output bits|<p>Number of output bytes, current throughput rate in bits per second (bps).</p>|Dependent item|juniper.mx.net.output.bits["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["output-bytes"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li><li><p>Custom multiplier: `8`</p></li></ul>|
-|Interface [{#IFNAME}][{#IFDESCR}]: Input bits|<p>Number of Input bytes, current throughput rate in bits per second (bps).</p>|Dependent item|juniper.mx.net.input.bits["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["input-bytes"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li><li><p>Custom multiplier: `8`</p></li></ul>|
-|Interface [{#IFNAME}][{#IFDESCR}]: Output packets|<p>Number of output packets, current throughput rate in packets per second (pps).</p>|Dependent item|juniper.mx.net.output.packets["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["output-packets"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li></ul>|
-|Interface [{#IFNAME}][{#IFDESCR}]: Input packets|<p>Number of input packets, current throughput rate in packets per second (pps).</p>|Dependent item|juniper.mx.net.input.packets["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["input-packets"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Get metrics data|<p>Get data physical-interface '[{#IFNAME}]'.</p>|Dependent item|juniper.mx.interface.get["{#IFNAME}","{#IFDESCR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Operational status|<p>Get operational status physical-interface '[{#IFNAME}]'.</p>|Dependent item|juniper.mx.net.if.oper.status["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["oper-status"]`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Speed|<p>Get speed interface '[{#IFNAME}]'.</p>|Dependent item|juniper.mx.net.if.speed["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["speed"]`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `12h`</p></li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Link level type|<p>Get link level type interface '[{#IFNAME}]'.</p>|Dependent item|juniper.mx.net.link.level.type["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["link-level-type"]`</p></li><li><p>Discard unchanged with heartbeat: `12h`</p></li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Output bits|<p>Number of output bytes, current throughput rate in bits per second (bps).</p>|Dependent item|juniper.mx.net.output.bits.rate["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["output-bytes"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li><li><p>Custom multiplier: `8`</p></li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Input bits|<p>Number of Input bytes, current throughput rate in bits per second (bps).</p>|Dependent item|juniper.mx.net.input.bits.rate["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["input-bytes"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li><li><p>Custom multiplier: `8`</p></li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Output packets|<p>Number of output packets, current throughput rate in packets per second (pps).</p>|Dependent item|juniper.mx.net.output.packets.rate["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["output-packets"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li></ul>|
+|Interface [{#IFNAME}][{#IFDESCR}]: Input packets|<p>Number of input packets, current throughput rate in packets per second (pps).</p>|Dependent item|juniper.mx.net.input.packets.rate["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["traffic-statistics"]["input-packets"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li></ul>|
 |Interface [{#IFNAME}][{#IFDESCR}]: Input errors|<p>Input errors on the interface.</p>|Dependent item|juniper.mx.net.input.errors["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["input-error-list"]["input-errors"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li></ul>|
 |Interface [{#IFNAME}][{#IFDESCR}]: Output errors|<p>Output errors on the interface.</p>|Dependent item|juniper.mx.net.output.errors["{#IFNAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["output-error-list"]["output-errors"]`</p><p>⛔️Custom on fail: Discard value</p></li><li>Change per second</li></ul>|
 
@@ -222,8 +222,8 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
 |Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: Link down|<p>This trigger expression works as follows:<br>1. It can be triggered if the operational status is down.<br>2. `{$JUNIPER.MX.NET.IF.CONTROL:"{#IFNAME}"}=1` - a user can redefine the context macro to "0", marking this interface as not important. No new trigger will be fired if this interface is down.<br>3. `last(/TEMPLATE_NAME/METRIC)<>last(/TEMPLATE_NAME/METRIC,#2)` - the trigger fires only if the operational status has changed to "down" from some other state (so, does not fire for "eternal off" interfaces).<br><br>WARNING: if closed manually - it will not fire again on the next poll, because of `last(/TEMPLATE_NAME/METRIC)<>last(/TEMPLATE_NAME/METRIC,#2)`.</p>|`{$JUNIPER.MX.NET.IF.CONTROL:"{#IFNAME}"}=1 and last(/Juniper MX by NETCONF/juniper.mx.net.if.oper.status["{#IFNAME}"])=2 and (last(/Juniper MX by NETCONF/juniper.mx.net.if.oper.status["{#IFNAME}"])<>last(/Juniper MX by NETCONF/juniper.mx.net.if.oper.status["{#IFNAME}"],#2))`|Average|**Manual close**: Yes|
-|Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High outbound bandwidth usage|<p>The utilization of the network interface is close to its estimated maximum bandwidth.</p>|`(avg(/Juniper MX by NETCONF/juniper.mx.net.output.bits["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])>0`|Warning|**Depends on**:<br><ul><li>Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: Link down</li></ul>|
-|Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High inbound bandwidth usage|<p>The utilization of the network interface is close to its estimated maximum bandwidth.</p>|`(avg(/Juniper MX by NETCONF/juniper.mx.net.input.bits["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])>0`|Warning|**Depends on**:<br><ul><li>Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: Link down</li></ul>|
+|Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High outbound bandwidth usage|<p>The utilization of the network interface is close to its estimated maximum bandwidth.</p>|`(avg(/Juniper MX by NETCONF/juniper.mx.net.output.bits.rate["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])>0`|Warning|**Depends on**:<br><ul><li>Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: Link down</li></ul>|
+|Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High inbound bandwidth usage|<p>The utilization of the network interface is close to its estimated maximum bandwidth.</p>|`(avg(/Juniper MX by NETCONF/juniper.mx.net.input.bits.rate["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])>0`|Warning|**Depends on**:<br><ul><li>Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: Link down</li></ul>|
 
 ### LLD rule Multi-lane DOM discovery
 
@@ -235,10 +235,10 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Get metrics data|<p>Get module data physical-interface `[{#SFPIFNAME}]` line `[{#LANEID}]`.</p>|Dependent item|juniper.mx.dom.get["{#SFPIFNAME}","{#LANEID}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
+|SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Get metrics data|<p>Get module data physical-interface '[{#SFPIFNAME}]' line '[{#LANEID}]'.</p>|Dependent item|juniper.mx.dom.get["{#SFPIFNAME}","{#LANEID}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
 |SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Rx optical power|<p>Rx power [{#SFPIFNAME}] line [{#LANEID}].</p>|Dependent item|juniper.mx.dom.rx.lane.laser["{#SFPIFNAME}","{#LANEID}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.rx_power`</p></li></ul>|
-|SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Tx optical power|<p>Tx power physical-interface `[{#SFPIFNAME}]` line `[{#LANEID}]`.</p>|Dependent item|juniper.mx.dom.tx.lane.laser["{#SFPIFNAME}","{#LANEID}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.tx_power`</p></li></ul>|
-|SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Module alarms|<p>Get module alarms physical-interface `[{#SFPIFNAME}]` line `[{#LANEID}]`.</p>|Dependent item|juniper.dom.alarms.get["{#SFPIFNAME}","{#LANEID}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
+|SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Tx optical power|<p>Tx power physical-interface '[{#SFPIFNAME}]' line '[{#LANEID}]'.</p>|Dependent item|juniper.mx.dom.tx.lane.laser["{#SFPIFNAME}","{#LANEID}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.tx_power`</p></li></ul>|
+|SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Module alarms|<p>Get module alarms physical-interface '[{#SFPIFNAME}]' line '[{#LANEID}]'.</p>|Dependent item|juniper.dom.alarms.get["{#SFPIFNAME}","{#LANEID}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
 
 ### Trigger prototypes for Multi-lane DOM discovery
 
@@ -263,13 +263,13 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|BGP Router [{#BGP_ROUTER_NAME}]: Down peers count|<p>Get down peer count on router [{#BGP_ROUTER_NAME}].</p>|Dependent item|juniper.mx.bgp.router.peer.down["{#BGP_ROUTER_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
+|BGP Router [{#BGP_ROUTER_NAME}]: Down peers count|<p>Get down peer count on router '[{#BGP_ROUTER_NAME}]'.</p>|Dependent item|juniper.mx.bgp.router.peer.down["{#BGP_ROUTER_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
 
 ### Trigger prototypes for BGP Router discovery
 
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
-|Juniper MX: BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Down peers is equal to peers|<p>Down peers count is equal to peers count on router [{#BGP_ROUTER_NAME}]. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.</p>|`last(/Juniper MX by NETCONF/juniper.mx.bgp.router.peer.down["{#BGP_ROUTER_NAME}"]) = {#BGP_PEER_COUNT}`|High||
+|Juniper MX: BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Down peers is equal to peers|<p>Down peers count is equal to peers count on router '[{#BGP_ROUTER_NAME}]'. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.</p>|`last(/Juniper MX by NETCONF/juniper.mx.bgp.router.peer.down["{#BGP_ROUTER_NAME}"]) = {#BGP_PEER_COUNT}`|High||
 
 ### LLD rule BGP Prefix counter discovery
 
@@ -281,7 +281,7 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}] RIB [{#BGP_RIB_NAME}]: Get metrics data|<p>Get data RIB [{#BGP_RIB_NAME}].</p>|Dependent item|juniper.mx.bgp.prefix.get["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}","{#BGP_RIB_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
+|BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}] RIB [{#BGP_RIB_NAME}]: Get metrics data|<p>Get data RIB '[{#BGP_RIB_NAME}]'.</p>|Dependent item|juniper.mx.bgp.prefix.get["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}","{#BGP_RIB_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
 |BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}] RIB [{#BGP_RIB_NAME}]: Suppressed prefixes|<p>The number of suppressed prefixes for a peer.</p>|Dependent item|juniper.mx.bgp.prefix.suppressed["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}","{#BGP_RIB_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.accepted`</p><p>⛔️Custom on fail: Discard value</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
 |BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}] RIB [{#BGP_RIB_NAME}]: Accepted prefixes|<p>The number of prefixes for a peer that are installed in the Adj-Ribs-In and are eligible to become active in the Loc-Rib.</p>|Dependent item|juniper.mx.bgp.prefix.accepted["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}","{#BGP_RIB_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.accepted`</p><p>⛔️Custom on fail: Discard value</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
 |BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}] RIB [{#BGP_RIB_NAME}]: Received prefixes|<p>The number of prefixes received from a peer and stored in the Adj-Ribs-In for that peer.</p>|Dependent item|juniper.mx.bgp.prefix.received["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}","{#BGP_RIB_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.received`</p><p>⛔️Custom on fail: Discard value</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
@@ -297,7 +297,7 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Get metrics data|<p>Get data.</p>|Dependent item|juniper.mx.bgp.get["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
+|BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Get metrics data|<p>Get BGP raw data router '[{#BGP_ROUTER_NAME}]'.</p>|Dependent item|juniper.mx.bgp.get["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
 |BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: State|<p>The remote BGP peer's FSM state.</p>|Dependent item|juniper.mx.bgp.state["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.peer_state`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
 |BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Established time|<p>This timer indicates how long (in seconds) this peer has been in the Established state or how long since this peer was last in the Established state. It is set to zero when a new peer is configured or the router is booted.</p>|Dependent item|juniper.mx.bgp.elapsed.time["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.elapsed_time`</p></li></ul>|
 |BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Flap count|<p>Flap count is the total number of BGP session flaps from a router.</p>|Dependent item|juniper.mx.bgp.flap.count["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.flap_count`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
@@ -318,7 +318,7 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: Get metrics data|<p>Get data.</p>|Dependent item|juniper.mx.ospf.get["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
+|OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: Get metrics data|<p>Get OSPF raw data neighbor '[{#OSPF_NEIGHBOR_ADDR}]'.</p>|Dependent item|juniper.mx.ospf.get["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
 |OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: State|<p>The state of the relationship with this neighbor.</p>|Dependent item|juniper.mx.ospf.state["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.neighbor_state`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
 |OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: Interface|<p>The OSPF interface.</p>|Dependent item|juniper.mx.ospf.interface["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.interface_name`</p></li></ul>|
 |OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: Uptime|<p>The OSPF uptime.</p>|Dependent item|juniper.mx.ospf.uptime["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.uptime`</p></li></ul>|
@@ -327,32 +327,32 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
-|Juniper MX: OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: State down|<p>OSPF neighbor [{#OSPF_NEIGHBOR_ADDR}] in operational state `down`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf.state["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]) = 2`|Average||
-|Juniper MX: OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: State init|<p>OSPFv3 neighbor [{#OSPF_NEIGHBOR_ADDR}] in operational state `init`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf.state["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]) = 6`|Average||
-|Juniper MX: OSPF has been restarted||`last(/Juniper MX by NETCONF/juniper.mx.ospf.uptime["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"])<10m`|Warning||
+|Juniper MX: OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: State down|<p>OSPF neighbor '[{#OSPF_NEIGHBOR_ADDR}]'' in operational state `down`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf.state["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]) = 2`|Average||
+|Juniper MX: OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: State init|<p>OSPFv3 neighbor '[{#OSPF_NEIGHBOR_ADDR}]' in operational state `init`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf.state["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]) = 6`|Average||
+|Juniper MX: OSPF has been restarted|<p>Uptime is less than 10 minutes.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf.uptime["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"])<10m`|Warning||
 
 ### LLD rule OSPFv3 Neighbor discovery
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|OSPFv3 Neighbor discovery|<p>OSPF Neighbors discovery.</p>|Dependent item|juniper.mx.ospf3.neighbor.discovery<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
+|OSPFv3 Neighbor discovery|<p>OSPFv3 Neighbors discovery.</p>|Dependent item|juniper.mx.ospf3.neighbor.discovery<p>**Preprocessing**</p><ul><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
 
 ### Item prototypes for OSPFv3 Neighbor discovery
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: Get metrics data|<p>Get data.</p>|Dependent item|juniper.mx.ospf3.get["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
+|OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: Get metrics data|<p>Get OSPFv3 raw data neighbor '[{#OSPFV3_NEIGHBOR_ADDR}]'.</p>|Dependent item|juniper.mx.ospf3.get["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p><p>⛔️Custom on fail: Discard value</p></li></ul>|
 |OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: State|<p>The state of the relationship with this neighbor.</p>|Dependent item|juniper.mx.ospf3.state["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.neighbor_state`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: Interface|<p>The OSPF interface.</p>|Dependent item|juniper.mx.ospf3.interface["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.interface_name`</p></li></ul>|
+|OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: Interface|<p>The OSPFv3 interface.</p>|Dependent item|juniper.mx.ospf3.interface["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.interface_name`</p></li></ul>|
 |OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: Up time|<p>The OSPFv3 uptime.</p>|Dependent item|juniper.mx.ospf3.uptime["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.uptime`</p></li></ul>|
 
 ### Trigger prototypes for OSPFv3 Neighbor discovery
 
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
-|Juniper MX: OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: State down|<p>OSPF neighbor [{#OSPFV3_NEIGHBOR_ADDR}] in operational state `down`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf3.state["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]) = 2`|Average||
-|Juniper MX: OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: State init|<p>OSPFv3 neighbor [{#OSPFV3_NEIGHBOR_ADDR}] in operational state `init`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf3.state["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]) = 6`|Average||
-|Juniper MX: OSPF has been restarted||`last(/Juniper MX by NETCONF/juniper.mx.ospf3.uptime["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"])<10m`|Warning||
+|Juniper MX: OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: State down|<p>OSPFv3 neighbor '[{#OSPFV3_NEIGHBOR_ADDR}]' in operational state `down`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf3.state["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]) = 2`|Average||
+|Juniper MX: OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: State init|<p>OSPFv3 neighbor '[{#OSPFV3_NEIGHBOR_ADDR}]' in operational state `init`.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf3.state["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]) = 6`|Average||
+|Juniper MX: OSPFv3 has been restarted|<p>Uptime is less than 10 minutes.</p>|`last(/Juniper MX by NETCONF/juniper.mx.ospf3.uptime["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"])<10m`|Warning||
 
 ### LLD rule Mounted filesystem discovery
 
@@ -364,7 +364,7 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|FS [{#FSNAME}] Mounted [{#MOUNT}]: Get data|<p>Intermediate data of `{#FSNAME}` filesystem. Mounted on `{#MOUNT}`.</p>|Dependent item|juniper.mx.fs.get["{#FSNAME}","{#MOUNT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
+|FS [{#FSNAME}] Mounted [{#MOUNT}]: Get data|<p>Intermediate data of '[{#FSNAME}]' filesystem. Mounted on '[{#MOUNT}]'.</p>|Dependent item|juniper.mx.fs.get["{#FSNAME}","{#MOUNT}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
 |FS [{#FSNAME}] Mounted [{#MOUNT}]: Space: Total|<p>Total space expressed in bytes.</p>|Dependent item|juniper.mx.fs.size["{#FSNAME}","{#MOUNT}",total]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["total-blocks"]["#text"]`</p></li><li><p>Custom multiplier: `512`</p></li></ul>|
 |FS [{#FSNAME}] Mounted [{#MOUNT}]: Space: Available|<p>Available storage space expressed in bytes.</p>|Dependent item|juniper.mx.fs.size["{#FSNAME}","{#MOUNT}",free]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["available-blocks"]["#text"]`</p></li><li><p>Custom multiplier: `512`</p></li></ul>|
 |FS [{#FSNAME}] Mounted [{#MOUNT}]: Space: Used|<p>Used storage expressed in bytes.</p>|Dependent item|juniper.mx.fs.size["{#FSNAME}","{#MOUNT}",used]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$["used-blocks"]["#text"]`</p></li><li><p>Custom multiplier: `512`</p></li></ul>|
@@ -387,9 +387,9 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|Module [{#NAME}]: Get data|<p>Intermediate data of `{#NAME}`.</p>|Dependent item|juniper.mx.fan.get["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.[?(@.name=='{#NAME}')].first()`</p></li></ul>|
-|Module [{#NAME}]: Status|<p>Current status of the Fan tray `{#NAME}`.</p>|Dependent item|juniper.mx.fan.status["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.status`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
-|Module [{#NAME}]: Percentage speed|<p>Current percentage of the `{#NAME}` speed being used.</p>|Dependent item|juniper.mx.fan.rpm.percent["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["rpm-percent"]`</p></li><li><p>Right trim: `%`</p></li></ul>|
+|Module [{#NAME}]: Get data|<p>Intermediate data of '[{#NAME}]'.</p>|Dependent item|juniper.mx.fan.get["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.[?(@.name=='{#NAME}')].first()`</p></li></ul>|
+|Module [{#NAME}]: Status|<p>Current status of the Fan tray '[{#NAME}]'.</p>|Dependent item|juniper.mx.fan.status["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.status`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li></ul>|
+|Module [{#NAME}]: Percentage speed|<p>Current percentage of the '[{#NAME}]' speed being used.</p>|Dependent item|juniper.mx.fan.rpm.percent["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["rpm-percent"]`</p></li><li><p>Right trim: `%`</p></li></ul>|
 |Module [{#NAME}]: Fan speed|<p>Fan speed in revolutions per minute (RPM).</p>|Dependent item|juniper.mx.fan.rpm["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["comment"]`</p></li><li><p>Right trim: `RPM`</p></li></ul>|
 
 ### LLD rule PEM discovery
@@ -402,8 +402,8 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
-|Module [{#NAME}]: Get data|<p>Intermediate data of power entry module `{#NAME}`.</p>|Dependent item|juniper.mx.pem.get["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.[?(@.name=='{#NAME}')].first()`</p></li></ul>|
-|Module [{#NAME}]: State|<p>Status of the power entry module `{#NAME}`.</p>|Dependent item|juniper.mx.pem.state["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.state`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
+|Module [{#NAME}]: Get data|<p>Intermediate data of power entry module '[{#NAME}]'.</p>|Dependent item|juniper.mx.pem.get["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.[?(@.name=='{#NAME}')].first()`</p></li></ul>|
+|Module [{#NAME}]: State|<p>Status of the power entry module '[{#NAME}]'.</p>|Dependent item|juniper.mx.pem.state["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.state`</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
 |Module [{#NAME}]: Voltage|<p>Information about voltage supplied to the PEM.</p>|Dependent item|juniper.mx.pem.voltage["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["dc-information"]["dc-detail"]["str3-dc-voltage"]`</p></li></ul>|
 |Module [{#NAME}]: Load|<p>Information about the load on supply, in percentage of rated current being used.</p>|Dependent item|juniper.mx.pem.load["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["dc-information"]["dc-detail"]["dc-load"]`</p></li></ul>|
 |Module [{#NAME}]: Current|<p>Information about the PEM current.</p>|Dependent item|juniper.mx.pem.current["{#NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["dc-information"]["dc-detail"]["str3-dc-current"]`</p></li></ul>|
@@ -432,14 +432,14 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|-----------------------|
 |Alarm [{#ALARM_NAME}]: Get data|<p>Get system alarm about the state and its reason.</p>|Dependent item|juniper.mx.alarm.get.data["{#ALARM_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `The text is too long. Please see the template.`</p></li></ul>|
-|Alarm [{#ALARM_NAME}]: Severity|<p>Alarms can be categorized in one of four severities: critical, major, minor and info.</p><p>Alarm description:</p><p>{#ALARM_DESCR}</p>|Dependent item|juniper.mx.alarm.severity["{#ALARM_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["alarm-detail"]["alarm-class"]`</p><p>⛔️Custom on fail: Discard value</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
+|Alarm [{#ALARM_NAME}]: Severity|<p>Alarms can be categorized in one of four severities: critical, major, minor and info.</p><p>Alarm description:</p><p>'[{#ALARM_DESCR}]'</p>|Dependent item|juniper.mx.alarm.severity["{#ALARM_NAME}"]<p>**Preprocessing**</p><ul><li><p>JSON Path: `$.["alarm-detail"]["alarm-class"]`</p><p>⛔️Custom on fail: Discard value</p></li><li><p>JavaScript: `The text is too long. Please see the template.`</p></li><li><p>Discard unchanged with heartbeat: `1h`</p></li></ul>|
 
 ### Trigger prototypes for Alarms discovery
 
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
-|Juniper MX: [{#ALARM_NAME}] has 'Major' state|<p>Alarm "{#ALARM_NAME}" has `Major` state.<br>Reason: "{#ALARM_DESCR}"</p>|`last(/Juniper MX by NETCONF/juniper.mx.alarm.severity["{#ALARM_NAME}"])=3`|Average||
-|Juniper MX: [{#ALARM_NAME}] has 'Critical' state|<p>Alarm "{#ALARM_NAME}" has `Critical` state.<br>Reason: "{#ALARM_DESCR}"</p>|`last(/Juniper MX by NETCONF/juniper.mx.alarm.severity["{#ALARM_NAME}"])=4`|High||
+|Juniper MX: [{#ALARM_NAME}] has 'Major' state|<p>Alarm '[{#ALARM_NAME}]' has `Major` state.<br>Reason: '[{#ALARM_DESCR}]'</p>|`last(/Juniper MX by NETCONF/juniper.mx.alarm.severity["{#ALARM_NAME}"])=3`|Average||
+|Juniper MX: [{#ALARM_NAME}] has 'Critical' state|<p>Alarm '[{#ALARM_NAME}]' has `Critical` state.<br>Reason: '[{#ALARM_DESCR}]'</p>|`last(/Juniper MX by NETCONF/juniper.mx.alarm.severity["{#ALARM_NAME}"])=4`|High||
 
 ## Feedback
 

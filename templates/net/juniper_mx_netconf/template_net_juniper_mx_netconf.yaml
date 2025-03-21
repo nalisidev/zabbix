@@ -47,14 +47,14 @@ zabbix_export:
               parameters:
                 - '$.results..["rpc-reply"]["alarm-information"]'
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
         - uuid: 1f163e34710d49bead6eea3348b39667
           name: 'BGP: Get data'
           type: DEPENDENT
-          key: juniper.mx.bgp.data
+          key: juniper.mx.bgp.data.get
           history: '0'
           value_type: TEXT
           description: 'Get BGP raw data.'
@@ -130,7 +130,7 @@ zabbix_export:
                   
                   return JSON.stringify({ bgp, bgp_peers, bgp_rib });
           master_item:
-            key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
@@ -138,18 +138,18 @@ zabbix_export:
           name: 'Routing protocols: Get rpc error'
           type: DEPENDENT
           key: juniper.mx.bgp.ospf.error
-          value_type: CHAR
-          description: 'Check that the remote procedure call have metrics data has been received correctly.'
+          value_type: TEXT
+          description: 'Check that the remote procedure call have metrics and data has been received correctly.'
           preprocessing:
             - type: JSONPATH
               parameters:
-                - '$.results..["rpc-reply"]["rpc-error"]'
+                - $.results..content.first()
               error_handler: CUSTOM_VALUE
             - type: DISCARD_UNCHANGED_HEARTBEAT
               parameters:
                 - 3h
           master_item:
-            key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: status
@@ -158,7 +158,7 @@ zabbix_export:
               expression: 'length(last(/Juniper MX by NETCONF/juniper.mx.bgp.ospf.error))>0'
               name: 'Juniper MX: Failed to get routing protocol data'
               event_name: 'Juniper MX: Failed to get metrics for routing protocol using RPC request'
-              opdata: 'Current value: {ITEM.LASTVALUE1}'
+              opdata: 'Current error: {ITEM.LASTVALUE1}'
               priority: WARNING
               description: 'Failed to get metrics for routing protocol.'
               tags:
@@ -168,18 +168,18 @@ zabbix_export:
           name: 'DOM: Get rpc error'
           type: DEPENDENT
           key: juniper.mx.dom.error
-          value_type: CHAR
-          description: 'Check that the remote procedure call have metrics data has been received correctly.'
+          value_type: TEXT
+          description: 'Check that the remote procedure call have metrics and data has been received correctly.'
           preprocessing:
             - type: JSONPATH
               parameters:
-                - '$.results..["rpc-reply"]["rpc-error"]'
+                - $.error
               error_handler: CUSTOM_VALUE
             - type: DISCARD_UNCHANGED_HEARTBEAT
               parameters:
                 - 3h
           master_item:
-            key: 'ssh.run[JuniperMxDom,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxDom,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: status
@@ -188,16 +188,16 @@ zabbix_export:
               expression: 'length(last(/Juniper MX by NETCONF/juniper.mx.dom.error))>0'
               name: 'Juniper MX: Failed to get DOM data'
               event_name: 'Juniper MX: Failed to get metrics for interface optics diagnostics information using RPC request'
-              opdata: 'Current value: {ITEM.LASTVALUE1}'
+              opdata: 'Current error: {ITEM.LASTVALUE1}'
               priority: WARNING
-              description: 'Failed to get metrics for interface optics diagnostics informatio.'
+              description: 'Failed to get metrics for interface optics diagnostics information.'
               tags:
                 - tag: scope
                   value: availability
         - uuid: 2656571ab9914ccfa7079c4a5578e30f
           name: 'FAN: Get data'
           type: DEPENDENT
-          key: juniper.mx.fan.data
+          key: juniper.mx.fan.data.get
           history: '0'
           value_type: TEXT
           description: 'Get FAN raw data.'
@@ -206,14 +206,14 @@ zabbix_export:
               parameters:
                 - '$.results..["rpc-reply"]["fan-information"]["fan-information-percent-rpm-item"].first()'
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
         - uuid: a5a7b97ba77e481d88e0372543524d61
           name: 'FPC: Get data'
           type: DEPENDENT
-          key: juniper.mx.fpc.data
+          key: juniper.mx.fpc.data.get
           history: '0'
           value_type: TEXT
           description: 'Get raw data information for Packet Forwarding Engines (FPC).'
@@ -259,7 +259,7 @@ zabbix_export:
                   
                   return JSON.stringify(mergedData);
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
@@ -267,18 +267,18 @@ zabbix_export:
           name: 'Interface information: Get rpc error'
           type: DEPENDENT
           key: juniper.mx.interface.error
-          value_type: CHAR
-          description: 'Check that the remote procedure call have metrics data has been received correctly.'
+          value_type: TEXT
+          description: 'Check that the remote procedure call have metrics and data has been received correctly.'
           preprocessing:
             - type: JSONPATH
               parameters:
-                - '$.results..["rpc-reply"]["rpc-error"]'
+                - $.results..content.first()
               error_handler: CUSTOM_VALUE
             - type: DISCARD_UNCHANGED_HEARTBEAT
               parameters:
                 - 3h
           master_item:
-            key: 'ssh.run[JuniperMxInterface,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxInterface,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: status
@@ -287,7 +287,7 @@ zabbix_export:
               expression: 'length(last(/Juniper MX by NETCONF/juniper.mx.interface.error))>0'
               name: 'Juniper MX: Failed to get interface information data'
               event_name: 'Juniper MX: Failed to get metrics for interface information using RPC request'
-              opdata: 'Current value: {ITEM.LASTVALUE1}'
+              opdata: 'Current error: {ITEM.LASTVALUE1}'
               priority: WARNING
               description: 'Failed to get metrics for interface information.'
               tags:
@@ -296,7 +296,7 @@ zabbix_export:
         - uuid: 47ee207624e242439704c40754b98056
           name: 'OSPF: Get data'
           type: DEPENDENT
-          key: juniper.mx.ospf.data
+          key: juniper.mx.ospf.data.get
           history: '0'
           value_type: TEXT
           description: 'Get OSPF raw data.'
@@ -368,14 +368,14 @@ zabbix_export:
                   
                   return JSON.stringify({ ospf, ospf3 });
           master_item:
-            key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
         - uuid: d0d76f6d630b46268d16d150981bfd52
           name: 'PEM: Get data'
           type: DEPENDENT
-          key: juniper.mx.pem.data
+          key: juniper.mx.pem.data.get
           history: '0'
           value_type: TEXT
           description: 'Get PEM raw data.'
@@ -384,7 +384,7 @@ zabbix_export:
               parameters:
                 - '$.results..["rpc-reply"]["environment-component-information"]["environment-component-item"].first()'
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
@@ -392,18 +392,18 @@ zabbix_export:
           name: 'Resource: Get rpc error'
           type: DEPENDENT
           key: juniper.mx.resource.error
-          value_type: CHAR
-          description: 'Check that the remote procedure call have metrics data has been received correctly.'
+          value_type: TEXT
+          description: 'Check that the remote procedure call have metrics and data has been received correctly.'
           preprocessing:
             - type: JSONPATH
               parameters:
-                - '$.results..["rpc-reply"]["rpc-error"]'
+                - $.results..content.first()
               error_handler: CUSTOM_VALUE
             - type: DISCARD_UNCHANGED_HEARTBEAT
               parameters:
                 - 3h
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: status
@@ -421,7 +421,7 @@ zabbix_export:
         - uuid: a62d84c9063b49c7b54d34e1e43cc01e
           name: 'Routing Engine: Get data'
           type: DEPENDENT
-          key: juniper.mx.routing.engine.data
+          key: juniper.mx.routing.engine.data.get
           history: '0'
           value_type: TEXT
           description: 'Get get route engine information raw data.'
@@ -447,14 +447,14 @@ zabbix_export:
                   
                   return JSON.stringify(data);
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
         - uuid: 9b76281cf92f4c63805afd7fbfe8a79c
           name: 'Storage: Get data'
           type: DEPENDENT
-          key: juniper.mx.storage.data
+          key: juniper.mx.storage.data.get
           history: '0'
           value_type: TEXT
           description: 'Get storage raw data.'
@@ -463,14 +463,14 @@ zabbix_export:
               parameters:
                 - '$.results..["rpc-reply"]["system-storage-information"]["filesystem"].first()'
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
         - uuid: 4a84cb99fe78404f8eae5b9b5e682baa
           name: 'Temperature: Get data'
           type: DEPENDENT
-          key: juniper.mx.temperature.data
+          key: juniper.mx.temperature.data.get
           history: '0'
           value_type: TEXT
           description: 'Get temperature raw data.'
@@ -496,14 +496,14 @@ zabbix_export:
                   
                   return JSON.stringify(data);
           master_item:
-            key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           tags:
             - tag: component
               value: raw
         - uuid: a5f2e862b7d04ebea583840735ca359b
           name: 'NETCONF: Service response time'
           type: SIMPLE
-          key: 'net.tcp.service.perf[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"]'
+          key: 'net.tcp.service.perf[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"]'
           value_type: FLOAT
           units: s
           description: |
@@ -516,22 +516,22 @@ zabbix_export:
               value: network
           triggers:
             - uuid: ff60b0ce48d94a7da65db91333507df3
-              expression: 'min(/Juniper MX by NETCONF/net.tcp.service.perf[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"],5m)>{$NETCONF.RESPONSE_TIME.MAX.WARN}'
+              expression: 'min(/Juniper MX by NETCONF/net.tcp.service.perf[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"],5m)>{$JUNIPER.MX.NETCONF.RESPONSE_TIME.MAX.WARN}'
               name: 'Juniper MX: NETCONF response time is too high'
-              event_name: 'Juniper MX: NETCONF response time is too high (over {$NETCONF.RESPONSE_TIME.MAX.WARN}s for 5m)'
+              event_name: 'Juniper MX: NETCONF response time is too high (over {$JUNIPER.MX.NETCONF.RESPONSE_TIME.MAX.WARN}s for 5m)'
               opdata: 'Response time: {ITEM.LASTVALUE1}'
               priority: WARNING
               manual_close: 'YES'
               dependencies:
                 - name: 'Juniper MX: NETCONF is not available'
-                  expression: 'last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"])=0'
+                  expression: 'last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"])=0'
               tags:
                 - tag: scope
                   value: performance
         - uuid: ce22a1eda3874f8c9df95f932b918d5f
           name: 'NETCONF: Service status'
           type: SIMPLE
-          key: 'net.tcp.service[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"]'
+          key: 'net.tcp.service[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"]'
           description: |
             Checks if a service is running and accepting NETCONF connections.
             Return value: 0 - the service is down; 1 - the service is running.
@@ -544,10 +544,11 @@ zabbix_export:
               value: network
           triggers:
             - uuid: fb93ede78cb9412b86391f775b8fcfc2
-              expression: 'last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.NETCONF.IP}","{$JUNIPER.NETCONF.PORT}"])=0'
+              expression: 'last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"])=0'
               name: 'Juniper MX: NETCONF is not available'
-              opdata: 'Value: {ITEM.LASTVALUE1}'
+              opdata: 'Current status: {ITEM.LASTVALUE1}'
               priority: AVERAGE
+              description: 'Checks the availability of NETCONF on the TCP port.'
               manual_close: 'YES'
               tags:
                 - tag: scope
@@ -555,7 +556,7 @@ zabbix_export:
         - uuid: bf26f0a8e3e7481692c4150217a3802b
           name: 'Routing protocols: Get data'
           type: SSH
-          key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+          key: 'ssh.run[JuniperMxBgpOspf,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           delay: 0;s15
           history: '0'
           value_type: TEXT
@@ -584,8 +585,8 @@ zabbix_export:
                 <close-session/>
             </rpc>
             ]]>]]>
-          username: '{$JUNIPER.NETCONF.USERNAME}'
-          password: '{$JUNIPER.NETCONF.PASSWORD}'
+          username: '{$JUNIPER.MX.NETCONF.USERNAME}'
+          password: '{$JUNIPER.MX.NETCONF.PASSWORD}'
           description: 'Get routing protocols information data using RPC request NETCONF server.'
           preprocessing:
             - type: JAVASCRIPT
@@ -631,14 +632,14 @@ zabbix_export:
                   results = cleanObject(results);
                   
                   return JSON.stringify({ results, skipped_parts });
-          timeout: '{$JUNIPER.NETCONF.TIMEOUT}'
+          timeout: '{$JUNIPER.MX.NETCONF.TIMEOUT}'
           tags:
             - tag: component
               value: raw
         - uuid: b08e9571da564af3bfcefcde64221d1f
           name: 'DOM: Get data'
           type: SSH
-          key: 'ssh.run[JuniperMxDom,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+          key: 'ssh.run[JuniperMxDom,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           delay: 0;s30
           history: '0'
           value_type: TEXT
@@ -652,8 +653,8 @@ zabbix_export:
                 <close-session/>
             </rpc>
             ]]>]]>
-          username: '{$JUNIPER.NETCONF.USERNAME}'
-          password: '{$JUNIPER.NETCONF.PASSWORD}'
+          username: '{$JUNIPER.MX.NETCONF.USERNAME}'
+          password: '{$JUNIPER.MX.NETCONF.PASSWORD}'
           description: 'Get interface optics diagnostics information data using RPC request NETCONF server.'
           preprocessing:
             - type: JAVASCRIPT
@@ -699,15 +700,13 @@ zabbix_export:
                   results = cleanObject(results);
                   
                   return JSON.stringify({ results, skipped_parts });
-            - type: JSONPATH
-              parameters:
-                - '$.results..["rpc-reply"]["interface-information"]["physical-interface"].first()'
             - type: JAVASCRIPT
               parameters:
                 - |
                   var data = JSON.parse(value),
                   	metrics = [],
-                  	alarms = [];
+                  	alarms = [],
+                  	error;
                   
                   function getField(data, path, default_value) {
                   	var steps = path.split('.');
@@ -724,71 +723,81 @@ zabbix_export:
                   	return data;
                   };
                   
-                  data.forEach(function (item) {
-                  	var name = getField(item, 'name'),
-                  		diagnostics = getField(item, 'optics-diagnostics'),
-                  		lane_values = getField(diagnostics, 'optics-diagnostics-lane-values');
+                  var result = data.results[1];
                   
-                  	if (lane_values) {
-                  		lane_values.forEach(function (lane) {
+                  if (typeof result[error] === undefined || result['rpc-reply'] !== undefined) {
+                  
+                  	var dom = getField(result, 'rpc-reply.interface-information.physical-interface');
+                  
+                  	dom.forEach(function (item) {
+                  		var name = getField(item, 'name'),
+                  			diagnostics = getField(item, 'optics-diagnostics'),
+                  			lane_values = getField(diagnostics, 'optics-diagnostics-lane-values');
+                  
+                  		if (lane_values) {
+                  			lane_values.forEach(function (lane) {
+                  				metrics.push({
+                  					name: name,
+                  					lane_index: getField(lane, 'lane-index'),
+                  					multi: 1,
+                  					tx_power: getField(lane, 'laser-output-power-dbm'),
+                  					rx_power: getField(lane, 'laser-rx-optical-power')
+                  				});
+                  
+                  				alarms.push({
+                  					name: name,
+                  					lane_index: getField(lane, 'lane-index'),
+                  					tx_loss_signal: getField(lane, 'tx-loss-of-signal-functionality-alarm'),
+                  					tx_laser_disabled: getField(lane, 'tx-laser-disabled-alarm'),
+                  					bias_high: getField(lane, 'laser-bias-current-high-alarm'),
+                  					bias_low: getField(lane, 'laser-bias-current-low-alarm'),
+                  					rx_loss_signal: getField(lane, 'rx-loss-of-signal-alarm'),
+                  					rx_high: getField(lane, 'laser-rx-power-high-alarm'),
+                  					rx_low: getField(lane, 'laser-rx-power-low-alarm'),
+                  					voltage_high: getField(diagnostics, 'module-voltage-high-alarm'),
+                  					voltage_low: getField(diagnostics, 'module-voltage-low-alarm'),
+                  					temperature_high: getField(diagnostics, 'module-temperature-high-alarm'),
+                  					temperature_low: getField(diagnostics, 'module-temperature-low-alarm')
+                  				});
+                  			});
+                  		} else {
                   			metrics.push({
                   				name: name,
-                  				lane_index: getField(lane, 'lane-index'),
-                  				multi: 1,
-                  				tx_power: getField(lane, 'laser-output-power-dbm'),
-                  				rx_power: getField(lane, 'laser-rx-optical-power')
+                  				lane_index: 0,
+                  				multi: 0,
+                  				tx_power: getField(diagnostics, 'laser-output-power-dbm'),
+                  				rx_power: getField(diagnostics, 'rx-signal-avg-optical-power-dbm')
                   			});
-                  
                   			alarms.push({
                   				name: name,
-                  				lane_index: getField(lane, 'lane-index'),
-                  				tx_loss_signal: getField(lane, 'tx-loss-of-signal-functionality-alarm'),
-                  				tx_laser_disabled: getField(lane, 'tx-laser-disabled-alarm'),
-                  				bias_high: getField(lane, 'laser-bias-current-high-alarm'),
-                  				bias_low: getField(lane, 'laser-bias-current-low-alarm'),
-                  				rx_loss_signal: getField(lane, 'rx-loss-of-signal-alarm'),
-                  				rx_high: getField(lane, 'laser-rx-power-high-alarm'),
-                  				rx_low: getField(lane, 'laser-rx-power-low-alarm'),
+                  				lane_index: 0,
+                  				bias_high: getField(diagnostics, 'laser-bias-current-high-alarm'),
+                  				bias_low: getField(diagnostics, 'laser-bias-current-low-alarm'),
+                  				rx_high: getField(diagnostics, 'laser-rx-power-high-alarm'),
+                  				rx_low: getField(diagnostics, 'laser-rx-power-low-alarm'),
+                  				tx_high: getField(diagnostics, 'laser-tx-power-high-alarm'),
+                  				tx_low: getField(diagnostics, 'laser-tx-power-low-alarm'),
                   				voltage_high: getField(diagnostics, 'module-voltage-high-alarm'),
                   				voltage_low: getField(diagnostics, 'module-voltage-low-alarm'),
                   				temperature_high: getField(diagnostics, 'module-temperature-high-alarm'),
                   				temperature_low: getField(diagnostics, 'module-temperature-low-alarm')
                   			});
-                  		});
-                  	} else {
-                  		metrics.push({
-                  			name: name,
-                  			lane_index: 0,
-                  			multi: 0,
-                  			tx_power: getField(diagnostics, 'laser-output-power-dbm'),
-                  			rx_power: getField(diagnostics, 'rx-signal-avg-optical-power-dbm')
-                  		});
-                  		alarms.push({
-                  			name: name,
-                  			lane_index: 0,
-                  			bias_high: getField(diagnostics, 'laser-bias-current-high-alarm'),
-                  			bias_low: getField(diagnostics, 'laser-bias-current-low-alarm'),
-                  			rx_high: getField(diagnostics, 'laser-rx-power-high-alarm'),
-                  			rx_low: getField(diagnostics, 'laser-rx-power-low-alarm'),
-                  			tx_high: getField(diagnostics, 'laser-tx-power-high-alarm'),
-                  			tx_low: getField(diagnostics, 'laser-tx-power-low-alarm'),
-                  			voltage_high: getField(diagnostics, 'module-voltage-high-alarm'),
-                  			voltage_low: getField(diagnostics, 'module-voltage-low-alarm'),
-                  			temperature_high: getField(diagnostics, 'module-temperature-high-alarm'),
-                  			temperature_low: getField(diagnostics, 'module-temperature-low-alarm')
-                  		});
-                  	}
-                  });
+                  		}
+                  	});
+                  }
+                  else {
+                  	error = result.content;
+                  };
                   
-                  return JSON.stringify({ metrics, alarms });
-          timeout: '{$JUNIPER.NETCONF.TIMEOUT}'
+                  return JSON.stringify({ metrics, alarms, error });
+          timeout: '{$JUNIPER.MX.NETCONF.TIMEOUT}'
           tags:
             - tag: component
               value: raw
         - uuid: 5087b2674f6f42128e865119aac94a64
           name: 'Interface information: Get data'
           type: SSH
-          key: 'ssh.run[JuniperMxInterface,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+          key: 'ssh.run[JuniperMxInterface,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           delay: 0;s00
           history: '0'
           value_type: TEXT
@@ -804,8 +813,8 @@ zabbix_export:
                 <close-session/>
             </rpc>
             ]]>]]>
-          username: '{$JUNIPER.NETCONF.USERNAME}'
-          password: '{$JUNIPER.NETCONF.PASSWORD}'
+          username: '{$JUNIPER.MX.NETCONF.USERNAME}'
+          password: '{$JUNIPER.MX.NETCONF.PASSWORD}'
           description: 'Get interface information data using RPC request NETCONF server.'
           preprocessing:
             - type: JAVASCRIPT
@@ -851,17 +860,14 @@ zabbix_export:
                   results = cleanObject(results);
                   
                   return JSON.stringify({ results, skipped_parts });
-            - type: JSONPATH
-              parameters:
-                - '$.results..["rpc-reply"]["interface-information"]["physical-interface"].first()'
-          timeout: '{$JUNIPER.NETCONF.TIMEOUT}'
+          timeout: '{$JUNIPER.MX.NETCONF.TIMEOUT}'
           tags:
             - tag: component
               value: raw
         - uuid: b6f6235bfc6a42238cf6e03ebf43d00d
           name: 'Resource: Get data'
           type: SSH
-          key: 'ssh.run[JuniperMxResource,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+          key: 'ssh.run[JuniperMxResource,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           delay: 0;s45
           history: '0'
           value_type: TEXT
@@ -911,8 +917,8 @@ zabbix_export:
                 <close-session/>
             </rpc>
             ]]>]]>
-          username: '{$JUNIPER.NETCONF.USERNAME}'
-          password: '{$JUNIPER.NETCONF.PASSWORD}'
+          username: '{$JUNIPER.MX.NETCONF.USERNAME}'
+          password: '{$JUNIPER.MX.NETCONF.PASSWORD}'
           description: 'Get resource information data using RPC request NETCONF server.'
           preprocessing:
             - type: JAVASCRIPT
@@ -958,7 +964,7 @@ zabbix_export:
                   results = cleanObject(results);
                   
                   return JSON.stringify({ results, skipped_parts });
-          timeout: '{$JUNIPER.NETCONF.TIMEOUT}'
+          timeout: '{$JUNIPER.MX.NETCONF.TIMEOUT}'
           tags:
             - tag: component
               value: raw
@@ -996,6 +1002,8 @@ zabbix_export:
               master_item:
                 key: juniper.mx.alarm.data.get
               tags:
+                - tag: class
+                  value: '{#ALARM_TYPE}'
                 - tag: component
                   value: raw
             - uuid: 5f553388d97b41f9bfe8a4e72a5b7b15
@@ -1005,7 +1013,7 @@ zabbix_export:
               description: |
                 Alarms can be categorized in one of four severities: critical, major, minor and info.
                 Alarm description:
-                {#ALARM_DESCR}
+                '[{#ALARM_DESCR}]'
               valuemap:
                 name: 'Alarm severity'
               preprocessing:
@@ -1032,8 +1040,8 @@ zabbix_export:
                   name: 'Juniper MX: [{#ALARM_NAME}] has ''Critical'' state'
                   priority: HIGH
                   description: |
-                    Alarm "{#ALARM_NAME}" has `Critical` state.
-                    Reason: "{#ALARM_DESCR}"
+                    Alarm '[{#ALARM_NAME}]' has `Critical` state.
+                    Reason: '[{#ALARM_DESCR}]'
                   tags:
                     - tag: scope
                       value: availability
@@ -1042,8 +1050,8 @@ zabbix_export:
                   name: 'Juniper MX: [{#ALARM_NAME}] has ''Major'' state'
                   priority: AVERAGE
                   description: |
-                    Alarm "{#ALARM_NAME}" has `Major` state.
-                    Reason: "{#ALARM_DESCR}"
+                    Alarm '[{#ALARM_NAME}]' has `Major` state.
+                    Reason: '[{#ALARM_DESCR}]'
                   tags:
                     - tag: scope
                       value: availability
@@ -1056,18 +1064,40 @@ zabbix_export:
                   var alarms = JSON.parse(value);
                   
                   var result = alarms.map(function (alarm) {
-                    return {
-                  	'{#ALARM_DESCR}': alarm['alarm-detail']['alarm-description'] !== null ? alarm['alarm-detail']['alarm-description'] : 'None',
-                  	'{#ALARM_CLASS}': alarm['alarm-detail']['alarm-class'],
-                  	'{#ALARM_TYPE}': alarm['alarm-detail']['alarm-type'],
-                  	'{#ALARM_NAME}': alarm['alarm-detail']['alarm-short-description']
-                    };
+                  	summary = alarm['alarm-summary']
+                  	if (summary['no-active-alarms'] !== null) {
+                  		return {
+                  			'{#ALARM_DESCR}': alarm['alarm-detail']['alarm-description'] !== null ? alarm['alarm-detail']['alarm-description'] : 'None',
+                  			'{#ALARM_CLASS}': alarm['alarm-detail']['alarm-class'],
+                  			'{#ALARM_TYPE}': alarm['alarm-detail']['alarm-type'],
+                  			'{#ALARM_NAME}': alarm['alarm-detail']['alarm-short-description']
+                  		};
+                  	} else {
+                  		return {
+                  			'{#ALARM_NAME}': 'no-active-alarms',
+                  			'{#ALARM_CLASS}': ''
+                  		}
+                  	};
                   });
                   
                   return JSON.stringify(result);
             - type: DISCARD_UNCHANGED_HEARTBEAT
               parameters:
                 - 1h
+          overrides:
+            - name: 'No active alarms'
+              step: '1'
+              filter:
+                conditions:
+                  - macro: '{#ALARM_NAME}'
+                    value: no-active-alarms
+              operations:
+                - operator: LIKE
+                  value: ': Get data'
+                  discover: NO_DISCOVER
+                - operator: LIKE
+                  value: ': Severity'
+                  discover: NO_DISCOVER
         - uuid: c6243e5241df4bcab940800ef0e1045a
           name: 'BGP Peer discovery'
           type: DEPENDENT
@@ -1141,14 +1171,14 @@ zabbix_export:
               key: 'juniper.mx.bgp.get["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"]'
               history: '0'
               value_type: TEXT
-              description: 'Get data.'
+              description: 'Get BGP raw data router ''[{#BGP_ROUTER_NAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.bgp_peers[?(@.router_name == "{#BGP_ROUTER_NAME}" && @.peer_address == "{#BGP_PEER_REMOTE_ADDR}" && @.peer_as == "{#BGP_PEER_REMOTE_AS}")].first()'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: juniper.mx.bgp.data
+                key: juniper.mx.bgp.data.get
               tags:
                 - tag: address
                   value: '{#BGP_PEER_REMOTE_ADDR}'
@@ -1200,7 +1230,7 @@ zabbix_export:
                     - tag: scope
                       value: notice
           master_item:
-            key: juniper.mx.bgp.data
+            key: juniper.mx.bgp.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -1300,14 +1330,14 @@ zabbix_export:
               key: 'juniper.mx.bgp.prefix.get["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}","{#BGP_RIB_NAME}"]'
               history: '0'
               value_type: TEXT
-              description: 'Get data RIB [{#BGP_RIB_NAME}].'
+              description: 'Get data RIB ''[{#BGP_RIB_NAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.bgp_rib[?(@.router_name == "{#BGP_ROUTER_NAME}" && @.name == "{#BGP_RIB_NAME}" && @.peer_address == "{#BGP_PEER_REMOTE_ADDR}" && @.peer_as == "{#BGP_PEER_REMOTE_AS}")].first()'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: juniper.mx.bgp.data
+                key: juniper.mx.bgp.data.get
               tags:
                 - tag: address
                   value: '{#BGP_PEER_REMOTE_ADDR}'
@@ -1378,7 +1408,7 @@ zabbix_export:
                 - tag: router
                   value: '{#BGP_ROUTER_NAME}'
           master_item:
-            key: juniper.mx.bgp.data
+            key: juniper.mx.bgp.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -1416,7 +1446,7 @@ zabbix_export:
               name: 'BGP Router [{#BGP_ROUTER_NAME}]: Down peers count'
               type: DEPENDENT
               key: 'juniper.mx.bgp.router.peer.down["{#BGP_ROUTER_NAME}"]'
-              description: 'Get down peer count on router [{#BGP_ROUTER_NAME}].'
+              description: 'Get down peer count on router ''[{#BGP_ROUTER_NAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
@@ -1426,7 +1456,7 @@ zabbix_export:
                   parameters:
                     - 1h
               master_item:
-                key: juniper.mx.bgp.data
+                key: juniper.mx.bgp.data.get
               tags:
                 - tag: bgp-thread-mode
                   value: '{#BGP_THREAD_MODE}'
@@ -1442,12 +1472,12 @@ zabbix_export:
                   name: 'Juniper MX: BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Down peers is equal to peers'
                   event_name: 'Juniper MX: Router: "{#BGP_ROUTER_NAME}": Down peer count on router is equal to peer count'
                   priority: HIGH
-                  description: 'Down peers count is equal to peers count on router [{#BGP_ROUTER_NAME}]. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.'
+                  description: 'Down peers count is equal to peers count on router ''[{#BGP_ROUTER_NAME}]''. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.'
                   tags:
                     - tag: scope
                       value: notice
           master_item:
-            key: juniper.mx.bgp.data
+            key: juniper.mx.bgp.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -1484,15 +1514,15 @@ zabbix_export:
               name: 'SFP [{#SFPIFNAME}] Lane [{#LANEID}]: Module alarms'
               type: DEPENDENT
               key: 'juniper.dom.alarms.get["{#SFPIFNAME}","{#LANEID}"]'
-              value_type: CHAR
-              description: 'Get module alarms physical-interface `[{#SFPIFNAME}]` line `[{#LANEID}]`.'
+              value_type: TEXT
+              description: 'Get module alarms physical-interface ''[{#SFPIFNAME}]'' line ''[{#LANEID}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.alarms[?(@.name == "{#SFPIFNAME}" && @.lane_index == "{#LANEID}")].first()'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: 'ssh.run[JuniperMxDom,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+                key: 'ssh.run[JuniperMxDom,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
               tags:
                 - tag: component
                   value: alarms
@@ -1603,14 +1633,14 @@ zabbix_export:
               key: 'juniper.mx.dom.get["{#SFPIFNAME}","{#LANEID}"]'
               history: '0'
               value_type: TEXT
-              description: 'Get module data physical-interface `[{#SFPIFNAME}]` line `[{#LANEID}]`.'
+              description: 'Get module data physical-interface ''[{#SFPIFNAME}]'' line ''[{#LANEID}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.metrics[?(@.name == "{#SFPIFNAME}" && @.lane_index == "{#LANEID}")].first()'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: 'ssh.run[JuniperMxDom,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+                key: 'ssh.run[JuniperMxDom,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
               tags:
                 - tag: component
                   value: network
@@ -1646,7 +1676,7 @@ zabbix_export:
               key: 'juniper.mx.dom.tx.lane.laser["{#SFPIFNAME}","{#LANEID}"]'
               value_type: FLOAT
               units: dbm
-              description: 'Tx power physical-interface `[{#SFPIFNAME}]` line `[{#LANEID}]`.'
+              description: 'Tx power physical-interface ''[{#SFPIFNAME}]'' line ''[{#LANEID}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
@@ -1661,7 +1691,7 @@ zabbix_export:
                 - tag: sfp
                   value: '{#SFPIFNAME}'
           master_item:
-            key: 'ssh.run[JuniperMxDom,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxDom,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -1719,13 +1749,13 @@ zabbix_export:
               key: 'juniper.mx.fan.get["{#NAME}"]'
               history: '0'
               value_type: TEXT
-              description: 'Intermediate data of `{#NAME}`.'
+              description: 'Intermediate data of ''[{#NAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.[?(@.name==''{#NAME}'')].first()'
               master_item:
-                key: juniper.mx.fan.data
+                key: juniper.mx.fan.data.get
               tags:
                 - tag: component
                   value: fan
@@ -1738,7 +1768,7 @@ zabbix_export:
               type: DEPENDENT
               key: 'juniper.mx.fan.rpm.percent["{#NAME}"]'
               units: '%'
-              description: 'Current percentage of the `{#NAME}` speed being used.'
+              description: 'Current percentage of the ''[{#NAME}]'' speed being used.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
@@ -1777,7 +1807,7 @@ zabbix_export:
               name: 'Module [{#NAME}]: Status'
               type: DEPENDENT
               key: 'juniper.mx.fan.status["{#NAME}"]'
-              description: 'Current status of the Fan tray `{#NAME}`.'
+              description: 'Current status of the Fan tray ''[{#NAME}]''.'
               valuemap:
                 name: 'FAN status'
               preprocessing:
@@ -1795,7 +1825,7 @@ zabbix_export:
                 - tag: module
                   value: '{#NAME}'
           master_item:
-            key: juniper.mx.fan.data
+            key: juniper.mx.fan.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -1863,7 +1893,7 @@ zabbix_export:
                     - '$[?(@.slot == "{#SLOT}")]'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: juniper.mx.fpc.data
+                key: juniper.mx.fpc.data.get
               tags:
                 - tag: component
                   value: fpc
@@ -2035,7 +2065,7 @@ zabbix_export:
                 - tag: fpc-slot
                   value: '{#SLOT}'
           master_item:
-            key: juniper.mx.fpc.data
+            key: juniper.mx.fpc.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -2072,13 +2102,13 @@ zabbix_export:
               key: 'juniper.mx.fs.get["{#FSNAME}","{#MOUNT}"]'
               history: '0'
               value_type: TEXT
-              description: 'Intermediate data of `{#FSNAME}` filesystem. Mounted on `{#MOUNT}`.'
+              description: 'Intermediate data of ''[{#FSNAME}]'' filesystem. Mounted on ''[{#MOUNT}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.[?(@["filesystem-name"]=="{#FSNAME}" && @["mounted-on"]== "{#MOUNT}")].first()'
               master_item:
-                key: juniper.mx.storage.data
+                key: juniper.mx.storage.data.get
               tags:
                 - tag: component
                   value: raw
@@ -2231,7 +2261,7 @@ zabbix_export:
                     host: 'Juniper MX by NETCONF'
                     key: 'juniper.mx.fs.size["{#FSNAME}","{#MOUNT}",used]'
           master_item:
-            key: juniper.mx.storage.data
+            key: juniper.mx.storage.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -2280,14 +2310,14 @@ zabbix_export:
               key: 'juniper.mx.interface.get["{#IFNAME}","{#IFDESCR}"]'
               history: '0'
               value_type: TEXT
-              description: 'Get data physical-interface `[{#IFNAME}]`.'
+              description: 'Get data physical-interface ''[{#IFNAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
-                    - '$[?(@.name == "{#IFNAME}")].first()'
+                    - '$.results..["rpc-reply"]["interface-information"]["physical-interface"][?(@.name == "{#IFNAME}")].first()'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: 'ssh.run[JuniperMxInterface,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+                key: 'ssh.run[JuniperMxInterface,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
               tags:
                 - tag: component
                   value: network
@@ -2304,7 +2334,7 @@ zabbix_export:
               type: DEPENDENT
               key: 'juniper.mx.net.if.oper.status["{#IFNAME}"]'
               value_type: FLOAT
-              description: 'Get operational status physical-interface `[{#IFNAME}]`.'
+              description: 'Get operational status physical-interface ''[{#IFNAME}]''.'
               valuemap:
                 name: 'Operational status'
               preprocessing:
@@ -2354,7 +2384,7 @@ zabbix_export:
               type: DEPENDENT
               key: 'juniper.mx.net.if.speed["{#IFNAME}"]'
               units: bps
-              description: 'Get speed interface `[{#IFNAME}]`.'
+              description: 'Get speed interface ''[{#IFNAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
@@ -2412,7 +2442,7 @@ zabbix_export:
             - uuid: 47f4aff789af4e7dbbdb7ce169655df8
               name: 'Interface [{#IFNAME}][{#IFDESCR}]: Input bits'
               type: DEPENDENT
-              key: 'juniper.mx.net.input.bits["{#IFNAME}"]'
+              key: 'juniper.mx.net.input.bits.rate["{#IFNAME}"]'
               units: bps
               description: 'Number of Input bytes, current throughput rate in bits per second (bps).'
               preprocessing:
@@ -2464,7 +2494,7 @@ zabbix_export:
             - uuid: a197648a392a42d5ac14c4a9f229b5f1
               name: 'Interface [{#IFNAME}][{#IFDESCR}]: Input packets'
               type: DEPENDENT
-              key: 'juniper.mx.net.input.packets["{#IFNAME}"]'
+              key: 'juniper.mx.net.input.packets.rate["{#IFNAME}"]'
               units: '!pps'
               description: 'Number of input packets, current throughput rate in packets per second (pps).'
               preprocessing:
@@ -2491,7 +2521,7 @@ zabbix_export:
               type: DEPENDENT
               key: 'juniper.mx.net.link.level.type["{#IFNAME}"]'
               value_type: CHAR
-              description: 'Get link level type interface `[{#IFNAME}]`.'
+              description: 'Get link level type interface ''[{#IFNAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
@@ -2515,7 +2545,7 @@ zabbix_export:
             - uuid: bdf5bc09d36e461d95b2bbf4cd11bc50
               name: 'Interface [{#IFNAME}][{#IFDESCR}]: Output bits'
               type: DEPENDENT
-              key: 'juniper.mx.net.output.bits["{#IFNAME}"]'
+              key: 'juniper.mx.net.output.bits.rate["{#IFNAME}"]'
               units: bps
               description: 'Number of output bytes, current throughput rate in bits per second (bps).'
               preprocessing:
@@ -2567,7 +2597,7 @@ zabbix_export:
             - uuid: 819f635bb371472cabe4cc4e88c6f6f3
               name: 'Interface [{#IFNAME}][{#IFDESCR}]: Output packets'
               type: DEPENDENT
-              key: 'juniper.mx.net.output.packets["{#IFNAME}"]'
+              key: 'juniper.mx.net.output.packets.rate["{#IFNAME}"]'
               units: '!pps'
               description: 'Number of output packets, current throughput rate in packets per second (pps).'
               preprocessing:
@@ -2592,10 +2622,10 @@ zabbix_export:
           trigger_prototypes:
             - uuid: 7b0eba09fb814b1f84e0b3b858abe0f4
               expression: |
-                (avg(/Juniper MX by NETCONF/juniper.mx.net.input.bits["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and
+                (avg(/Juniper MX by NETCONF/juniper.mx.net.input.bits.rate["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and
                 last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])>0
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'avg(/Juniper MX by NETCONF/juniper.mx.net.input.bits["{#IFNAME}"],15m)<(({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}-3)/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])'
+              recovery_expression: 'avg(/Juniper MX by NETCONF/juniper.mx.net.input.bits.rate["{#IFNAME}"],15m)<(({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}-3)/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])'
               name: 'Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High inbound bandwidth usage'
               event_name: 'Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High inbound bandwidth usage ( > {$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}% )'
               opdata: 'In: {ITEM.LASTVALUE1}, speed: {ITEM.LASTVALUE2}'
@@ -2610,10 +2640,10 @@ zabbix_export:
                   value: performance
             - uuid: c31323aee08c49d4b2f40fa5bf064786
               expression: |
-                (avg(/Juniper MX by NETCONF/juniper.mx.net.output.bits["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and
+                (avg(/Juniper MX by NETCONF/juniper.mx.net.output.bits.rate["{#IFNAME}"],15m)>({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])) and
                 last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])>0
               recovery_mode: RECOVERY_EXPRESSION
-              recovery_expression: 'avg(/Juniper MX by NETCONF/juniper.mx.net.output.bits["{#IFNAME}"],15m)<(({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}-3)/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])'
+              recovery_expression: 'avg(/Juniper MX by NETCONF/juniper.mx.net.output.bits.rate["{#IFNAME}"],15m)<(({$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}-3)/100)*last(/Juniper MX by NETCONF/juniper.mx.net.if.speed["{#IFNAME}"])'
               name: 'Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High outbound bandwidth usage'
               event_name: 'Juniper MX: Interface [{#IFNAME}][{#IFDESCR}]: High outbound bandwidth usage ( > {$JUNIPER.MX.NET.IF.UTIL.MAX:"{#IFNAME}"}% )'
               opdata: 'Out: {ITEM.LASTVALUE1}, speed: {ITEM.LASTVALUE2}'
@@ -2633,15 +2663,18 @@ zabbix_export:
                 - color: 199C0D
                   item:
                     host: 'Juniper MX by NETCONF'
-                    key: 'juniper.mx.net.input.bits["{#IFNAME}"]'
+                    key: 'juniper.mx.net.input.bits.rate["{#IFNAME}"]'
                 - sortorder: '1'
                   color: F63100
                   item:
                     host: 'Juniper MX by NETCONF'
-                    key: 'juniper.mx.net.output.bits["{#IFNAME}"]'
+                    key: 'juniper.mx.net.output.bits.rate["{#IFNAME}"]'
           master_item:
-            key: 'ssh.run[JuniperMxInterface,{$JUNIPER.NETCONF.IP},{$JUNIPER.NETCONF.PORT},,,netconf]'
+            key: 'ssh.run[JuniperMxInterface,{$JUNIPER.MX.NETCONF.IP},{$JUNIPER.MX.NETCONF.PORT},,,netconf]'
           preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$.results..["rpc-reply"]["interface-information"]["physical-interface"].first()'
             - type: JAVASCRIPT
               parameters:
                 - |
@@ -2709,14 +2742,14 @@ zabbix_export:
               key: 'juniper.mx.ospf.get["{#OSPF_ROUTER_NAME}","{#OSPF_NEIGHBOR_ADDR}"]'
               history: '0'
               value_type: TEXT
-              description: 'Get data.'
+              description: 'Get OSPF raw data neighbor ''[{#OSPF_NEIGHBOR_ADDR}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.ospf[?(@.router_name == "{#OSPF_ROUTER_NAME}" && @.neighbor_address == "{#OSPF_NEIGHBOR_ADDR}")].first()'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: juniper.mx.ospf.data
+                key: juniper.mx.ospf.data.get
               tags:
                 - tag: address
                   value: '{#OSPF_NEIGHBOR_ADDR}'
@@ -2780,7 +2813,7 @@ zabbix_export:
                   name: 'Juniper MX: OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: State down'
                   opdata: 'Current state: {ITEM.LASTVALUE1}'
                   priority: AVERAGE
-                  description: 'OSPF neighbor [{#OSPF_NEIGHBOR_ADDR}] in operational state `down`.'
+                  description: 'OSPF neighbor ''[{#OSPF_NEIGHBOR_ADDR}]'''' in operational state `down`.'
                   tags:
                     - tag: scope
                       value: performance
@@ -2789,7 +2822,7 @@ zabbix_export:
                   name: 'Juniper MX: OSPF Neighbor [{#OSPF_NEIGHBOR_ADDR}]: State init'
                   opdata: 'Current state: {ITEM.LASTVALUE1}'
                   priority: AVERAGE
-                  description: 'OSPFv3 neighbor [{#OSPF_NEIGHBOR_ADDR}] in operational state `init`.'
+                  description: 'OSPFv3 neighbor ''[{#OSPF_NEIGHBOR_ADDR}]'' in operational state `init`.'
                   tags:
                     - tag: scope
                       value: performance
@@ -2820,8 +2853,9 @@ zabbix_export:
                   name: 'Juniper MX: OSPF has been restarted'
                   event_name: 'Juniper MX: OSPF has been restarted (uptime < 10m)'
                   priority: WARNING
+                  description: 'Uptime is less than 10 minutes.'
           master_item:
-            key: juniper.mx.ospf.data
+            key: juniper.mx.ospf.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -2843,7 +2877,7 @@ zabbix_export:
           name: 'OSPFv3 Neighbor discovery'
           type: DEPENDENT
           key: juniper.mx.ospf3.neighbor.discovery
-          description: 'OSPF Neighbors discovery.'
+          description: 'OSPFv3 Neighbors discovery.'
           item_prototypes:
             - uuid: 9a8806699cf1402689e443ab18d2d9b0
               name: 'OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: Get metrics data'
@@ -2851,14 +2885,14 @@ zabbix_export:
               key: 'juniper.mx.ospf3.get["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]'
               history: '0'
               value_type: TEXT
-              description: 'Get data.'
+              description: 'Get OSPFv3 raw data neighbor ''[{#OSPFV3_NEIGHBOR_ADDR}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.ospf3[?(@.router_name == "{#OSPFV3_ROUTER_NAME}" && @.neighbor_address == "{#OSPFV3_NEIGHBOR_ADDR}")].first()'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: juniper.mx.ospf.data
+                key: juniper.mx.ospf.data.get
               tags:
                 - tag: address
                   value: '{#OSPFV3_NEIGHBOR_ADDR}'
@@ -2875,7 +2909,7 @@ zabbix_export:
               type: DEPENDENT
               key: 'juniper.mx.ospf3.interface["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"]'
               value_type: TEXT
-              description: 'The OSPF interface.'
+              description: 'The OSPFv3 interface.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
@@ -2922,7 +2956,7 @@ zabbix_export:
                   name: 'Juniper MX: OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: State down'
                   opdata: 'Current state: {ITEM.LASTVALUE1}'
                   priority: AVERAGE
-                  description: 'OSPF neighbor [{#OSPFV3_NEIGHBOR_ADDR}] in operational state `down`.'
+                  description: 'OSPFv3 neighbor ''[{#OSPFV3_NEIGHBOR_ADDR}]'' in operational state `down`.'
                   tags:
                     - tag: scope
                       value: performance
@@ -2931,7 +2965,7 @@ zabbix_export:
                   name: 'Juniper MX: OSPFv3 Neighbor [{#OSPFV3_NEIGHBOR_ADDR}]: State init'
                   opdata: 'Current state: {ITEM.LASTVALUE1}'
                   priority: AVERAGE
-                  description: 'OSPFv3 neighbor [{#OSPFV3_NEIGHBOR_ADDR}] in operational state `init`.'
+                  description: 'OSPFv3 neighbor ''[{#OSPFV3_NEIGHBOR_ADDR}]'' in operational state `init`.'
                   tags:
                     - tag: scope
                       value: performance
@@ -2959,11 +2993,12 @@ zabbix_export:
               trigger_prototypes:
                 - uuid: 2cede617dec14cfe828405f2dfdb0b7d
                   expression: 'last(/Juniper MX by NETCONF/juniper.mx.ospf3.uptime["{#OSPFV3_ROUTER_NAME}","{#OSPFV3_NEIGHBOR_ADDR}"])<10m'
-                  name: 'Juniper MX: OSPF has been restarted'
+                  name: 'Juniper MX: OSPFv3 has been restarted'
                   event_name: 'Juniper MX: OSPFv3 has been restarted (uptime < 10m)'
                   priority: WARNING
+                  description: 'Uptime is less than 10 minutes.'
           master_item:
-            key: juniper.mx.ospf.data
+            key: juniper.mx.ospf.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -3011,13 +3046,13 @@ zabbix_export:
               key: 'juniper.mx.pem.get["{#NAME}"]'
               history: '0'
               value_type: TEXT
-              description: 'Intermediate data of power entry module `{#NAME}`.'
+              description: 'Intermediate data of power entry module ''[{#NAME}]''.'
               preprocessing:
                 - type: JSONPATH
                   parameters:
                     - '$.[?(@.name==''{#NAME}'')].first()'
               master_item:
-                key: juniper.mx.pem.data
+                key: juniper.mx.pem.data.get
               tags:
                 - tag: component
                   value: power
@@ -3063,7 +3098,7 @@ zabbix_export:
               name: 'Module [{#NAME}]: State'
               type: DEPENDENT
               key: 'juniper.mx.pem.state["{#NAME}"]'
-              description: 'Status of the power entry module `{#NAME}`.'
+              description: 'Status of the power entry module ''[{#NAME}]''.'
               valuemap:
                 name: 'PEM state'
               preprocessing:
@@ -3102,7 +3137,7 @@ zabbix_export:
                 - tag: module
                   value: '{#NAME}'
           master_item:
-            key: juniper.mx.pem.data
+            key: juniper.mx.pem.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -3141,7 +3176,7 @@ zabbix_export:
             - uuid: fc7a8ad154c94ca5b24c3212f6b19a22
               name: 'Routing Engine Slot [{#SLOT}]: CPU background utilization'
               type: DEPENDENT
-              key: 'juniper.mx.routing.engine.cpu.background["{#SLOT}"]'
+              key: 'juniper.mx.routing.engine.cpu.background.util["{#SLOT}"]'
               units: '%'
               description: 'Percentage of CPU time being used by background processes.'
               preprocessing:
@@ -3183,7 +3218,7 @@ zabbix_export:
             - uuid: 22bc0ff44cc847a2b11cb905d2b0a93c
               name: 'Routing Engine Slot [{#SLOT}]: CPU interrupt utilization'
               type: DEPENDENT
-              key: 'juniper.mx.routing.engine.cpu.interrupt["{#SLOT}"]'
+              key: 'juniper.mx.routing.engine.cpu.interrupt.util["{#SLOT}"]'
               units: '%'
               description: 'Percentage of CPU time being used by interrupts.'
               preprocessing:
@@ -3204,7 +3239,7 @@ zabbix_export:
             - uuid: 516cb08e3b7d4f138abd62b402279b63
               name: 'Routing Engine Slot [{#SLOT}]: CPU system utilization'
               type: DEPENDENT
-              key: 'juniper.mx.routing.engine.cpu.system["{#SLOT}"]'
+              key: 'juniper.mx.routing.engine.cpu.system.util["{#SLOT}"]'
               units: '%'
               description: 'Percentage of CPU time being used by system processes.'
               preprocessing:
@@ -3248,9 +3283,9 @@ zabbix_export:
             - uuid: 9081adce1e1b43d58f6800b1f26039ad
               name: 'Routing Engine Slot [{#SLOT}]: CPU total utilization'
               type: CALCULATED
-              key: 'juniper.mx.routing.engine.cpu.total["{#SLOT}"]'
+              key: 'juniper.mx.routing.engine.cpu.total.util["{#SLOT}"]'
               units: '%'
-              params: 'last(//juniper.mx.routing.engine.cpu.user["{#SLOT}"])+last(//juniper.mx.routing.engine.cpu.system["{#SLOT}"])+last(//juniper.mx.routing.engine.cpu.interrupt["{#SLOT}"])+last(//juniper.mx.routing.engine.cpu.background["{#SLOT}"])'
+              params: 'last(//juniper.mx.routing.engine.cpu.user.util["{#SLOT}"])+last(//juniper.mx.routing.engine.cpu.system.util["{#SLOT}"])+last(//juniper.mx.routing.engine.cpu.interrupt.util["{#SLOT}"])+last(//juniper.mx.routing.engine.cpu.background.util["{#SLOT}"])'
               description: 'Percentage of total CPU utilization.'
               tags:
                 - tag: component
@@ -3263,7 +3298,7 @@ zabbix_export:
                   value: '{#SLOT}'
               trigger_prototypes:
                 - uuid: 2c9a8b78c121479aa5525b98afcdb84d
-                  expression: 'min(/Juniper MX by NETCONF/juniper.mx.routing.engine.cpu.total["{#SLOT}"], 10m) >= {$JUNIPER.MX.CPU.UTIL.MIN}'
+                  expression: 'min(/Juniper MX by NETCONF/juniper.mx.routing.engine.cpu.total.util["{#SLOT}"], 10m) >= {$JUNIPER.MX.CPU.UTIL.MIN}'
                   name: 'Juniper MX: High Routing Engine CPU utilization'
                   event_name: 'Juniper MX: Routing Engine Slot [{#SLOT}]: High CPU utilization: (over >= {$JUNIPER.MX.CPU.UTIL.MIN}% over last 10m)'
                   opdata: 'Current utilization: {ITEM.LASTVALUE}'
@@ -3275,7 +3310,7 @@ zabbix_export:
             - uuid: 3219e76abec24d8183bca320cbea6be9
               name: 'Routing Engine Slot [{#SLOT}]: CPU user utilization'
               type: DEPENDENT
-              key: 'juniper.mx.routing.engine.cpu.user["{#SLOT}"]'
+              key: 'juniper.mx.routing.engine.cpu.user.util["{#SLOT}"]'
               units: '%'
               description: 'Percentage of CPU time being used by user processes.'
               preprocessing:
@@ -3336,7 +3371,7 @@ zabbix_export:
                     - '$[?(@.slot == "{#SLOT}")]'
                   error_handler: DISCARD_VALUE
               master_item:
-                key: juniper.mx.routing.engine.data
+                key: juniper.mx.routing.engine.data.get
               tags:
                 - tag: component
                   value: raw
@@ -3502,29 +3537,29 @@ zabbix_export:
                   color: F63100
                   item:
                     host: 'Juniper MX by NETCONF'
-                    key: 'juniper.mx.routing.engine.cpu.background["{#SLOT}"]'
+                    key: 'juniper.mx.routing.engine.cpu.background.util["{#SLOT}"]'
                 - sortorder: '2'
                   color: 00611C
                   item:
                     host: 'Juniper MX by NETCONF'
-                    key: 'juniper.mx.routing.engine.cpu.system["{#SLOT}"]'
+                    key: 'juniper.mx.routing.engine.cpu.system.util["{#SLOT}"]'
                 - sortorder: '3'
                   color: F7941D
                   item:
                     host: 'Juniper MX by NETCONF'
-                    key: 'juniper.mx.routing.engine.cpu.interrupt["{#SLOT}"]'
+                    key: 'juniper.mx.routing.engine.cpu.interrupt.util["{#SLOT}"]'
                 - sortorder: '4'
                   color: FC6EA3
                   item:
                     host: 'Juniper MX by NETCONF'
-                    key: 'juniper.mx.routing.engine.cpu.user["{#SLOT}"]'
+                    key: 'juniper.mx.routing.engine.cpu.user.util["{#SLOT}"]'
                 - sortorder: '5'
                   color: 6C59DC
                   item:
                     host: 'Juniper MX by NETCONF'
-                    key: 'juniper.mx.routing.engine.cpu.total["{#SLOT}"]'
+                    key: 'juniper.mx.routing.engine.cpu.total.util["{#SLOT}"]'
           master_item:
-            key: juniper.mx.routing.engine.data
+            key: juniper.mx.routing.engine.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -3558,12 +3593,14 @@ zabbix_export:
                   parameters:
                     - '$.[?(@.name==''{#NAME}'')].temperature["@celsius"].first()'
               master_item:
-                key: juniper.mx.temperature.data
+                key: juniper.mx.temperature.data.get
               tags:
                 - tag: component
                   value: temperature
+                - tag: sensor
+                  value: '{#NAME}'
           master_item:
-            key: juniper.mx.temperature.data
+            key: juniper.mx.temperature.data.get
           preprocessing:
             - type: JAVASCRIPT
               parameters:
@@ -3701,23 +3738,23 @@ zabbix_export:
         - macro: '{$JUNIPER.MX.NET.IF.UTIL.MAX}'
           value: '90'
           description: 'The threshold in the hardware interface utilization triggers.'
-        - macro: '{$JUNIPER.NETCONF.IP}'
+        - macro: '{$JUNIPER.MX.NETCONF.IP}'
           value: '<SET JUNIPER MX IP NETCONF>'
           description: 'The IP address of the Juniper MX.'
-        - macro: '{$JUNIPER.NETCONF.PASSWORD}'
+        - macro: '{$JUNIPER.MX.NETCONF.PASSWORD}'
           type: SECRET_TEXT
           description: 'Juniper NETCONF password.'
-        - macro: '{$JUNIPER.NETCONF.PORT}'
+        - macro: '{$JUNIPER.MX.NETCONF.PORT}'
           value: '830'
           description: 'The NETCONF port of the Juniper MX.'
-        - macro: '{$JUNIPER.NETCONF.TIMEOUT}'
-          value: 15s
-          description: 'SSH response timeout.'
-        - macro: '{$JUNIPER.NETCONF.USERNAME}'
-          description: 'Juniper NETCONF username.'
-        - macro: '{$NETCONF.RESPONSE_TIME.MAX.WARN}'
+        - macro: '{$JUNIPER.MX.NETCONF.RESPONSE_TIME.MAX.WARN}'
           value: '10'
           description: 'The maximum Juniper NETCONF response time expressed in seconds for a trigger expression.'
+        - macro: '{$JUNIPER.MX.NETCONF.TIMEOUT}'
+          value: 15s
+          description: 'SSH response timeout.'
+        - macro: '{$JUNIPER.MX.NETCONF.USERNAME}'
+          description: 'Juniper NETCONF username.'
       dashboards:
         - uuid: 6515b40b447a4037bb602813c07c5ed1
           name: 'Juniper MX: Overview'
@@ -3842,9 +3879,6 @@ zabbix_export:
                   height: '5'
                   hide_header: 'YES'
                   fields:
-                    - type: STRING
-                      name: bg_color
-                      value: E2EFF5
                     - type: INTEGER
                       name: decimal_places
                       value: '0'
@@ -3871,9 +3905,6 @@ zabbix_export:
                   height: '5'
                   hide_header: 'YES'
                   fields:
-                    - type: STRING
-                      name: bg_color
-                      value: E2EFF5
                     - type: INTEGER
                       name: decimal_places
                       value: '0'
@@ -3896,9 +3927,6 @@ zabbix_export:
                   height: '5'
                   hide_header: 'YES'
                   fields:
-                    - type: STRING
-                      name: bg_color
-                      value: E2EFF5
                     - type: INTEGER
                       name: decimal_places
                       value: '0'
@@ -4042,9 +4070,6 @@ zabbix_export:
                       name: angle
                       value: '270'
                     - type: STRING
-                      name: bg_color
-                      value: E2EFF5
-                    - type: STRING
                       name: empty_color
                       value: 78909C
                     - type: STRING
@@ -4079,9 +4104,6 @@ zabbix_export:
                   height: '5'
                   hide_header: 'YES'
                   fields:
-                    - type: STRING
-                      name: bg_color
-                      value: E2EFF5
                     - type: INTEGER
                       name: decimal_places
                       value: '0'
@@ -4604,9 +4626,6 @@ zabbix_export:
                     - type: INTEGER
                       name: angle
                       value: '270'
-                    - type: STRING
-                      name: bg_color
-                      value: E2EFF5
                     - type: INTEGER
                       name: decimal_places
                       value: '0'
@@ -4780,7 +4799,7 @@ zabbix_export:
                   fields:
                     - type: STRING
                       name: ds.0.color
-                      value: 7972ded2
+                      value: 303F9F
                     - type: STRING
                       name: ds.0.items.0
                       value: 'Module *: Voltage'
