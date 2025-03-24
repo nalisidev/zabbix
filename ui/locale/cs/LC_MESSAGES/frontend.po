@@ -6072,6 +6072,11 @@ msgstr "Databáze šifrování TLS"
 msgid "Database TLS key file"
 msgstr "Soubor klíče TLS databáze"
 
+#: include/classes/api/clients/CLocalApiClient.php:124
+#: include/classes/api/clients/CLocalApiClient.php:138
+msgid "Database error occurred."
+msgstr ""
+
 #: app/partials/administration.system.info.php:130
 msgid "Database history tables use primary key"
 msgstr "Databázové tabulky historie používají primární klíč"

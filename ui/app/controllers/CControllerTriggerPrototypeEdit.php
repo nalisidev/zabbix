@@ -90,7 +90,8 @@ class CControllerTriggerPrototypeEdit extends CController {
 					'correlation_tag', 'manual_close', 'opdata', 'event_name', 'url_name', 'discover'
 				],
 				'selectHosts' => ['hostid'],
-				'triggerids' => $trigger_id,
+				'selectDiscoveryRule' => ['itemid', 'templateid'],
+				'triggerids' => $this->getInput('triggerid'),
 				'selectItems' => ['itemid', 'templateid', 'flags'],
 				'selectDependencies' => ['triggerid'],
 				'selectTags' => ['tag', 'value']
@@ -176,7 +177,7 @@ class CControllerTriggerPrototypeEdit extends CController {
 				}
 
 				if (($data['show_inherited_tags'] == 0 || !$this->trigger_prototype)
-					&& (array_key_exists('type', $tag) && !($tag['type'] & ZBX_PROPERTY_OWN))) {
+						&& (array_key_exists('type', $tag) && !($tag['type'] & ZBX_PROPERTY_OWN))) {
 					continue;
 				}
 
