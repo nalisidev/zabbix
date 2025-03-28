@@ -13,8 +13,8 @@
 ** If not, see <https://www.gnu.org/licenses/>.
 **/
 
-define('ZABBIX_VERSION',		'7.2.5rc1');
-define('ZABBIX_API_VERSION',	'7.2.5');
+define('ZABBIX_VERSION',		'7.2.6rc1');
+define('ZABBIX_API_VERSION',	'7.2.6');
 define('ZABBIX_EXPORT_VERSION',	'7.2');
 
 define('ZABBIX_DB_VERSION',		7020000);
@@ -1639,6 +1639,7 @@ if (!defined('JSON_ERROR_SYNTAX')) {
 
 // API errors
 define('ZBX_API_ERROR_INTERNAL',	111);
+define('ZBX_API_ERROR_DB',			112);
 define('ZBX_API_ERROR_PARAMETERS',	100);
 define('ZBX_API_ERROR_NO_ENTITY',	101);
 define('ZBX_API_ERROR_PERMISSIONS',	120);
