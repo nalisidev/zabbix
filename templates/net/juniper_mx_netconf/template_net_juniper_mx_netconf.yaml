@@ -412,7 +412,7 @@ zabbix_export:
               expression: 'length(last(/Juniper MX by NETCONF/juniper.mx.resource.error))>0'
               name: 'Juniper MX: Failed to get resource data'
               event_name: 'Juniper MX: Failed to get metrics for resource using RPC request'
-              opdata: 'Current value: {ITEM.LASTVALUE1}'
+              opdata: 'Current error: {ITEM.LASTVALUE1}'
               priority: WARNING
               description: 'Failed to get metrics for resource.'
               tags:
@@ -548,7 +548,7 @@ zabbix_export:
               name: 'Juniper MX: NETCONF is not available'
               opdata: 'Current status: {ITEM.LASTVALUE1}'
               priority: AVERAGE
-              description: 'Checks the availability of NETCONF on the TCP port.'
+              description: 'NETCONF is unavailable on the specified TCP port. Possible causes include service downtime, port blockage, or network issues.'
               manual_close: 'YES'
               tags:
                 - tag: scope
@@ -1225,7 +1225,7 @@ zabbix_export:
                   name: 'Juniper MX: BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Is down'
                   opdata: 'Current state: {ITEM.LASTVALUE1}'
                   priority: HIGH
-                  description: 'Session [BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]] is down, check the BGP configuration. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.'
+                  description: 'Session BGP Router ''[{#BGP_ROUTER_NAME}]'' AS ''[{#BGP_PEER_REMOTE_AS}]'' Peer ''[{#BGP_PEER_REMOTE_ADDR}]'' is down, check the BGP configuration. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.'
                   tags:
                     - tag: scope
                       value: notice

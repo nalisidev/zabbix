@@ -128,7 +128,7 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
-|Juniper MX: NETCONF is not available|<p>Checks the availability of NETCONF on the TCP port.</p>|`last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"])=0`|Average|**Manual close**: Yes|
+|Juniper MX: NETCONF is not available|<p>NETCONF is unavailable on the specified TCP port. Possible causes include service downtime, port blockage, or network issues.</p>|`last(/Juniper MX by NETCONF/net.tcp.service[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"])=0`|Average|**Manual close**: Yes|
 |Juniper MX: NETCONF response time is too high||`min(/Juniper MX by NETCONF/net.tcp.service.perf[ssh,"{$JUNIPER.MX.NETCONF.IP}","{$JUNIPER.MX.NETCONF.PORT}"],5m)>{$JUNIPER.MX.NETCONF.RESPONSE_TIME.MAX.WARN}`|Warning|**Manual close**: Yes<br>**Depends on**:<br><ul><li>Juniper MX: NETCONF is not available</li></ul>|
 |Juniper MX: Failed to get DOM data|<p>Failed to get metrics for interface optics diagnostics information.</p>|`length(last(/Juniper MX by NETCONF/juniper.mx.dom.error))>0`|Warning||
 |Juniper MX: Failed to get resource data|<p>Failed to get metrics for resource.</p>|`length(last(/Juniper MX by NETCONF/juniper.mx.resource.error))>0`|Warning||
@@ -306,7 +306,7 @@ For more details read [Enable NETCONF Service over SSH](https://www.juniper.net/
 
 |Name|Description|Expression|Severity|Dependencies and additional info|
 |----|-----------|----------|--------|--------------------------------|
-|Juniper MX: BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Is down|<p>Session [BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]] is down, check the BGP configuration. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.</p>|`count(/Juniper MX by NETCONF/juniper.mx.bgp.state["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"],#3,"regexp","{$JUNIPER.MX.BGP.PEER.STATE}")=0`|High||
+|Juniper MX: BGP Router [{#BGP_ROUTER_NAME}] AS [{#BGP_PEER_REMOTE_AS}] Peer [{#BGP_PEER_REMOTE_ADDR}]: Is down|<p>Session BGP Router '[{#BGP_ROUTER_NAME}]' AS '[{#BGP_PEER_REMOTE_AS}]' Peer '[{#BGP_PEER_REMOTE_ADDR}]' is down, check the BGP configuration. For information on checking the BGP configuration, see https://www.juniper.net/documentation/us/en/software/junos/bgp/topics/topic-map/troubleshooting-bgp-sessions.html.</p>|`count(/Juniper MX by NETCONF/juniper.mx.bgp.state["{#BGP_ROUTER_NAME}","{#BGP_PEER_REMOTE_ADDR}","{#BGP_PEER_REMOTE_AS}"],#3,"regexp","{$JUNIPER.MX.BGP.PEER.STATE}")=0`|High||
 
 ### LLD rule OSPF Neighbor discovery
 
