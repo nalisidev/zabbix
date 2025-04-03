@@ -100,16 +100,5 @@
 		massupdate_overlay.$dialogue[0].addEventListener('dialogue.close', () => {
 			ZABBIX.EventHub.unsubscribeAll(subscriptions);
 		});
-
-		subscriptions.push(
-			ZABBIX.EventHub.subscribe({
-				require: {
-					context: CPopupManager.EVENT_CONTEXT,
-					event: CPopupManagerEvent.EVENT_END_SCRIPTING,
-					action: massupdate_overlay.dialogueid
-				},
-				callback: () => ZABBIX.EventHub.unsubscribeAll(subscriptions)
-			})
-		);
 	})();
 </script>
