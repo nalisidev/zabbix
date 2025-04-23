@@ -208,7 +208,11 @@ class testUserMacrosWithContext extends CIntegrationTest {
 
 	/**
 	 *
-	 * @required-components server
+	 * @required-components server, agent
+	 *
+	 * Note: agent is not required for this test.
+	 * However, starting agent when server is started is the easiest way to ensure that agent items configured for
+	 * other test cases do not become unavailable after failing with network errors.
 	 */
 	public function testUserMacrosWithContext_inTriggerExpressions() {
 		$senderValues = [
