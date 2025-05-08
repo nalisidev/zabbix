@@ -3707,7 +3707,7 @@ static void	DCsync_items(zbx_dbsync_t *sync, zbx_uint64_t revision, int flags, z
 			template_item->templateid = templateid;
 
 			THIS_SHOULD_NEVER_HAPPEN_MSG("item_rtdata entry unexpectedly is present for item "
-					"prototype: " ZBX_FS_UI64 " on hostid" ZBX_FS_UI64, itemid, hostid);
+					"prototype: " ZBX_FS_UI64 " on hostid: " ZBX_FS_UI64, itemid, hostid);
 			continue;
 		}
 
