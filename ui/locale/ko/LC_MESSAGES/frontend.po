@@ -7055,6 +7055,10 @@ msgstr "디스커버리 오브젝트"
 msgid "Discovery of VMware clusters, \"url\" - VMware service URL. Returns JSON"
 msgstr "VMware 클러스터 검색, \"url\" - VMware 서비스 URL. JSON을 반환함"
 
+#: include/classes/data/CItemData.php:1932
+msgid "Discovery of VMware datastores, \"url\" - VMware service URL, \"filter_uuid\" - one hv uuid or vm uuid (empty by default). Returns JSON"
+msgstr ""
+
 #: include/classes/data/CItemData.php:1799
 msgid "Discovery of VMware datastores, \"url\" - VMware service URL. Returns JSON"
 msgstr "VMware 데이터 저장소 검색, \"url\" - VMware 서비스 URL. JSON을 반환함"
