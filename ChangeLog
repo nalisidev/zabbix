@@ -1,3 +1,15 @@
+Changes for 7.2.8rc1
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 7.2.7
+
+7.2.7rc1 was released as 7.2.7 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 7.2.7rc1
 
 New features:
@@ -447,6 +459,18 @@ A.F....... [ZBX-23227] fixed issue where using an empty array or string value fo
 ...GI..PS. [ZBX-25140] updated configure to reject TLS-unaware compilers (jxl)
 ...G...... [ZBX-25149] fixed Zabbix agent build on AIX and Solaris (arimdjonoks)
 ....I..... [ZBX-23881] dropped preference list when searching for compiler (jxl)
+
+--------------------------------------------------------------------------------
+Changes for 7.0.14rc1
+
+New features:
+
+Bug fixes:
+
+--------------------------------------------------------------------------------
+Changes for 7.0.13
+
+7.0.13rc1 was released as 7.0.13 without any changes
 
 --------------------------------------------------------------------------------
 Changes for 7.0.13rc1
@@ -7412,9 +7436,12 @@ A......... [ZBX-17955] fixed "medias" parameter named inconsistency in user.crea
 .......PS. [ZBX-17548] don't store text items with history 0 in proxy history (wiper)
 
 --------------------------------------------------------------------------------
-Changes for 5.0.47rc1
+Changes for 5.0.47
 
-New features:
+5.0.47rc1 was released as 5.0.47 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 5.0.47rc1
 
 Bug fixes:
 ...G...PS. [ZBX-26080] fixed old file descriptors being held when external log rotation is used (dgoloscapov)
