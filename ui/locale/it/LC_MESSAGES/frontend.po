@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2025-01-27 13:16+0000\n"
+"PO-Revision-Date: 2025-04-16 08:00+0000\n"
 "Last-Translator: Edoardo Ridolfi <edo2313@gmail.com>\n"
 "Language-Team: Zabbix <info@zabbix.com>\n"
 "Language: it\n"
@@ -1636,7 +1636,7 @@ msgstr ""
 
 #: app/views/administration.userrole.edit.php:137
 msgid "At least one UI element must be checked."
-msgstr ""
+msgstr "È necessario selezionare almeno un elemento dell'interfaccia utente."
 
 #: include/classes/api/services/CRole.php:480
 #, c-format
@@ -1667,11 +1667,11 @@ msgstr "È necessario selezionare almeno un gruppo host o un host."
 
 #: include/classes/setup/CFrontendSetup.php:252
 msgid "At least one of MySQL or PostgreSQL should be supported."
-msgstr ""
+msgstr "Almeno un tipo DB tra MySQL o PostgreSQL dovrebbe essere supportato."
 
 #: include/classes/setup/CFrontendSetup.php:241
 msgid "At least one of MySQL, PostgreSQL or Oracle should be supported."
-msgstr ""
+msgstr "Almeno un tipo DB tra MySQL, PostgreSQL, Oracle dovrebbe essere supportato."
 
 #: app/views/correlation.edit.php:264
 msgid "At least one operation must be selected."
@@ -1726,7 +1726,7 @@ msgstr "Attributo"
 
 #: app/views/administration.geomaps.edit.php:86
 msgid "Attribution text"
-msgstr ""
+msgstr "Testo di attribuzione"
 
 #: app/controllers/CControllerAuditLogList.php:190
 #: app/views/administration.audit.settings.edit.php:29
@@ -1742,7 +1742,7 @@ msgstr "Audit log"
 
 #: app/views/administration.housekeeping.edit.php:242
 msgid "Audit settings"
-msgstr ""
+msgstr "Impostazioni di audit"
 
 #: include/func.inc.php:243
 msgid "Aug"
@@ -2031,14 +2031,14 @@ msgstr "Blu"
 #: include/views/configuration.item.edit.php:441
 #: include/views/configuration.item.prototype.edit.php:418
 msgid "Body"
-msgstr ""
+msgstr "Body"
 
 #: app/views/webscenario.step.edit.php:252
 #: include/views/configuration.host.discovery.edit.php:385
 #: include/views/configuration.item.edit.php:443
 #: include/views/configuration.item.prototype.edit.php:420
 msgid "Body and headers"
-msgstr ""
+msgstr "Body e header"
 
 #: tests/selenium/modules/clock32/includes/WidgetForm.php:95
 #: tests/selenium/modules/clock32/includes/WidgetForm.php:105
@@ -2107,7 +2107,7 @@ msgstr "In basso"
 
 #: widgets/tophosts/includes/WidgetForm.php:146
 msgid "Bottom N"
-msgstr ""
+msgstr "Gli ultimi N"
 
 #: jsLoader.php:266
 msgid "Bring forward"
@@ -7153,6 +7153,10 @@ msgstr "Oggetto discovery"
 
 #: include/classes/data/CItemData.php:1764
 msgid "Discovery of VMware clusters, \"url\" - VMware service URL. Returns JSON"
+msgstr ""
+
+#: include/classes/data/CItemData.php:1932
+msgid "Discovery of VMware datastores, \"url\" - VMware service URL, \"filter_uuid\" - one hv uuid or vm uuid (empty by default). Returns JSON"
 msgstr ""
 
 #: include/classes/data/CItemData.php:1799

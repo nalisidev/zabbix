@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2025-03-17 21:40+0000\n"
+"PO-Revision-Date: 2025-05-01 18:38+0000\n"
 "Last-Translator: Xevi Noè i Nogueiras <xevi.noe@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -7163,6 +7163,10 @@ msgstr "Objecte de descobriment"
 #: include/classes/data/CItemData.php:1764
 msgid "Discovery of VMware clusters, \"url\" - VMware service URL. Returns JSON"
 msgstr "Descoberta de clústers de VMware, \"url\" - URL del servei de VMware. Retorna un JSON"
+
+#: include/classes/data/CItemData.php:1932
+msgid "Discovery of VMware datastores, \"url\" - VMware service URL, \"filter_uuid\" - one hv uuid or vm uuid (empty by default). Returns JSON"
+msgstr "Descoberta de magatzems de dades de VMware, \"url\" - URL del servei de VMware, \"filter_uuid\" - un hv uuid o vm uuid (buit per defecte). Retorna JSON"
 
 #: include/classes/data/CItemData.php:1799
 msgid "Discovery of VMware datastores, \"url\" - VMware service URL. Returns JSON"
@@ -19581,7 +19585,7 @@ msgstr "Estadístiques i disponibilitat del buffer de memòria proxy. Mode (mode
 
 #: include/classes/data/CItemData.php:2862
 msgid "Statistics of values received by the preprocessing manager."
-msgstr ""
+msgstr "Estadístiques dels valors rebuts pel gestor de preprocessament."
 
 #: app/controllers/CControllerPopupGeneric.php:237
 #: app/controllers/CControllerPopupGeneric.php:251

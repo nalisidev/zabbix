@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2025-04-08 12:20+0000\n"
-"Last-Translator: Jurijs <jurijs.klopovskis@zabbix.com>\n"
+"PO-Revision-Date: 2025-05-20 05:01+0000\n"
+"Last-Translator: Sergejs <sergejs.maklakovs@zabbix.com>\n"
 "Language-Team: \n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -19,14 +19,14 @@ msgstr ""
 #: app/controllers/CControllerSlaReportList.php:182
 #, c-format
 msgid "\"%1$s\" date must be less than \"%2$s\" date."
-msgstr ""
+msgstr "\"%1$s\" дата трябва да е преди \"%2$s\" дата."
 
 #: include/classes/db/MysqlDbBackend.php:70
 #: include/classes/db/OracleDbBackend.php:142
 #: include/classes/db/PostgresqlDbBackend.php:96
 #, c-format
 msgid "\"%1$s\" instead \"%2$s\""
-msgstr ""
+msgstr "\"%1$s\" вместо \"%2$s\""
 
 #: include/classes/import/validators/C10XmlValidator.php:322
 #: include/classes/import/validators/C10XmlValidator.php:340
@@ -44,26 +44,26 @@ msgstr ""
 #: include/classes/import/validators/C62XmlValidator.php:2054
 #, c-format
 msgid "\"%1$s\" is expected"
-msgstr ""
+msgstr "\"%1$s\" е очаквано"
 
 #: include/classes/api/services/CReport.php:220
 #: include/classes/api/services/CReport.php:615
 #, c-format
 msgid "\"%1$s\" must be an empty string or greater than \"%2$s\"."
-msgstr ""
+msgstr "\"%1$s\" трябва да е празен стринг (текст) или по-голям от \"%2$s\"."
 
 #: include/classes/import/validators/C10XmlValidator.php:359
 #: include/classes/import/validators/C10XmlValidator.php:382
 #: include/classes/import/validators/C10XmlValidator.php:404
 msgid "\"host:key\" pair is expected"
-msgstr ""
+msgstr "\"host:key\" двойка се очаква"
 
 #: include/forms.inc.php:1330
 #: include/views/configuration.host.discovery.edit.php:932
 #: include/views/js/configuration.host.discovery.edit.js.php:87
 #: include/views/js/item.preprocessing.js.php:315
 msgid "$.path.to.node"
-msgstr ""
+msgstr "$.path.to.node"
 
 #: include/classes/api/services/CDRule.php:579
 #, c-format
@@ -163,8 +163,8 @@ msgstr[1] ""
 #, c-format
 msgid "%1$s hour"
 msgid_plural "%1$s hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s час"
+msgstr[1] "%1$s часа"
 
 #: include/views/monitoring.history.php:32
 #: widgets/plaintext/actions/WidgetView.php:126
@@ -172,16 +172,16 @@ msgstr[1] ""
 #, c-format
 msgid "%1$s item"
 msgid_plural "%1$s items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s елемент"
+msgstr[1] "%1$s елемент"
 
 #: include/actions.inc.php:1662
 #, c-format
 msgctxt "screen reader"
 msgid "%1$s message"
 msgid_plural "%1$s messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s съобщение"
+msgstr[1] "%1$s съобщение"
 
 #: include/classes/core/CWidget.php:200 include/classes/core/CWidget.php:201
 #: include/classes/core/CWidget.php:202 include/classes/core/CWidget.php:203
@@ -190,15 +190,15 @@ msgstr[1] ""
 #, c-format
 msgid "%1$s minute"
 msgid_plural "%1$s minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s минута"
+msgstr[1] "%1$s минута"
 
 #: include/classes/helpers/CMapHelper.php:316
 #, c-format
 msgid "%1$s of %2$s element in problem state"
 msgid_plural "%1$s of %2$s elements in problem state"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s от %2$s елемент в проблемно състояние"
+msgstr[1] "%1$s от %2$s елемента в проблемно състояние"
 
 #: app/views/administration.miscconfig.edit.php:127
 #, c-format
@@ -221,15 +221,15 @@ msgstr ""
 #, c-format
 msgid "%1$s problem"
 msgid_plural "%1$s problems"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s проблем"
+msgstr[1] "%1$s проблем"
 
 #: include/classes/helpers/CMapHelper.php:319
 #, c-format
 msgid "%1$s problem in total"
 msgid_plural "%1$s problems in total"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Общо %1$s проблем"
+msgstr[1] "Общо %1$s проблем"
 
 #: app/views/reports.actionlog.list.csv.php:70
 #: app/views/reports.actionlog.list.php:154 include/actions.inc.php:2114
@@ -237,8 +237,8 @@ msgstr[1] ""
 #, c-format
 msgid "%1$s retry left"
 msgid_plural "%1$s retries left"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Остава %1$s повторен опит"
+msgstr[1] "Остава %1$s повторен опит"
 
 #: app/views/administration.user.edit.php:741
 #: include/classes/core/CWidget.php:198 include/classes/core/CWidget.php:199
@@ -246,23 +246,23 @@ msgstr[1] ""
 #, c-format
 msgid "%1$s second"
 msgid_plural "%1$s seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s секунда"
+msgstr[1] "%1$s секунда"
 
 #: include/maps.inc.php:369 include/maps.inc.php:372 include/maps.inc.php:379
 #: include/maps.inc.php:384
 #, c-format
 msgid "%1$s unacknowledged problem"
 msgid_plural "%1$s unacknowledged problems"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s непотвърден проблем"
+msgstr[1] "%1$s непотвърден проблем"
 
 #: widgets/problemhosts/views/widget.view.php:117
 #: widgets/problems/includes/WidgetProblems.php:347
 #, c-format
 msgctxt "screen reader"
 msgid "%1$s, Severity, %2$s"
-msgstr ""
+msgstr "%1$s, сериозност, %2$s"
 
 #: jsLoader.php:335
 #, c-format
@@ -314,11 +314,11 @@ msgstr[1] "%d устройства"
 #, c-format
 msgctxt "user fullname"
 msgid "(%1$s %2$s)"
-msgstr ""
+msgstr "(%1$s %2$s)"
 
 #: app/views/popup.operation.edit.php:84
 msgid "(0 - infinitely)"
-msgstr ""
+msgstr "(0 - безкрайно)"
 
 #: app/views/popup.operation.edit.php:95
 msgid "(0 - use action default)"
@@ -7177,6 +7177,10 @@ msgstr "Обект за откриване"
 
 #: include/classes/data/CItemData.php:1764
 msgid "Discovery of VMware clusters, \"url\" - VMware service URL. Returns JSON"
+msgstr ""
+
+#: include/classes/data/CItemData.php:1932
+msgid "Discovery of VMware datastores, \"url\" - VMware service URL, \"filter_uuid\" - one hv uuid or vm uuid (empty by default). Returns JSON"
 msgstr ""
 
 #: include/classes/data/CItemData.php:1799
