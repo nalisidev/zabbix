@@ -951,8 +951,7 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 				'/macro/macro:' . self::VALUE_TO_FIRE_TRIGGER .
 				'/macroN/macro:' . self::VALUE_TO_FIRE_TRIGGER .
 				'/macro/macroN:' . self::VALUE_TO_RECOVER_TRIGGER .
-				'/empty/macroN:' . self::VALUE_TO_RECOVER_TRIGGER .
-			$macroses . "\n" .
+			'/empty/macroN:' . self::VALUE_TO_RECOVER_TRIGGER . "\n" .
 			'===2===' . "\n" .
 			self::$BUILTIN_MACROS_CONSISTENT_RESOLVE_COMMON_RESOLVED . "\n" .
 			'===3===' . "\n" .
@@ -970,7 +969,7 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 			'===9===' . "\n" .
 			self::MACRO_FUNCS_RESOLVED;
 
-		$this->assertEquals($message_expect, self::$alert_response['result'][1]['message']);
+		$this->assertEquals($message_expect, $macroses);
 		$this->assertTrue(abs($timestamp - microtime(true)) < 100);
 	}
 
