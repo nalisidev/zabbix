@@ -948,7 +948,7 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 				'/macro/macro:' . self::VALUE_TO_FIRE_TRIGGER .
 				'/macroN/macro:' . self::VALUE_TO_FIRE_TRIGGER .
 				'/macro/macroN:' . self::VALUE_TO_RECOVER_TRIGGER .
-			'/empty/macroN:' . self::VALUE_TO_RECOVER_TRIGGER . "\n" .
+				'/empty/macroN:' . self::VALUE_TO_RECOVER_TRIGGER . "\n" .
 			'===2===' . "\n" .
 			self::$BUILTIN_MACROS_CONSISTENT_RESOLVE_COMMON_RESOLVED . "\n" .
 			'===3===' . "\n" .
