@@ -941,7 +941,7 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 	public function testExpressionMacros_checkProblemMessage2() {
 		$string = self::$alert_response['result'][1]['message'];
 		$position = strpos($string, self::TIMESTAMP_PREFIX);
-		$macros = substr($string, 0, $position);
+		$macroses = substr($string, 0, $position);
 		$timestamp = intval(substr($string, $position + strlen(self::TIMESTAMP_PREFIX)));
 
 		$message_expect = self::MESSAGE_PREFIX.self::VALUE_TO_FIRE_TRIGGER . "\n" .
