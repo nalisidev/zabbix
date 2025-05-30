@@ -985,7 +985,7 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 			"EVENT.TIME[\s\S]*" .
 			"HOST.ID[\s\S]*" .
 			"ITEM.ID[\s\S]*" .
-			"TRIGGER.ID[\s\S]*/" .
+			"TRIGGER.ID[\s\S]*" .
 			"TIMESTAMP[\s\S]*/";
 
 		$this->assertEquals("", self::$alert_response['result'][2]['subject']);
