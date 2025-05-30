@@ -244,7 +244,8 @@ EVENT.ID -> {EVENT.ID} <-
 EVENT.TIME -> {EVENT.TIME} <-
 HOST.ID -> {HOST.ID} <-
 ITEM.ID -> {ITEM.ID} <-
-TRIGGER.ID -> {TRIGGER.ID} <-";
+TRIGGER.ID -> {TRIGGER.ID} <-
+TIMESTAMP -> {TIMESTAMP}";
 
 	/* These macros resolve to new values on every test run - like time or id  */
 	/* ONLY during the recovery operations. For other operations they are not  */
@@ -782,8 +783,7 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 								'/macro/macro:{?last(/{HOST.HOST}/{ITEM.KEY})}'.
 								'/macroN/macro:{?last(/{HOST.HOST1}/{ITEM.KEY})}'.
 								'/macro/macroN:{?last(/{HOST.HOST}/{ITEM.KEY2})}'.
-								'/empty/macroN:{?last(//{ITEM.KEY2})}'.
-								self::TIMESTAMP_PREFIX.'{TIMESTAMP}' . "\n" .
+								'/empty/macroN:{?last(//{ITEM.KEY2})}'. "\n" .
 							'===2===' . "\n" .
 							self::BUILTIN_MACROS_CONSISTENT_RESOLVE_COMMON . "\n" .
 							'===3===' . "\n" .
@@ -939,9 +939,6 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 	 * Test macro resolution during the first escalation step (1 minute passed after trigger was fired).
 	 */
 	public function testExpressionMacros_checkProblemMessage2() {
-		$string = self::$alert_response['result'][1]['message'];
-		$position = strpos($string, self::TIMESTAMP_PREFIX);
-		$macroses = substr($string, 0, $position);
 		$timestamp = intval(substr($string, $position + strlen(self::TIMESTAMP_PREFIX)));
 
 		$message_expect = self::MESSAGE_PREFIX.self::VALUE_TO_FIRE_TRIGGER . "\n" .
@@ -969,7 +966,7 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 			'===9===' . "\n" .
 			self::MACRO_FUNCS_RESOLVED;
 
-		$this->assertEquals($message_expect, $macroses);
+		$this->assertEquals($message_expect, self::$alert_response['result'][1]['message']);
 		$this->assertTrue(abs($timestamp - microtime(true)) < 100);
 	}
 
@@ -988,7 +985,8 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 			"EVENT.TIME[\s\S]*" .
 			"HOST.ID[\s\S]*" .
 			"ITEM.ID[\s\S]*" .
-			"TRIGGER.ID[\s\S]*/";
+			"TRIGGER.ID[\s\S]*/" .
+			"TIMESTAMP[\s\S]*/";
 
 		$this->assertEquals("", self::$alert_response['result'][2]['subject']);
 		$this->assertRegExp($inconsistent_macros_resolved, self::$alert_response['result'][2]['message']);
