@@ -245,7 +245,7 @@ EVENT.TIME -> {EVENT.TIME} <-
 HOST.ID -> {HOST.ID} <-
 ITEM.ID -> {ITEM.ID} <-
 TRIGGER.ID -> {TRIGGER.ID} <-
-TIMESTAMP -> {TIMESTAMP}";
+TIMESTAMP -> {TIMESTAMP} <-";
 
 	/* These macros resolve to new values on every test run - like time or id  */
 	/* ONLY during the recovery operations. For other operations they are not  */
