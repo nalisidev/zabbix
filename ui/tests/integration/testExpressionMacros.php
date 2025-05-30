@@ -939,8 +939,6 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 	 * Test macro resolution during the first escalation step (1 minute passed after trigger was fired).
 	 */
 	public function testExpressionMacros_checkProblemMessage2() {
-		$timestamp = intval(substr($string, $position + strlen(self::TIMESTAMP_PREFIX)));
-
 		$message_expect = self::MESSAGE_PREFIX.self::VALUE_TO_FIRE_TRIGGER . "\n" .
 			'===1===' . "\n" .
 				'/host/macro:' . self::VALUE_TO_FIRE_TRIGGER .
@@ -967,7 +965,6 @@ INVENTORY.VENDOR -> "					. REDUCTED_PRINTABLE_ASCII		. " <-";
 			self::MACRO_FUNCS_RESOLVED;
 
 		$this->assertEquals($message_expect, self::$alert_response['result'][1]['message']);
-		$this->assertTrue(abs($timestamp - microtime(true)) < 100);
 	}
 
 	/**
