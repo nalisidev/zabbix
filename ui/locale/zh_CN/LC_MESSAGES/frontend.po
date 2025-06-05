@@ -7058,6 +7058,10 @@ msgstr "自动发现对象"
 msgid "Discovery of VMware clusters, \"url\" - VMware service URL. Returns JSON"
 msgstr "VMware 发现的集群，“url”- VMware 服务 URL。返回 JSON"
 
+#: include/classes/data/CItemData.php:1932
+msgid "Discovery of VMware datastores, \"url\" - VMware service URL, \"filter_uuid\" - one hv uuid or vm uuid (empty by default). Returns JSON"
+msgstr ""
+
 #: include/classes/data/CItemData.php:1799
 msgid "Discovery of VMware datastores, \"url\" - VMware service URL. Returns JSON"
 msgstr "VMware 发现的数据存储，“url”- VMware 服务 URL。返回 JSON"
@@ -19416,6 +19420,10 @@ msgstr "Zabbix 写缓存的统计和可用性。缓存 - 值之一（模式：al
 #: include/classes/data/CItemData.php:2848
 msgid "Statistics and availability of proxy memory buffer. Mode (modes: pfree, free, total, used, pused)."
 msgstr "代理内存缓冲区的统计信息和可用性。模式（模式：pfree、free、total、used、pused）。"
+
+#: include/classes/data/CItemData.php:2862
+msgid "Statistics of values received by the preprocessing manager."
+msgstr ""
 
 #: app/controllers/CControllerPopupGeneric.php:237
 #: app/controllers/CControllerPopupGeneric.php:251
