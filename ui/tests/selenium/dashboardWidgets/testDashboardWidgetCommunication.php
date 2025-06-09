@@ -1760,6 +1760,8 @@ class testDashboardWidgetCommunication extends testWidgetCommunication {
 		}
 
 		$dashboard->cancelEditing();
+		// Added waitUntilReady() to check for unstable test with js 32739:4 Uncaught error.
+		$dashboard->waitUntilReady();
 	}
 
 	/**
