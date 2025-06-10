@@ -22404,6 +22404,10 @@ msgstr "მომხმარებლის სახელის ატრი�
 msgid "Users"
 msgstr "მომხმარებლები"
 
+#: include/locales.inc.php:62
+msgid "Uzbek (uz_UZ)"
+msgstr ""
+
 #: include/classes/data/CItemData.php:1876
 msgid "VMware Distributed Virtual Switch, \"url\" - VMware service URL. Returns JSON"
 msgstr "VMware-ის განაწილებული ვირტუალური კომუტატორი. \"url\" - VMWare-ის სერვისის URL. აბრუნებს JSON-ს"

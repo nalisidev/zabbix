@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Zabbix 6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-19 13:48+0300\n"
-"PO-Revision-Date: 2025-03-03 05:44+0000\n"
+"PO-Revision-Date: 2025-06-03 03:26+0000\n"
 "Last-Translator: NoYoWiFi <1284524409@qq.com>\n"
 "Language-Team: Zabbix <info@zabbix.com>\n"
 "Language: zh_CN\n"
@@ -5858,7 +5858,7 @@ msgstr "数据库 TLS 密钥文件"
 #: include/classes/api/clients/CLocalApiClient.php:124
 #: include/classes/api/clients/CLocalApiClient.php:138
 msgid "Database error occurred."
-msgstr ""
+msgstr "数据库错误。"
 
 #: app/partials/administration.system.info.php:130
 msgid "Database history tables use primary key"
@@ -7060,7 +7060,7 @@ msgstr "VMware 发现的集群，“url”- VMware 服务 URL。返回 JSON"
 
 #: include/classes/data/CItemData.php:1932
 msgid "Discovery of VMware datastores, \"url\" - VMware service URL, \"filter_uuid\" - one hv uuid or vm uuid (empty by default). Returns JSON"
-msgstr ""
+msgstr "发现 VMware 数据存储，\"url\" - VMware 服务 URL，\"filter_uuid\" - 一个主机（HV）UUID 或虚拟机（VM）UUID（默认为空）。返回 JSON"
 
 #: include/classes/data/CItemData.php:1799
 msgid "Discovery of VMware datastores, \"url\" - VMware service URL. Returns JSON"
@@ -19423,7 +19423,7 @@ msgstr "代理内存缓冲区的统计信息和可用性。模式（模式：pfr
 
 #: include/classes/data/CItemData.php:2862
 msgid "Statistics of values received by the preprocessing manager."
-msgstr ""
+msgstr " preprocessing manager接收的值的统计信息。"
 
 #: app/controllers/CControllerPopupGeneric.php:237
 #: app/controllers/CControllerPopupGeneric.php:251
@@ -22418,6 +22418,10 @@ msgstr "用户名属性"
 #: include/views/monitoring.sysmap.edit.php:362
 msgid "Users"
 msgstr "用户"
+
+#: include/locales.inc.php:62
+msgid "Uzbek (uz_UZ)"
+msgstr ""
 
 #: include/classes/data/CItemData.php:1876
 msgid "VMware Distributed Virtual Switch, \"url\" - VMware service URL. Returns JSON"

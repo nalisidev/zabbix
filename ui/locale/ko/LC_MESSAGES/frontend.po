@@ -22417,6 +22417,10 @@ msgstr "사용자 이름 속성"
 msgid "Users"
 msgstr "유저"
 
+#: include/locales.inc.php:62
+msgid "Uzbek (uz_UZ)"
+msgstr ""
+
 #: include/classes/data/CItemData.php:1876
 msgid "VMware Distributed Virtual Switch, \"url\" - VMware service URL. Returns JSON"
 msgstr "VMware 분산 가상 스위치, \"url\" - VMware 서비스 URL입니다. JSON을 반환함"

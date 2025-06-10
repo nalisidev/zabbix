@@ -22601,6 +22601,10 @@ msgstr "Attribut du nom d'utilisateur"
 msgid "Users"
 msgstr "Utilisateurs"
 
+#: include/locales.inc.php:62
+msgid "Uzbek (uz_UZ)"
+msgstr ""
+
 #: include/classes/data/CItemData.php:1876
 msgid "VMware Distributed Virtual Switch, \"url\" - VMware service URL. Returns JSON"
 msgstr "Switch virtuel distribué VMware, \"url\" - URL du service VMware. Retourne un JSON"
