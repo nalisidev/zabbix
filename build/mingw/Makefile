@@ -61,7 +61,7 @@ OBJS = \
 	$(OUTPUTDIR)\process_eventslog6.o \
 	$(OUTPUTDIR)\symbols.o \
 	$(OUTPUTDIR)\win32_file.o \
-	$(TARGETDIR)\resource.syso
+	# $(TARGETDIR)\resource.syso
 
 CFLAGS := $(CFLAGS) -O2 -g -DHAVE_STDINT_H=1 -DZBX_BUILD_AGENT2=1  -DHAVE_THREAD_LOCAL=1 \
 	-I$(TOPDIR)\build\win32\include\common -I$(TOPDIR)\build\mingw -I$(TOPDIR)\include -I$(TOPDIR)\include\common
@@ -78,11 +78,11 @@ ifeq ("$(ARCH)", "x86")
 	CFLAGS := $(CFLAGS) -m32
 	CGO_CFLAGS := $(CGO_CFLAGS) -m32
 	GOARCH := 386
-	TARGETBIN=$(TOPDIR)\bin\win32\zabbix_agent2.exe
+	TARGETBIN=$(TOPDIR)\bin\win32\netwatch_agentd.exe
 	RFLAGS := $(RFLAGS) --target=pe-i386
 
 else
-	TARGETBIN=$(TOPDIR)\bin\win64\zabbix_agent2.exe
+	TARGETBIN=$(TOPDIR)\bin\win64\netwatch_agentd.exe
 	GOARCH := amd64
 	RFLAGS := $(RFLAGS) --target=pe-x86-64
 endif
@@ -116,8 +116,8 @@ PKG=golang.zabbix.com/agent2/pkg/version
 
 GOLDFLAGS = -X $(PKG).compileOs=windows
 GOLDFLAGS += -X $(PKG).compileArch=$(GOARCH)
-GOLDFLAGS += -X main.confDefault=zabbix_agent2.win.conf
-GOLDFLAGS += -X main.applicationName=zabbix_agent2
+GOLDFLAGS += -X main.confDefault=netwatch_agentd.conf
+GOLDFLAGS += -X main.applicationName=netwatch_agentd
 
 all: $(TARGETBIN)
 
@@ -275,7 +275,7 @@ $(OUTPUTDIR)\logfiles.o: $(TOPDIR)\src\zabbix_agent\logfiles\logfiles.c
 	$(CC) $(CFLAGS) -DUNICODE -c $^ -o $@
 
 $(TARGETDIR)\resource.syso: $(TOPDIR)\build\win32\project\resource.rc
-	$(WINDRES) $^ $(RFLAGS) -D _WINDOWS -D ZABBIX_AGENT2 -o $@
+	$(WINDRES) $^ $(RFLAGS) -D _WINDOWS -D NETWATCH_AGENT -o $@
 
 .FORCE:
 $(TARGETBIN): $(OBJS) .FORCE

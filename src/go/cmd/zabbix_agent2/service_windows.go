@@ -34,7 +34,7 @@ import (
 	"golang.zabbix.com/sdk/zbxflag"
 )
 
-const usageMessageExampleConfPath = `C:\zabbix\zabbix_agent2.conf`
+const usageMessageExampleConfPath = `C:\netwatch\netwatch_agentd.conf`
 
 const (
 	startTypeAutomatic = "automatic"
@@ -44,7 +44,7 @@ const (
 )
 
 var (
-	serviceName = "Zabbix Agent 2"
+	serviceName = "Netwatch Agent"
 
 	svcInstallFlag       bool
 	svcUninstallFlag     bool
@@ -82,7 +82,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "install",
 				Shorthand:   "i",
-				Description: "Install Zabbix agent 2 as service",
+				Description: "Install Netwatch agent as service",
 			},
 			Default: false,
 			Dest:    &svcInstallFlag,
@@ -91,7 +91,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "uninstall",
 				Shorthand:   "d",
-				Description: "Uninstall Zabbix agent 2 from service",
+				Description: "Uninstall Netwatch agent from service",
 			},
 			Default: false,
 			Dest:    &svcUninstallFlag,
@@ -100,7 +100,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "start",
 				Shorthand:   "s",
-				Description: "Start Zabbix agent 2 service",
+				Description: "Start Netwatch agent service",
 			},
 			Default: false,
 			Dest:    &svcStartFlag,
@@ -109,7 +109,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "stop",
 				Shorthand:   "x",
-				Description: "Stop Zabbix agent 2 service",
+				Description: "Stop Netwatch agent service",
 			},
 			Default: false,
 			Dest:    &svcStopFlag,
@@ -119,7 +119,7 @@ func osDependentFlags() zbxflag.Flags {
 				Name:      "startup-type",
 				Shorthand: "S",
 				Description: fmt.Sprintf(
-					"Set startup type of the Zabbix Windows agent service to be installed."+
+					"Set startup type of the Netwatch Windows agent service to be installed."+
 						" Allowed values: %s (default), %s, %s, %s",
 					startTypeAutomatic,
 					startTypeDelayed,

@@ -62,7 +62,7 @@ const usageMessageFormatRuntimeControlFormat = //
 `
 
 const usageMessageFormat = //
-`Usage of Zabbix agent 2:
+`Usage of Netwatch agent:
   %[1]s [-c config-file]
   %[1]s [-c config-file] [-v] -p
   %[1]s [-c config-file] [-v] -t item-key
@@ -73,16 +73,16 @@ const usageMessageFormat = //
 `
 
 const helpMessageFormat = //
-`A Zabbix daemon for monitoring of various server parameters.
+`A Netwatch daemon for monitoring of various server parameters.
 
 Options:
 %[1]s
 
-Example: zabbix_agent2 -c %[2]s
+Example: netwatch_agentd -c %[2]s
 
-Report bugs to: <https://support.zabbix.com>
-Zabbix home page: <https://www.zabbix.com>
-Documentation: <https://www.zabbix.com/documentation>
+Report bugs to: <https://support.netwatch.ai>
+Netwatch home page: <https://www.netwatch.ai>
+Documentation: <https://www.netwatch.ai/documentation>
 `
 
 // variables set at build
@@ -128,7 +128,7 @@ func main() {
 		if !errors.As(err, &cliErr) {
 			fmt.Fprintf(
 				os.Stderr,
-				"zabbix_agent2 [%d]: ERROR: %s\n",
+				"netwatch_agentd [%d]: ERROR: %s\n",
 				os.Getpid(),
 				err.Error(),
 			)
@@ -137,7 +137,7 @@ func main() {
 
 		fmt.Fprintf(
 			os.Stderr,
-			"zabbix_agent2 [%d]: ERROR: %s\n",
+			"netwatch_agentd [%d]: ERROR: %s\n",
 			os.Getpid(),
 			cliErr.Message,
 		)
@@ -344,7 +344,7 @@ func runAgent(isForeground bool, configPath string, systemOpt agent.PluginSystem
 
 	zbxlib.SetLogLevel(agent.Options.DebugLevel)
 
-	greeting := fmt.Sprintf("Starting Zabbix Agent 2 (%s)", version.Long())
+	greeting := fmt.Sprintf("Starting Netwatch Agent (%s)", version.Long())
 	log.Infof(greeting)
 
 	addresses, err := agent.ParseServerActive(agent.Options.ServerActive)
@@ -436,7 +436,7 @@ func runAgent(isForeground bool, configPath string, systemOpt agent.PluginSystem
 
 	agent.FirstHostname = hostnames[0]
 	hostmessage := fmt.Sprintf(
-		"Zabbix Agent2 hostname: [%s]",
+		"Netwatch Agent hostname: [%s]",
 		agent.Options.Hostname,
 	)
 	log.Infof(hostmessage)
@@ -520,7 +520,7 @@ func runAgent(isForeground bool, configPath string, systemOpt agent.PluginSystem
 	}
 
 	monitor.Wait(monitor.Output)
-	farewell := fmt.Sprintf("Zabbix Agent 2 stopped. (%s)", version.Long())
+	farewell := fmt.Sprintf("Netwatch Agent stopped. (%s)", version.Long())
 	log.Infof(farewell)
 
 	if isForeground && agent.Options.LogType != "console" {
@@ -557,7 +557,7 @@ func parseArgs() (string, *Arguments, error) {
 			Flag: zbxflag.Flag{
 				Name:        "foreground",
 				Shorthand:   "f",
-				Description: "Run Zabbix agent in foreground",
+				Description: "Run Netwatch agent in foreground",
 			},
 			Default: true,
 			Dest:    &args.foreground,

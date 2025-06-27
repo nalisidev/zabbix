@@ -16,7 +16,7 @@ GOLDFLAGS += -X ${PKG}.compileArch=${GOARCH}
 
 AGENT_GOLDFLAGS = ${GOLDFLAGS}
 AGENT_GOLDFLAGS += -X main.confDefault=${AGENT2_CONFIG_FILE}
-AGENT_GOLDFLAGS += -X main.applicationName=zabbix_agent2
+AGENT_GOLDFLAGS += -X main.applicationName=netwatch_agentd
 
 WEBSERVICE_GOLDFLAGS = ${GOLDFLAGS}
 WEBSERVICE_GOLDFLAGS += -X main.applicationName=zabbix_web_service
