@@ -275,7 +275,7 @@ $(OUTPUTDIR)\logfiles.o: $(TOPDIR)\src\zabbix_agent\logfiles\logfiles.c
 	$(CC) $(CFLAGS) -DUNICODE -c $^ -o $@
 
 $(TARGETDIR)\resource.syso: $(TOPDIR)\build\win32\project\resource.rc
-	$(WINDRES) $^ $(RFLAGS) -D _WINDOWS -D NETWATCH_AGENT -o $@
+	$(WINDRES) $^ $(RFLAGS) -D _WINDOWS -D ZABBIX_AGENT2 -o $@
 
 .FORCE:
 $(TARGETBIN): $(OBJS) .FORCE
