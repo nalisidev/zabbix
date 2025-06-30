@@ -61,7 +61,7 @@ OBJS = \
 	$(OUTPUTDIR)\process_eventslog6.o \
 	$(OUTPUTDIR)\symbols.o \
 	$(OUTPUTDIR)\win32_file.o \
-	# $(TARGETDIR)\resource.syso
+	$(TARGETDIR)\resource.syso
 
 CFLAGS := $(CFLAGS) -O2 -g -DHAVE_STDINT_H=1 -DZBX_BUILD_AGENT2=1  -DHAVE_THREAD_LOCAL=1 \
 	-I$(TOPDIR)\build\win32\include\common -I$(TOPDIR)\build\mingw -I$(TOPDIR)\include -I$(TOPDIR)\include\common
