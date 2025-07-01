@@ -17,7 +17,7 @@ ADD_LFLAGS = /MACHINE:X64
 
 PROJECTNAME = zabbix_sender
 PROJECTDIR = ..\..\..\src\$(PROJECTNAME)
-TARGETNAME = zabbix_sender
+TARGETNAME = netwatch_sender
 TARGETEXT = exe
 PROGNAME = $(TARGETDIR)\$(TARGETNAME).$(TARGETEXT)
 
