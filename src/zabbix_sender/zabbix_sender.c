@@ -35,8 +35,8 @@
 #endif
 
 ZBX_GET_CONFIG_VAR2(const char *, const char *, zbx_progname, NULL)
-static const char	title_message[] = "zabbix_sender";
-static const char	syslog_app_name[] = "zabbix_sender";
+static const char	title_message[] = "netwatch_sender";
+static const char	syslog_app_name[] = "netwatch_sender";
 
 static const char	*usage_message[] = {
 	"[-v]", "-z server", "[-p port]", "[-I IP-address]", "[-t timeout]", "-s host", "-k key", "-o value", NULL,
@@ -149,17 +149,17 @@ static int	CONFIG_SENDER_TIMEOUT = GET_SENDER_TIMEOUT;
 #define CONFIG_SENDER_TIMEOUT_MAX_STR	ZBX_STR(CONFIG_SENDER_TIMEOUT_MAX)
 
 static const char	*help_message[] = {
-	"Utility for sending monitoring data to Zabbix server or proxy.",
+	"Utility for sending monitoring data to Netwatch server or proxy.",
 	"",
 	"General options:",
-	"  -c --config config-file    Path to Zabbix agentd configuration file",
+	"  -c --config config-file    Path to Netwatch agentd configuration file",
 	"",
-	"  -z --zabbix-server server  Hostname or IP address of Zabbix server or proxy",
+	"  -z --zabbix-server server  Hostname or IP address of Netwatch server or proxy",
 	"                             to send data to. When used together with --config,",
 	"                             overrides the first entry of \"ServerActive\"",
 	"                             parameter specified in agentd configuration file",
 	"",
-	"  -p --port port             Specify port number of trapper process of Zabbix",
+	"  -p --port port             Specify port number of trapper process of Netwatch",
 	"                             server or proxy. When used together with --config,",
 	"                             overrides the port of the first entry of",
 	"                             \"ServerActive\" parameter specified in agentd",
@@ -174,7 +174,7 @@ static const char	*help_message[] = {
 	"                             (default: " ZBX_STR(GET_SENDER_TIMEOUT) " seconds)",
 	"",
 	"  -s --host host             Specify host name the item belongs to (as",
-	"                             registered in Zabbix frontend). Host IP address",
+	"                             registered in Netwatch frontend). Host IP address",
 	"                             and DNS name will not work. When used together",
 	"                             with --config, overrides \"Hostname\" parameter",
 	"                             specified in agentd configuration file",

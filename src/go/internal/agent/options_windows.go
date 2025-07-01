@@ -16,7 +16,7 @@ package agent
 
 type AgentOptions struct {
 	LogType                  string   `conf:"optional,default=file"`
-	LogFile                  string   `conf:"optional,default=c:\\zabbix_agent2.log"`
+	LogFile                  string   `conf:"optional,default=c:\\netwatch_agentd.log"`
 	LogFileSize              int      `conf:"optional,range=0:1024,default=1"`
 	DebugLevel               int      `conf:"optional,range=0:5,default=3"`
 	PidFile                  string   `conf:"optional"`

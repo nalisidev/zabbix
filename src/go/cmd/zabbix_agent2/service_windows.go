@@ -356,7 +356,7 @@ func resolveWindowsService(confPath string) error {
 		msg = fmt.Sprintf("service '%s' startup type configured successfully", serviceName)
 	}
 
-	msg = fmt.Sprintf("zabbix_agent2 [%d]: %s\n", os.Getpid(), msg)
+	msg = fmt.Sprintf("netwatch_agentd [%d]: %s\n", os.Getpid(), msg)
 	fmt.Fprintf(os.Stdout, msg)
 	if err := eventLogInfo(msg); err != nil {
 		return fmt.Errorf("failed to log to event log: %s", err)

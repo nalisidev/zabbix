@@ -1,11 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = zabbix_get
+bin_PROGRAMS = netwatch_get
 
-zabbix_get_SOURCES = \
+netwatch_get_SOURCES = \
 	zabbix_get.c
 
-zabbix_get_LDADD = \
+netwatch_get_LDADD = \
 	$(top_builddir)/src/libs/zbxcomms/libzbxcomms.a \
 	$(top_builddir)/src/libs/zbxxml/libzbxxml.a \
 	$(top_builddir)/src/libs/zbxjson/libzbxjson.a \
@@ -31,6 +31,6 @@ zabbix_get_LDADD = \
 	$(top_builddir)/src/libs/zbxversion/libzbxversion.a \
 	$(ZBXGET_LIBS)
 
-zabbix_get_LDFLAGS = $(ZBXGET_LDFLAGS)
+netwatch_get_LDFLAGS = $(ZBXGET_LDFLAGS)
 
-zabbix_get_CFLAGS = $(TLS_CFLAGS)
+netwatch_get_CFLAGS = $(TLS_CFLAGS)

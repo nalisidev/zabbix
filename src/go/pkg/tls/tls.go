@@ -809,7 +809,7 @@ static int	tls_has_peer_certificate(tls_t *tls)
 }
 
 #elif defined(HAVE_GNUTLS)
-#	error zabbix_agent2 does not support GnuTLS library. Compile with OpenSSL\
+#	error netwatch_agentd does not support GnuTLS library. Compile with OpenSSL\
 		(configure parameter --with-openssl) or without encryption support.
 #else // no crypto library requested, compile without encryption support
 

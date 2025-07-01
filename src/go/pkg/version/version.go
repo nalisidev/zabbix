@@ -29,10 +29,10 @@ const (
 	ZABBIX_VERSION_RC       = ""
 	ZABBIX_VERSION_RC_NUM   = "{ZABBIX_RC_NUM}"
 	ZABBIX_VERSION_REVISION = "{ZABBIX_REVISION}"
-	copyrightMessage        = "Copyright (C) 2025 Zabbix SIA\n" +
-		"License AGPLv3: GNU Affero General Public License version 3 <https://www.gnu.org/licenses/>.\n" +
-		"This is free software: you are free to change and redistribute it according to\n" +
-		"the license. There is NO WARRANTY, to the extent permitted by law."
+	copyrightMessage          = "Copyright (C) 2025 NETWATCH.AI\n" +
+		"License: Proprietary software. All rights reserved.\n" +
+		"This software is the property of NETWATCH.AI and is protected by\n" +
+		"copyright and other intellectual property laws."
 )
 
 var (
@@ -144,7 +144,7 @@ func TitleMessage() string {
 // Program version includes Zabbix revision and it's time and date, compilation time and date, Go compiler tree's
 // version string, copyright message, and additionalMessages provided by the caller function.
 func Display(additionalMessages []string) {
-	fmt.Printf("%s (Zabbix) %s\n", TitleMessage(), Long())
+	fmt.Printf("%s (Netwatch) %s\n", TitleMessage(), Long())
 	fmt.Printf(
 		"Revision %s %s, compilation time: %s %s, built with: %s\n",
 		Revision(), RevDate(), CompileDate(), CompileTime(), runtime.Version(),

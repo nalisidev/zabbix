@@ -37,7 +37,7 @@ typedef enum
 zbx_protocol_t;
 
 ZBX_GET_CONFIG_VAR2(const char *, const char *, zbx_progname, NULL)
-static const char	title_message[] = "zabbix_get";
+static const char	title_message[] = "netwatch_get";
 static const char	*usage_message[] = {
 	"-s host-name-or-IP", "[-p port-number]", "[-I IP-address]", "[-t timeout]", "-k item-key", NULL,
 #if defined(HAVE_GNUTLS) || defined(HAVE_OPENSSL)
@@ -76,7 +76,7 @@ ZBX_GET_CONFIG_VAR(unsigned char, zbx_program_type, ZBX_PROGRAM_TYPE_GET)
 static int	CONFIG_GET_TIMEOUT = CONFIG_GET_TIMEOUT_MAX;
 
 static const char	*help_message[] = {
-	"Get data from Zabbix agent.",
+	"Get data from Netwatch agent.",
 	"",
 	"General options:",
 	"  -s --host host-name-or-IP  Specify host name or IP address of a host",
@@ -149,25 +149,25 @@ static const char	*help_message[] = {
 	"                             criteria",
 #endif
 #else
-	"  Not available. This 'zabbix_get' was compiled without TLS support",
+	"  Not available. This 'netwatch_get' was compiled without TLS support",
 #endif
 	"",
 	"Example(s):",
-	"  zabbix_get -s 127.0.0.1 -p " ZBX_DEFAULT_AGENT_PORT_STR " -k \"system.cpu.load[all,avg1]\"",
+	"  netwatch_get -s 127.0.0.1 -p " ZBX_DEFAULT_AGENT_PORT_STR " -k \"system.cpu.load[all,avg1]\"",
 #if defined(HAVE_GNUTLS) || defined(HAVE_OPENSSL)
 	"",
-	"  zabbix_get -s 127.0.0.1 -p " ZBX_DEFAULT_AGENT_PORT_STR " -k \"system.cpu.load[all,avg1]\" \\",
-	"    --tls-connect cert --tls-ca-file /home/zabbix/zabbix_ca_file \\",
+	"  netwatch_get -s 127.0.0.1 -p " ZBX_DEFAULT_AGENT_PORT_STR " -k \"system.cpu.load[all,avg1]\" \\",
+	"    --tls-connect cert --tls-ca-file /home/netwatch/netwatch_ca_file \\",
 	"    --tls-agent-cert-issuer \\",
 	"    \"CN=Signing CA,OU=IT operations,O=Example Corp,DC=example,DC=com\" \\",
 	"    --tls-agent-cert-subject \\",
 	"    \"CN=server1,OU=IT operations,O=Example Corp,DC=example,DC=com\" \\",
-	"    --tls-cert-file /home/zabbix/zabbix_get.crt \\",
-	"    --tls-key-file /home/zabbix/zabbix_get.key",
+	"    --tls-cert-file /home/netwatch/netwatch_get.crt \\",
+	"    --tls-key-file /home/netwatch/netwatch_get.key",
 	"",
-	"  zabbix_get -s 127.0.0.1 -p " ZBX_DEFAULT_AGENT_PORT_STR " -k \"system.cpu.load[all,avg1]\" \\",
-	"    --tls-connect psk --tls-psk-identity \"PSK ID Zabbix agentd\" \\",
-	"    --tls-psk-file /home/zabbix/zabbix_agentd.psk",
+	"  netwatch_get -s 127.0.0.1 -p " ZBX_DEFAULT_AGENT_PORT_STR " -k \"system.cpu.load[all,avg1]\" \\",
+	"    --tls-connect psk --tls-psk-identity \"PSK ID Netwatch agentd\" \\",
+	"    --tls-psk-file /home/netwatch/netwatch_agentd.psk",
 #endif
 	NULL	/* end of text */
 };

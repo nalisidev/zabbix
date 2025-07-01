@@ -25,7 +25,7 @@ import (
 
 func createPidFile(pid int, path string) (file *os.File, err error) {
 	if path == "" {
-		path = "/tmp/zabbix_agent2.pid"
+		path = "/tmp/netwatch_agentd.pid"
 	}
 
 	flockT := syscall.Flock_t{
