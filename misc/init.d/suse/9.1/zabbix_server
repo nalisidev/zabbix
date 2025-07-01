@@ -1,7 +1,7 @@
 #! /bin/sh
 # Copyright (c) 07/2004 A.Tophofen, Germany
 # Modified for Zabbix 2.0.0
-# May 2012, Zabbix SIA
+# May 2012, NETWATCH.AI
 #
 # init.d/zabbix_agentd
 #

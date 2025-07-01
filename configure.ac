@@ -1,5 +1,5 @@
 dnl
-dnl Copyright (C) 2001-2025 Zabbix SIA
+dnl Copyright (C) 2001-2025 NETWATCH.AI
 dnl
 dnl This program is free software: you can redistribute it and/or modify it under the terms of
 dnl the GNU Affero General Public License as published by the Free Software Foundation, version 3.

@@ -1,7 +1,7 @@
 //go:build !windows
 
 /*
-** Copyright (C) 2001-2025 Zabbix SIA
+** Copyright (C) 2001-2025 NETWATCH.AI
 **
 ** This program is free software: you can redistribute it and/or modify it under the terms of
 ** the GNU Affero General Public License as published by the Free Software Foundation, version 3.
@@ -22,7 +22,7 @@ import (
 	"golang.zabbix.com/sdk/zbxflag"
 )
 
-const usageMessageExampleConfPath = `/etc/netwatch/netwatch_agentd.conf`
+const usageMessageExampleConfPath = `/etc/zabbix/zabbix_agent2.conf`
 
 func osDependentFlags() zbxflag.Flags { return zbxflag.Flags{} }
 

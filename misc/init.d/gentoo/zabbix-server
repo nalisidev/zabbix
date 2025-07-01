@@ -4,7 +4,7 @@
 #
 # Written by A. Tophofen
 # Modified for Zabbix 2.0.0
-# May 2012, Zabbix SIA
+# May 2012, NETWATCH.AI
 
 NAME=zabbix_server
 PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/sbin

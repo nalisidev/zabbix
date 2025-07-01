@@ -10,7 +10,7 @@
 # @created:	18.04.2006
 #
 # Modified for Zabbix 2.0.0
-# May 2012, Zabbix SIA
+# May 2012, NETWATCH.AI
 #
 # Source function library.
 . /etc/init.d/functions
