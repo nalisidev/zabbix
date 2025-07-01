@@ -100,7 +100,7 @@ zabbix_get \- Zabbix get utility
 .B zabbix_get \-V
 .SH DESCRIPTION
 .B zabbix_get
-is a command line utility for getting data from Zabbix agent.
+is a command line utility for getting data from Netwatch agent.
 .SH OPTIONS
 .IP "\fB\-s\fR, \fB\-\-host\fR \fIhost\-name\-or\-IP\fR"
 Specify host name or IP address of a host.
@@ -176,7 +176,7 @@ Display this help and exit.
 .IP "\fB\-V\fR, \fB\-\-version\fR"
 Output version information and exit.
 .SH EXIT STATUS
-The exit status is 0 if zabbix_get successfully retrieves a value from the Zabbix agent. If value retrieval failed, the exit status is 1.
+The exit status is 0 if zabbix_get successfully retrieves a value from the Netwatch agent. If value retrieval failed, the exit status is 1.
 .SH "EXAMPLES"
 \fBzabbix_get \-s 127.0.0.1 \-p 10050 \-k "system.cpu.load[all,avg1]"\fR
 .br

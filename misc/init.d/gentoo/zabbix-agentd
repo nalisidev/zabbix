@@ -1,6 +1,6 @@
 #!/sbin/runscript
 #
-# Zabbix agent start/stop script.
+# Netwatch agent start/stop script.
 #
 # Written by A. Tophofen
 # Modified for Zabbix 2.0.0
@@ -9,7 +9,7 @@
 NAME=zabbix_agentd
 PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/sbin
 DAEMON=/usr/local/sbin/${NAME}
-DESC="Zabbix agent"
+DESC="Netwatch agent"
 PID=/tmp/$NAME.pid
 
 opts="${opts} reload"

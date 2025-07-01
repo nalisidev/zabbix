@@ -1,7 +1,7 @@
 # Docker plugin
 This plugin provides a native solution to monitor Docker
 containers and images by Zabbix. 
-The plugin can monitor docker instances with Zabbix agent 2 using docker socket
+The plugin can monitor docker instances with Netwatch agent 2 using docker socket
 and querying docker API. It can be used in conjunction with the official 
 [Docker template](https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/app/docker). 
 You can extend it or create your own template to cater specific needs.
@@ -10,13 +10,13 @@ You can extend it or create your own template to cater specific needs.
 * Docker, version 19.03.5
 
 ## Installation
-The plugin is supplied as an out-of-box part of Zabbix agent 2 and 
+The plugin is supplied as an out-of-box part of Netwatch agent 2 and 
 does not require any special installation steps. Once 
-Zabbix agent 2 is installed, the plugin is ready to work. 
+Netwatch agent 2 is installed, the plugin is ready to work. 
 Now, you need to make sure that a Docker instance is available.
 
 ## Configuration
-Open Zabbix agent 2 docker configuration file `zabbix_agent2.d/plugins.d/docker.conf` and 
+Open Netwatch agent 2 docker configuration file `zabbix_agent2.d/plugins.d/docker.conf` and 
 set the required parameters.
 
 **Plugins.Docker.Endpoint** — the Docker API endpoint.
@@ -62,5 +62,5 @@ All (not required; default: false) — returns all containers (true) or only run
 - "0" if the connection is broken (is returned if there is any error during the test, or the response is not "OK").
 
 ## Troubleshooting
-The plugin uses log output of Zabbix agent 2. You can increase debugging level of Zabbix agent 2 
+The plugin uses log output of Netwatch agent 2. You can increase debugging level of Netwatch agent 2 
 if you need more details about the current situation.

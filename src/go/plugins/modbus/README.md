@@ -1,6 +1,6 @@
 # Modbus plugin
 This plugin provides a native solution for monitoring modbus devices by Zabbix. 
-The plugin can monitor several modbus devices simultaneously via Zabbix agent 2. Both TCP and 
+The plugin can monitor several modbus devices simultaneously via Netwatch agent 2. Both TCP and 
 RTU connections are supported.
 
 ## Installation

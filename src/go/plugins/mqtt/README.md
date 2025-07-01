@@ -1,6 +1,6 @@
 # MQTT plugin
 This plugin provides a native solution for monitoring messages published by MQTT brokers. 
-The plugin can monitor several broker instances simultaneously via Zabbix agent 2. Proxy and websocket connections are 
+The plugin can monitor several broker instances simultaneously via Netwatch agent 2. Proxy and websocket connections are 
 supported. The plugin keeps all subscriptions to a single broker in one connection to reduce network strain. The plugin 
 supports active checks only.
 
@@ -45,11 +45,11 @@ The last two parameters username and password need to be provided only if requir
 
 Websocket connection is supported using "ws://" scheme.
 
-If the Zabbix agent 2 is running behind a http/https proxy then the following environment variables are used 
+If the Netwatch agent 2 is running behind a http/https proxy then the following environment variables are used 
 'TP_PROXY', 'HTTPS_PROXY' and 'NO_PROXY', when this plugin establishes a connection.
 
 TLS encryption certificates can be used, by providing them either via session or default parameters
-in Zabbix agent 2 MQTT plugin configuration file.
+in Netwatch agent 2 MQTT plugin configuration file.
 For TLS use "tls://" scheme
 
 If broker URI is left empty the default value of "localhost" is used.
@@ -80,5 +80,5 @@ and waits for publications.
 - error message (if there was an error connecting to the broker or topic)
 
 ## Troubleshooting
-The plugin uses Zabbix agent 2 logs. To receive more detailed information about logged events, consider increasing a debug level 
-of Zabbix agent 2.
+The plugin uses Netwatch agent 2 logs. To receive more detailed information about logged events, consider increasing a debug level 
+of Netwatch agent 2.

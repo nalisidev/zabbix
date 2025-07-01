@@ -1,7 +1,7 @@
 # Oracle Database plugin
 
 This plugin provides native Zabbix solution to monitor Oracle Database (multi-model database management system).
-It can monitor several Oracle instances simultaneously; remote or local to Zabbix agent.
+It can monitor several Oracle instances simultaneously; remote or local to Netwatch agent.
 The plugin keeps connections in an open state to reduce network congestion, latency, CPU and
 memory usage. It is highly recommended to use in conjunction with the official 
 [Oracle template.](https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/db/oracle_agent2) 
@@ -140,7 +140,7 @@ One way to do this is using **pipelined table functions**:
 
 ## Configuration
 
-To configure plugins, Zabbix agent 2 configuration file is used.
+To configure plugins, Netwatch agent 2 configuration file is used.
 
 **Plugins.Oracle.CallTimeout** — the maximum time in seconds for waiting when a request has to be done.  
 *Default value:* equals the global Timeout configuration parameter.  
@@ -350,6 +350,6 @@ WHERE
 
 ## Troubleshooting
 
-The plugin uses logs of Zabbix agent 2. You can increase debugging level of Zabbix agent 2 if you need more details about the current situation.
+The plugin uses logs of Netwatch agent 2. You can increase debugging level of Netwatch agent 2 if you need more details about the current situation.
 The environment variable DPI_DEBUG_LEVEL can be used to selectively turn on the printing of various logging messages from Oracle Database Programming Interface for C (ODPI-C).
 See [ODPI-C Debugging](https://oracle.github.io/odpi/doc/user_guide/debugging.html) for details.

@@ -1411,7 +1411,7 @@ esac],
 [proxy=no])
 AM_CONDITIONAL(PROXY, test "x$proxy" = "xyes")
 
-AC_ARG_ENABLE(agent,[  --enable-agent          Turn on build of Zabbix agent and client utilities],
+AC_ARG_ENABLE(agent,[  --enable-agent          Turn on build of Netwatch agent and client utilities],
 [case "${enableval}" in
   yes) agent=yes ;;
   no)  agent=no ;;
@@ -1420,7 +1420,7 @@ esac],
 [agent=no])
 AM_CONDITIONAL(AGENT, test "x$agent" = "xyes")
 
-AC_ARG_ENABLE(agent2,[  --enable-agent2         Turn on build of Zabbix agent 2],
+AC_ARG_ENABLE(agent2,[  --enable-agent2         Turn on build of Netwatch agent 2],
 [case "${enableval}" in
   yes) agent2=yes ;;
   no)  agent2=no ;;

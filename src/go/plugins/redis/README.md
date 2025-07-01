@@ -99,5 +99,5 @@ section — Section of information. The default section name is "default".
 **redis.slowlog.count[\<commonParams\>]** — Returns the number of slow log entries since Redis was started.
 
 ## Troubleshooting
-The plugin uses Zabbix agent's logs. You can increase debugging level of Zabbix Agent if you need more details about 
+The plugin uses Netwatch agent's logs. You can increase debugging level of Zabbix Agent if you need more details about 
 what is happening. 

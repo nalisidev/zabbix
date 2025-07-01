@@ -11,7 +11,7 @@ The Zabbix SMART plugin for `zabbix_agent2` provides monitoring of storage devic
 
 - The SMART plugin can be configured through the `zabbix_agent2` configuration file (e.g., `zabbix_agent2.conf`) or a dedicated plugin configuration file (e.g., `smart.conf`).
 
-- Grant Zabbix agent 2 super/admin user privileges for smartctl utility.
+- Grant Netwatch agent 2 super/admin user privileges for smartctl utility.
 
 ### Configuration Parameters
 

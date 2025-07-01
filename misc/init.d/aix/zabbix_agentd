@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ##########################################################
-###### Zabbix agent daemon init script
+###### Netwatch agent daemon init script
 ##########################################################
 
 case $1 in

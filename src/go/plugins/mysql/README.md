@@ -2,7 +2,7 @@
 
 This plugin provides a native solution for monitoring MySQL servers via Zabbix.
 
-The plugin can monitor several remote or local MySQL instances simultaneously via Zabbix agent 2. Both TCP and Unix-socket connections are supported. Native connection encryption is also supported.
+The plugin can monitor several remote or local MySQL instances simultaneously via Netwatch agent 2. Both TCP and Unix-socket connections are supported. Native connection encryption is also supported.
 
 The plugin keeps connections in the open state to reduce network congestion, latency, CPU, and memory usage. It can be used in conjunction with the official [Zabbix MySQL template](https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/db/mysql_agent2), which you can extend; alternatively, you can create your own template for your specific needs.
 
@@ -29,11 +29,11 @@ GRANT REPLICATION CLIENT, PROCESS, SHOW DATABASES, SHOW VIEW, SLAVE MONITOR ON *
 
 ## Plugin installation
 
-The plugin is supplied as part of Zabbix agent 2, and does not require any additional installation steps. Once Zabbix agent 2 is installed, the plugin is ready. You then need to make sure that a MySQL instance is available for connection and configure monitoring.
+The plugin is supplied as part of Netwatch agent 2, and does not require any additional installation steps. Once Netwatch agent 2 is installed, the plugin is ready. You then need to make sure that a MySQL instance is available for connection and configure monitoring.
 
 ## Plugin configuration
 
-Open the Zabbix agent configuration file (`zabbix_agent2.conf`) and set the required parameters.
+Open the Netwatch agent configuration file (`zabbix_agent2.conf`) and set the required parameters.
 
 `Plugins.Mysql.CallTimeout`—The maximum time, in seconds, for waiting when a request has to be completed.
 <br>Default value: equals the global timeout configuration parameter.
@@ -181,4 +181,4 @@ WHERE
 
 ## Troubleshooting
 
-This plugin uses Zabbix agent logs. If extended monitoring is needed, you can increase the debug level of Zabbix agent.
+This plugin uses Netwatch agent logs. If extended monitoring is needed, you can increase the debug level of Netwatch agent.
