@@ -34,7 +34,7 @@ import (
 	"golang.zabbix.com/sdk/zbxflag"
 )
 
-const usageMessageExampleConfPath = `C:\zabbix\zabbix_agent2.conf`
+const usageMessageExampleConfPath = `C:\netwatch\netwatch_agentd.conf`
 
 const (
 	startTypeAutomatic = "automatic"
@@ -44,7 +44,7 @@ const (
 )
 
 var (
-	serviceName = "Zabbix Agent 2"
+	serviceName = "Netwatch Agent"
 
 	svcInstallFlag       bool
 	svcUninstallFlag     bool
@@ -82,7 +82,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "install",
 				Shorthand:   "i",
-				Description: "Install Zabbix agent 2 as service",
+				Description: "Install Netwatch agent as service",
 			},
 			Default: false,
 			Dest:    &svcInstallFlag,
@@ -91,7 +91,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "uninstall",
 				Shorthand:   "d",
-				Description: "Uninstall Zabbix agent 2 from service",
+				Description: "Uninstall Netwatch agent from service",
 			},
 			Default: false,
 			Dest:    &svcUninstallFlag,
@@ -100,7 +100,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "start",
 				Shorthand:   "s",
-				Description: "Start Zabbix agent 2 service",
+				Description: "Start Netwatch agent service",
 			},
 			Default: false,
 			Dest:    &svcStartFlag,
@@ -109,7 +109,7 @@ func osDependentFlags() zbxflag.Flags {
 			Flag: zbxflag.Flag{
 				Name:        "stop",
 				Shorthand:   "x",
-				Description: "Stop Zabbix agent 2 service",
+				Description: "Stop Netwatch agent service",
 			},
 			Default: false,
 			Dest:    &svcStopFlag,
@@ -119,7 +119,7 @@ func osDependentFlags() zbxflag.Flags {
 				Name:      "startup-type",
 				Shorthand: "S",
 				Description: fmt.Sprintf(
-					"Set startup type of the Zabbix Windows agent service to be installed."+
+					"Set startup type of the Netwatch Windows agent service to be installed."+
 						" Allowed values: %s (default), %s, %s, %s",
 					startTypeAutomatic,
 					startTypeDelayed,
@@ -356,7 +356,7 @@ func resolveWindowsService(confPath string) error {
 		msg = fmt.Sprintf("service '%s' startup type configured successfully", serviceName)
 	}
 
-	msg = fmt.Sprintf("zabbix_agent2 [%d]: %s\n", os.Getpid(), msg)
+	msg = fmt.Sprintf("netwatch_agentd [%d]: %s\n", os.Getpid(), msg)
 	fmt.Fprintf(os.Stdout, msg)
 	if err := eventLogInfo(msg); err != nil {
 		return fmt.Errorf("failed to log to event log: %s", err)
@@ -414,7 +414,7 @@ func svcStartTypeFlagParse() (uint32, bool, error) {
 func svcInstall(conf string) error {
 	exepath, err := getAgentPath()
 	if err != nil {
-		return fmt.Errorf("failed to get Zabbix Agent 2 executable path: %s", err.Error())
+		return fmt.Errorf("failed to get Netwatch Agent executable path: %s", err.Error())
 	}
 
 	m, err := mgr.Connect()
@@ -631,7 +631,7 @@ func (ws *winService) Execute(
 		changes <- svc.Status{State: svc.Running, Accepts: svc.AcceptStop | svc.AcceptShutdown}
 	case <-fatalStopChan:
 		changes <- svc.Status{State: svc.Stopped}
-		// This is needed to make sure that windows will receive the status stopped before zabbix agent 2 process ends
+		// This is needed to make sure that windows will receive the status stopped before Netwatch Agent process ends
 		<-time.After(time.Millisecond * 500)
 		fatalStopWg.Done()
 		return
@@ -648,7 +648,7 @@ loop:
 				closeChan <- true
 				winServiceWg.Wait()
 				changes <- svc.Status{State: svc.Stopped}
-				// This is needed to make sure that windows will receive the status stopped before zabbix agent 2 process ends
+				// This is needed to make sure that windows will receive the status stopped before Netwatch Agent process ends
 				<-time.After(time.Millisecond * 500)
 				closeChan <- true
 				break loop
@@ -659,7 +659,7 @@ loop:
 			changes <- svc.Status{State: svc.StopPending}
 			winServiceWg.Wait()
 			changes <- svc.Status{State: svc.Stopped}
-			// This is needed to make sure that windows will receive the status stopped before zabbix agent 2 process ends
+			// This is needed to make sure that windows will receive the status stopped before Netwatch Agent process ends
 			<-time.After(time.Millisecond * 500)
 			closeChan <- true
 			break loop

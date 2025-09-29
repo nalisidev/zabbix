@@ -78,11 +78,11 @@ ifeq ("$(ARCH)", "x86")
 	CFLAGS := $(CFLAGS) -m32
 	CGO_CFLAGS := $(CGO_CFLAGS) -m32
 	GOARCH := 386
-	TARGETBIN=$(TOPDIR)\bin\win32\zabbix_agent2.exe
+	TARGETBIN=$(TOPDIR)\bin\win32\netwatch_agentd.exe
 	RFLAGS := $(RFLAGS) --target=pe-i386
 
 else
-	TARGETBIN=$(TOPDIR)\bin\win64\zabbix_agent2.exe
+	TARGETBIN=$(TOPDIR)\bin\win64\netwatch_agentd.exe
 	GOARCH := amd64
 	RFLAGS := $(RFLAGS) --target=pe-x86-64
 endif
@@ -110,8 +110,8 @@ PKG=golang.zabbix.com/agent2/pkg/version
 
 GOLDFLAGS = -X $(PKG).compileOs=windows
 GOLDFLAGS += -X $(PKG).compileArch=$(GOARCH)
-GOLDFLAGS += -X main.confDefault=zabbix_agent2.win.conf
-GOLDFLAGS += -X main.applicationName=zabbix_agent2
+GOLDFLAGS += -X main.confDefault=netwatch_agentd.win.conf
+GOLDFLAGS += -X main.applicationName=netwatch_agentd
 
 all: $(TARGETBIN)
 
