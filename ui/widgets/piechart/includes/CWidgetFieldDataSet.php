@@ -1,6 +1,6 @@
 <?php declare(strict_types = 0);
 /*
-** Copyright (C) 2001-2025 Zabbix SIA
+** Copyright (C) 2001-2026 Zabbix SIA
 **
 ** This program is free software: you can redistribute it and/or modify it under the terms of
 ** the GNU Affero General Public License as published by the Free Software Foundation, version 3.
@@ -62,6 +62,25 @@ class CWidgetFieldDataSet extends CWidgetField {
 				'type'					=> ['type' => API_INTS32, 'flags' => null, 'in' => implode(',', [self::ITEM_TYPE_NORMAL, self::ITEM_TYPE_TOTAL])],
 				'data_set_label'		=> ['type' => API_STRING_UTF8, 'length' => 255]
 			]]);
+	}
+
+	public function getValue() {
+		$values = parent::getValue();
+
+		foreach ($values as &$value) {
+			if ($value['dataset_type'] != self::DATASET_TYPE_SINGLE_ITEM) {
+				continue;
+			}
+
+			foreach (array_keys($value['itemids']) as $i) {
+				if (!array_key_exists($i, $value['type'])) {
+					$value['type'][$i] = self::ITEM_TYPE_NORMAL;
+				}
+			}
+		}
+		unset($value);
+
+		return $values;
 	}
 
 	public function setValue($value): self {

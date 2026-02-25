@@ -1,5 +1,5 @@
 /*
-** Copyright (C) 2001-2025 Zabbix SIA
+** Copyright (C) 2001-2026 Zabbix SIA
 **
 ** This program is free software: you can redistribute it and/or modify it under the terms of
 ** the GNU Affero General Public License as published by the Free Software Foundation, version 3.
@@ -21,15 +21,16 @@ import (
 	"strings"
 )
 
+//nolint:revive // these consts are part of higher level script
 const (
-	ZABBIX_REVDATE          = "23 September 2025"
+	ZABBIX_REVDATE          = "13 February 2026"
 	ZABBIX_VERSION_MAJOR    = 7
 	ZABBIX_VERSION_MINOR    = 4
-	ZABBIX_VERSION_PATCH    = 3
+	ZABBIX_VERSION_PATCH    = 8
 	ZABBIX_VERSION_RC       = "rc1"
 	ZABBIX_VERSION_RC_NUM   = "{ZABBIX_RC_NUM}"
 	ZABBIX_VERSION_REVISION = "{ZABBIX_REVISION}"
-	copyrightMessage        = "Copyright (C) 2025 NETWATCH.AI\n" +
+	copyrightMessage        = "Copyright (C) 2026 NETWATCH.AI\n" +
 		"License: Proprietary software. All rights reserved.\n" +
 		"This software is the property of NETWATCH.AI and is protected by\n" +
 		"copyright and other intellectual property laws."
